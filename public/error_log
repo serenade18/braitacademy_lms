@@ -1,0 +1,123 @@
+[27-Jul-2024 16:02:19 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: Please provide a valid cache path. in /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Compilers/Compiler.php:66
+Stack trace:
+#0 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/ViewServiceProvider.php(101): Illuminate\View\Compilers\Compiler->__construct(Object(Illuminate\Filesystem\Filesystem), false, '', true, 'php')
+#1 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(885): Illuminate\View\ViewServiceProvider->Illuminate\View\{closure}(Object(Illuminate\Foundation\Application), Array)
+#2 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(770): Illuminate\Container\Container->build(Object(Closure))
+#3 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(856): Illuminate\Container\Container->resolve('blade.compiler', Array, true)
+#4 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(706): Illuminate\Foundation\Application->resolve('blade.compiler', Array)
+#5 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(841): Illuminate\Container\Container->make('blade.compiler', Array)
+#6 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(1431): Illuminate\Foundation\Application->make('blade.compiler')
+#7 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/ViewServiceProvider.php(164): Illuminate\Container\Container->offsetGet('blade.compiler')
+#8 [internal function]: Illuminate\View\ViewServiceProvider->Illuminate\View\{closure}()
+#9 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Engines/EngineResolver.php(55): call_user_func(Object(Closure))
+#10 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(310): Illuminate\View\Engines\EngineResolver->resolve('blade')
+#11 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(274): Illuminate\View\Factory->getEngineFromPath('/home/braitaca/...')
+#12 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(146): Illuminate\View\Factory->viewInstance('errors::500', '/home/braitaca/...', Array)
+#13 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(87): Illuminate\View\Factory->make('errors::500', Array)
+#14 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(629): Illuminate\Routing\ResponseFactory->view('errors::500', Array, 500, Array)
+#15 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(554): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#16 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(460): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#17 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(377): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#18 /home/braitaca/braitacademy.co.ke/app/Exceptions/Handler.php(63): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#19 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(233): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#20 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(210): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(InvalidArgumentException))
+#21 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(270): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(InvalidArgumentException))
+#22 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(InvalidArgumentException))
+#23 {main}
+  thrown in /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Compilers/Compiler.php on line 66
+[27-Jul-2024 16:02:23 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: Please provide a valid cache path. in /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Compilers/Compiler.php:66
+Stack trace:
+#0 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/ViewServiceProvider.php(101): Illuminate\View\Compilers\Compiler->__construct(Object(Illuminate\Filesystem\Filesystem), false, '', true, 'php')
+#1 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(885): Illuminate\View\ViewServiceProvider->Illuminate\View\{closure}(Object(Illuminate\Foundation\Application), Array)
+#2 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(770): Illuminate\Container\Container->build(Object(Closure))
+#3 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(856): Illuminate\Container\Container->resolve('blade.compiler', Array, true)
+#4 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(706): Illuminate\Foundation\Application->resolve('blade.compiler', Array)
+#5 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(841): Illuminate\Container\Container->make('blade.compiler', Array)
+#6 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(1431): Illuminate\Foundation\Application->make('blade.compiler')
+#7 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/ViewServiceProvider.php(164): Illuminate\Container\Container->offsetGet('blade.compiler')
+#8 [internal function]: Illuminate\View\ViewServiceProvider->Illuminate\View\{closure}()
+#9 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Engines/EngineResolver.php(55): call_user_func(Object(Closure))
+#10 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(310): Illuminate\View\Engines\EngineResolver->resolve('blade')
+#11 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(274): Illuminate\View\Factory->getEngineFromPath('/home/braitaca/...')
+#12 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(146): Illuminate\View\Factory->viewInstance('errors::500', '/home/braitaca/...', Array)
+#13 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(87): Illuminate\View\Factory->make('errors::500', Array)
+#14 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(629): Illuminate\Routing\ResponseFactory->view('errors::500', Array, 500, Array)
+#15 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(554): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#16 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(460): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#17 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(377): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#18 /home/braitaca/braitacademy.co.ke/app/Exceptions/Handler.php(63): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#19 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(233): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#20 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(210): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(InvalidArgumentException))
+#21 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(270): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(InvalidArgumentException))
+#22 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(InvalidArgumentException))
+#23 {main}
+  thrown in /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Compilers/Compiler.php on line 66
+[27-Jul-2024 16:02:28 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: Please provide a valid cache path. in /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Compilers/Compiler.php:66
+Stack trace:
+#0 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/ViewServiceProvider.php(101): Illuminate\View\Compilers\Compiler->__construct(Object(Illuminate\Filesystem\Filesystem), false, '', true, 'php')
+#1 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(885): Illuminate\View\ViewServiceProvider->Illuminate\View\{closure}(Object(Illuminate\Foundation\Application), Array)
+#2 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(770): Illuminate\Container\Container->build(Object(Closure))
+#3 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(856): Illuminate\Container\Container->resolve('blade.compiler', Array, true)
+#4 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(706): Illuminate\Foundation\Application->resolve('blade.compiler', Array)
+#5 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(841): Illuminate\Container\Container->make('blade.compiler', Array)
+#6 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(1431): Illuminate\Foundation\Application->make('blade.compiler')
+#7 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/ViewServiceProvider.php(164): Illuminate\Container\Container->offsetGet('blade.compiler')
+#8 [internal function]: Illuminate\View\ViewServiceProvider->Illuminate\View\{closure}()
+#9 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Engines/EngineResolver.php(55): call_user_func(Object(Closure))
+#10 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(310): Illuminate\View\Engines\EngineResolver->resolve('blade')
+#11 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(274): Illuminate\View\Factory->getEngineFromPath('/home/braitaca/...')
+#12 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(146): Illuminate\View\Factory->viewInstance('errors::500', '/home/braitaca/...', Array)
+#13 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(87): Illuminate\View\Factory->make('errors::500', Array)
+#14 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(629): Illuminate\Routing\ResponseFactory->view('errors::500', Array, 500, Array)
+#15 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(554): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#16 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(460): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#17 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(377): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#18 /home/braitaca/braitacademy.co.ke/app/Exceptions/Handler.php(63): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#19 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(233): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#20 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(210): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(InvalidArgumentException))
+#21 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(270): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(InvalidArgumentException))
+#22 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(InvalidArgumentException))
+#23 {main}
+  thrown in /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Compilers/Compiler.php on line 66
+[27-Jul-2024 16:02:30 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: Please provide a valid cache path. in /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Compilers/Compiler.php:66
+Stack trace:
+#0 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/ViewServiceProvider.php(101): Illuminate\View\Compilers\Compiler->__construct(Object(Illuminate\Filesystem\Filesystem), false, '', true, 'php')
+#1 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(885): Illuminate\View\ViewServiceProvider->Illuminate\View\{closure}(Object(Illuminate\Foundation\Application), Array)
+#2 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(770): Illuminate\Container\Container->build(Object(Closure))
+#3 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(856): Illuminate\Container\Container->resolve('blade.compiler', Array, true)
+#4 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(706): Illuminate\Foundation\Application->resolve('blade.compiler', Array)
+#5 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(841): Illuminate\Container\Container->make('blade.compiler', Array)
+#6 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Container/Container.php(1431): Illuminate\Foundation\Application->make('blade.compiler')
+#7 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/ViewServiceProvider.php(164): Illuminate\Container\Container->offsetGet('blade.compiler')
+#8 [internal function]: Illuminate\View\ViewServiceProvider->Illuminate\View\{closure}()
+#9 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Engines/EngineResolver.php(55): call_user_func(Object(Closure))
+#10 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(310): Illuminate\View\Engines\EngineResolver->resolve('blade')
+#11 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(274): Illuminate\View\Factory->getEngineFromPath('/home/braitaca/...')
+#12 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Factory.php(146): Illuminate\View\Factory->viewInstance('errors::500', '/home/braitaca/...', Array)
+#13 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(87): Illuminate\View\Factory->make('errors::500', Array)
+#14 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(629): Illuminate\Routing\ResponseFactory->view('errors::500', Array, 500, Array)
+#15 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(554): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#16 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(460): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#17 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(377): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#18 /home/braitaca/braitacademy.co.ke/app/Exceptions/Handler.php(63): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#19 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(233): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#20 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(210): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(InvalidArgumentException))
+#21 /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(270): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(InvalidArgumentException))
+#22 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(InvalidArgumentException))
+#23 {main}
+  thrown in /home/braitaca/braitacademy.co.ke/vendor/laravel/framework/src/Illuminate/View/Compilers/Compiler.php on line 66
+[28-Jul-2024 11:20:03 UTC] PHP Warning:  require_once(/home/braitaca/braitacademy.co.ke/public/../app/Helpers/helpers.php): Failed to open stream: No such file or directory in /home/braitaca/braitacademy.co.ke/public/index.php on line 35
+[28-Jul-2024 11:20:03 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/braitaca/braitacademy.co.ke/public/../app/Helpers/helpers.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/braitaca/braitacademy.co.ke/public/index.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/braitaca/braitacademy.co.ke/public/index.php on line 35
+[28-Jul-2024 11:20:05 UTC] PHP Warning:  require_once(/home/braitaca/braitacademy.co.ke/public/../app/Helpers/helpers.php): Failed to open stream: No such file or directory in /home/braitaca/braitacademy.co.ke/public/index.php on line 35
+[28-Jul-2024 11:20:05 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/braitaca/braitacademy.co.ke/public/../app/Helpers/helpers.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/braitaca/braitacademy.co.ke/public/index.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/braitaca/braitacademy.co.ke/public/index.php on line 35
+[28-Jul-2024 11:20:11 UTC] PHP Warning:  require_once(/home/braitaca/braitacademy.co.ke/public/../app/Helpers/helpers.php): Failed to open stream: No such file or directory in /home/braitaca/braitacademy.co.ke/public/index.php on line 35
+[28-Jul-2024 11:20:11 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/braitaca/braitacademy.co.ke/public/../app/Helpers/helpers.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/braitaca/braitacademy.co.ke/public/index.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/braitaca/braitacademy.co.ke/public/index.php on line 35
