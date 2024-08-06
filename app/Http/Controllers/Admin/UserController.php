@@ -853,109 +853,147 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->authorize('admin_users_edit');
-
         $user = User::findOrFail($id);
 
         $this->validate($request, [
-            'full_name' => 'required|min:3|max:128',
-            'role_id' => 'required|exists:roles,id',
-            'email' => (!empty($user->email)) ? 'required|email|unique:users,email,' . $user->id . ',id,deleted_at,NULL' : 'nullable|email|unique:users',
-            'mobile' => (!empty($user->mobile)) ? 'required|numeric|unique:users,mobile,' . $user->id . ',id,deleted_at,NULL' : 'nullable|numeric|unique:users',
-            'password' => 'nullable|string',
-            'bio' => 'nullable|string|min:3|max:48',
-            'about' => 'nullable|string|min:3',
-            'certificate_additional' => 'nullable|string|max:255',
-            'status' => 'required|' . Rule::in(User::$statuses),
-            'ban_start_at' => 'required_if:ban,on',
-            'ban_end_at' => 'required_if:ban,on',
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'mobile' => 'nullable|string|max:255',
+            'password' => 'nullable|string|min:6',
+            'role_id' => 'nullable|exists:roles,id',
+            'timezone' => 'nullable|string|max:255',
+            'currency' => 'nullable|string|max:255',
+            'bio' => 'nullable|string',
+            'about' => 'nullable|string',
+            'certificate_additional' => 'nullable|string',
+            'status' => 'nullable|string|in:active,inactive',
+            'language' => 'nullable|string|max:255',
+            'ban' => 'nullable|boolean',
+            'ban_start_at' => 'nullable|date',
+            'ban_end_at' => 'nullable|date',
+            'verified' => 'nullable|boolean',
+            'affiliate' => 'nullable|boolean',
+            'can_create_store' => 'nullable|boolean',
+            'access_content' => 'nullable|boolean',
+            'enable_ai_content' => 'nullable|boolean',
         ]);
 
-        $data = $request->all();
+        $user->fill($request->except('password'));
 
-        $role = Role::where('id', $data['role_id'])->first();
-        $userOldRoleId = $user->role_id;
-
-        if (empty($role)) {
-            $toastData = [
-                'title' => trans('public.request_failed'),
-                'msg' => 'Selected role not exist',
-                'status' => 'error'
-            ];
-            return back()->with(['toast' => $toastData]);
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
         }
-
-        if ($user->role_id != $role->id and $role->name == Role::$teacher) {
-            $becomeInstructor = BecomeInstructor::where('user_id', $user->id)
-                ->where('status', 'pending')
-                ->first();
-
-            if (!empty($becomeInstructor)) {
-                $becomeInstructor->update([
-                    'status' => 'accept'
-                ]);
-
-                // Send Notification
-                $becomeInstructor->sendNotificationToUser('accept');
-            }
-        }
-
-
-        $user->full_name = !empty($data['full_name']) ? $data['full_name'] : null;
-        $user->role_name = $role->name;
-        $user->role_id = $role->id;
-        $user->timezone = $data['timezone'] ?? null;
-        $user->currency = $data['currency'] ?? null;
-        $user->organ_id = !empty($data['organ_id']) ? $data['organ_id'] : null;
-        $user->email = !empty($data['email']) ? $data['email'] : null;
-        $user->mobile = !empty($data['mobile']) ? $data['mobile'] : null;
-        $user->bio = !empty($data['bio']) ? $data['bio'] : null;
-        $user->about = !empty($data['about']) ? $data['about'] : null;
-        $user->status = !empty($data['status']) ? $data['status'] : null;
-        $user->language = !empty($data['language']) ? $data['language'] : null;
-
-
-        if (!empty($data['password'])) {
-            $user->password = User::generatePassword($data['password']);
-        }
-
-        if (!empty($data['ban']) and $data['ban'] == '1') {
-            $ban_start_at = strtotime($data['ban_start_at']);
-            $ban_end_at = strtotime($data['ban_end_at']);
-
-            $user->ban = true;
-            $user->ban_start_at = $ban_start_at;
-            $user->ban_end_at = $ban_end_at;
-        } else {
-            $user->ban = false;
-            $user->ban_start_at = null;
-            $user->ban_end_at = null;
-        }
-
-        $user->verified = (!empty($data['verified']) and $data['verified'] == '1');
-
-        $user->affiliate = (!empty($data['affiliate']) and $data['affiliate'] == '1');
-
-        $user->can_create_store = (!empty($data['can_create_store']) and $data['can_create_store'] == '1');
-
-        $user->access_content = (!empty($data['access_content']) and $data['access_content'] == '1');
-
-        $user->enable_ai_content = (!empty($data['enable_ai_content']) and $data['enable_ai_content'] == '1');
 
         $user->save();
 
-        // save certificate_additional in user metas table
-        $this->handleUserCertificateAdditional($user->id, $data['certificate_additional']);
-
-        if ($userOldRoleId != $role->id) {
-            $notifyOptions = [
-                '[u.role]' => $role->caption,
-            ];
-            sendNotification("user_role_change", $notifyOptions, $user->id);
-        }
-
-        return redirect()->back();
+        return redirect()->back()->with('success', 'User updated successfully');
     }
+
+    // public function update(Request $request, $id)
+    // {
+    //     $this->authorize('admin_users_edit');
+
+    //     $user = User::findOrFail($id);
+
+    //     $this->validate($request, [
+    //         'full_name' => 'required|min:3|max:128',
+    //         'role_id' => 'required|exists:roles,id',
+    //         'email' => (!empty($user->email)) ? 'required|email|unique:users,email,' . $user->id . ',id,deleted_at,NULL' : 'nullable|email|unique:users',
+    //         'mobile' => (!empty($user->mobile)) ? 'required|numeric|unique:users,mobile,' . $user->id . ',id,deleted_at,NULL' : 'nullable|numeric|unique:users',
+    //         'password' => 'nullable|string',
+    //         'bio' => 'nullable|string|min:3|max:48',
+    //         'about' => 'nullable|string|min:3',
+    //         'certificate_additional' => 'nullable|string|max:255',
+    //         'status' => 'required|' . Rule::in(User::$statuses),
+    //         'ban_start_at' => 'required_if:ban,on',
+    //         'ban_end_at' => 'required_if:ban,on',
+    //     ]);
+
+    //     $data = $request->all();
+
+    //     $role = Role::where('id', $data['role_id'])->first();
+    //     $userOldRoleId = $user->role_id;
+
+    //     if (empty($role)) {
+    //         $toastData = [
+    //             'title' => trans('public.request_failed'),
+    //             'msg' => 'Selected role not exist',
+    //             'status' => 'error'
+    //         ];
+    //         return back()->with(['toast' => $toastData]);
+    //     }
+
+    //     if ($user->role_id != $role->id and $role->name == Role::$teacher) {
+    //         $becomeInstructor = BecomeInstructor::where('user_id', $user->id)
+    //             ->where('status', 'pending')
+    //             ->first();
+
+    //         if (!empty($becomeInstructor)) {
+    //             $becomeInstructor->update([
+    //                 'status' => 'accept'
+    //             ]);
+
+    //             // Send Notification
+    //             $becomeInstructor->sendNotificationToUser('accept');
+    //         }
+    //     }
+
+
+    //     $user->full_name = !empty($data['full_name']) ? $data['full_name'] : null;
+    //     $user->role_name = $role->name;
+    //     $user->role_id = $role->id;
+    //     $user->timezone = $data['timezone'] ?? null;
+    //     $user->currency = $data['currency'] ?? null;
+    //     $user->organ_id = !empty($data['organ_id']) ? $data['organ_id'] : null;
+    //     $user->email = !empty($data['email']) ? $data['email'] : null;
+    //     $user->mobile = !empty($data['mobile']) ? $data['mobile'] : null;
+    //     $user->bio = !empty($data['bio']) ? $data['bio'] : null;
+    //     $user->about = !empty($data['about']) ? $data['about'] : null;
+    //     $user->status = !empty($data['status']) ? $data['status'] : null;
+    //     $user->language = !empty($data['language']) ? $data['language'] : null;
+
+
+    //     if (!empty($data['password'])) {
+    //         $user->password = User::generatePassword($data['password']);
+    //     }
+
+    //     if (!empty($data['ban']) and $data['ban'] == '1') {
+    //         $ban_start_at = strtotime($data['ban_start_at']);
+    //         $ban_end_at = strtotime($data['ban_end_at']);
+
+    //         $user->ban = true;
+    //         $user->ban_start_at = $ban_start_at;
+    //         $user->ban_end_at = $ban_end_at;
+    //     } else {
+    //         $user->ban = false;
+    //         $user->ban_start_at = null;
+    //         $user->ban_end_at = null;
+    //     }
+
+    //     $user->verified = (!empty($data['verified']) and $data['verified'] == '1');
+
+    //     $user->affiliate = (!empty($data['affiliate']) and $data['affiliate'] == '1');
+
+    //     $user->can_create_store = (!empty($data['can_create_store']) and $data['can_create_store'] == '1');
+
+    //     $user->access_content = (!empty($data['access_content']) and $data['access_content'] == '1');
+
+    //     $user->enable_ai_content = (!empty($data['enable_ai_content']) and $data['enable_ai_content'] == '1');
+
+    //     $user->save();
+
+    //     // save certificate_additional in user metas table
+    //     $this->handleUserCertificateAdditional($user->id, $data['certificate_additional']);
+
+    //     if ($userOldRoleId != $role->id) {
+    //         $notifyOptions = [
+    //             '[u.role]' => $role->caption,
+    //         ];
+    //         sendNotification("user_role_change", $notifyOptions, $user->id);
+    //     }
+
+    //     return redirect()->back();
+    // }
 
     private function handleUserCertificateAdditional($userId, $value)
     {
