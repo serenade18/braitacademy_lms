@@ -188,9 +188,9 @@
                             <label class="input-label">{{ trans('public.from') }}</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                                                    <span class="input-group-text" id="dateInputGroupPrepend">
-                                                                        <i class="fa fa-calendar-alt"></i>
-                                                                    </span>
+                                    <span class="input-group-text" id="dateInputGroupPrepend">
+                                        <i class="fa fa-calendar-alt"></i>
+                                    </span>
                                 </div>
                                 <input type="text" name="ban_start_at" class="form-control datepicker @error('ban_start_at') is-invalid @enderror" value="{{ !empty($user->ban_start_at) ? dateTimeFormat($user->ban_start_at,'Y/m/d') :'' }}"/>
                                 @error('ban_start_at')
@@ -206,9 +206,9 @@
                             <label class="input-label">{{ trans('public.to') }}</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                                                    <span class="input-group-text" id="dateInputGroupPrepend">
-                                                                        <i class="fa fa-calendar-alt"></i>
-                                                                    </span>
+                                    <span class="input-group-text" id="dateInputGroupPrepend">
+                                        <i class="fa fa-calendar-alt"></i>
+                                    </span>
                                 </div>
                                 <input type="text" name="ban_end_at" class="form-control datepicker @error('ban_end_at') is-invalid @enderror" value="{{ !empty($user->ban_end_at) ? dateTimeFormat($user->ban_end_at,'Y/m/d') :'' }}"/>
                                 @error('ban_end_at')
