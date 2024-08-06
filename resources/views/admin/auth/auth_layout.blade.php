@@ -42,10 +42,9 @@
             <div class="absolute-bottom-left index-2">
             <div class="text-light p-5 pb-2">
               <div class="mb-2 pb-3">
-                <h1 class="mb-2 display-4 font-weight-bold">Rocket LMS</h1>
-                <h5 class="font-weight-normal text-muted-transparent">fully-featured educational platform</h5>
+                <h1 class="mb-2 display-4 font-weight-bold">Brait Academy</h1>
+                <h5 class="font-weight-normal text-muted-transparent">Learn & Thrive</h5>
               </div>
-              All rights reserved for <a class="text-light bb" target="_blank" href="https://codecanyon.net/user/rocketsoft">Rocket Soft</a> on <a class="text-light bb" target="_blank" href="https://codecanyon.net/collections/10821267-rocket-lms-full-package">Codecanyon</a>
             </div>
           </div>
             </div>
