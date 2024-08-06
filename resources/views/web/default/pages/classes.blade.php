@@ -84,21 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="mt-25 pt-25 border-top border-gray300">
-                                <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">{{ trans('site.more_options') }}</h3>
-
-                                <div class="pt-10">
-                                    @foreach(['subscribe','certificate_included','with_quiz','featured'] as $moreOption)
-                                        <div class="d-flex align-items-center justify-content-between mt-20">
-                                            <label class="cursor-pointer" for="filterLanguage{{ $moreOption }}">{{ trans('webinars.show_only_'.$moreOption) }}</label>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" name="moreOptions[]" id="filterLanguage{{ $moreOption }}" value="{{ $moreOption }}" @if(in_array($moreOption, request()->get('moreOptions', []))) checked="checked" @endif class="custom-control-input">
-                                                <label class="custom-control-label" for="filterLanguage{{ $moreOption }}"></label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
+                            <!-- removed the side bar -->
 
 
                             <button type="submit" class="btn btn-sm btn-primary btn-block mt-30">{{ trans('site.filter_items') }}</button>
