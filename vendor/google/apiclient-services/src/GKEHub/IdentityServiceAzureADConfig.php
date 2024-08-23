@@ -34,6 +34,10 @@ class IdentityServiceAzureADConfig extends \Google\Model
   /**
    * @var string
    */
+  public $groupFormat;
+  /**
+   * @var string
+   */
   public $kubectlRedirectUri;
   /**
    * @var string
@@ -85,6 +89,20 @@ class IdentityServiceAzureADConfig extends \Google\Model
   public function getEncryptedClientSecret()
   {
     return $this->encryptedClientSecret;
+  }
+  /**
+   * @param string
+   */
+  public function setGroupFormat($groupFormat)
+  {
+    $this->groupFormat = $groupFormat;
+  }
+  /**
+   * @return string
+   */
+  public function getGroupFormat()
+  {
+    return $this->groupFormat;
   }
   /**
    * @param string

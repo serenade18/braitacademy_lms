@@ -84,6 +84,8 @@ class GoogleCloudRunV2Revision extends \Google\Collection
    * @var string
    */
   public $name;
+  protected $nodeSelectorType = GoogleCloudRunV2NodeSelector::class;
+  protected $nodeSelectorDataType = '';
   /**
    * @var string
    */
@@ -98,6 +100,8 @@ class GoogleCloudRunV2Revision extends \Google\Collection
   public $satisfiesPzs;
   protected $scalingType = GoogleCloudRunV2RevisionScaling::class;
   protected $scalingDataType = '';
+  protected $scalingStatusType = GoogleCloudRunV2RevisionScalingStatus::class;
+  protected $scalingStatusDataType = '';
   /**
    * @var string
    */
@@ -106,6 +110,8 @@ class GoogleCloudRunV2Revision extends \Google\Collection
    * @var string
    */
   public $serviceAccount;
+  protected $serviceMeshType = GoogleCloudRunV2ServiceMesh::class;
+  protected $serviceMeshDataType = '';
   /**
    * @var bool
    */
@@ -366,6 +372,20 @@ class GoogleCloudRunV2Revision extends \Google\Collection
     return $this->name;
   }
   /**
+   * @param GoogleCloudRunV2NodeSelector
+   */
+  public function setNodeSelector(GoogleCloudRunV2NodeSelector $nodeSelector)
+  {
+    $this->nodeSelector = $nodeSelector;
+  }
+  /**
+   * @return GoogleCloudRunV2NodeSelector
+   */
+  public function getNodeSelector()
+  {
+    return $this->nodeSelector;
+  }
+  /**
    * @param string
    */
   public function setObservedGeneration($observedGeneration)
@@ -422,6 +442,20 @@ class GoogleCloudRunV2Revision extends \Google\Collection
     return $this->scaling;
   }
   /**
+   * @param GoogleCloudRunV2RevisionScalingStatus
+   */
+  public function setScalingStatus(GoogleCloudRunV2RevisionScalingStatus $scalingStatus)
+  {
+    $this->scalingStatus = $scalingStatus;
+  }
+  /**
+   * @return GoogleCloudRunV2RevisionScalingStatus
+   */
+  public function getScalingStatus()
+  {
+    return $this->scalingStatus;
+  }
+  /**
    * @param string
    */
   public function setService($service)
@@ -448,6 +482,20 @@ class GoogleCloudRunV2Revision extends \Google\Collection
   public function getServiceAccount()
   {
     return $this->serviceAccount;
+  }
+  /**
+   * @param GoogleCloudRunV2ServiceMesh
+   */
+  public function setServiceMesh(GoogleCloudRunV2ServiceMesh $serviceMesh)
+  {
+    $this->serviceMesh = $serviceMesh;
+  }
+  /**
+   * @return GoogleCloudRunV2ServiceMesh
+   */
+  public function getServiceMesh()
+  {
+    return $this->serviceMesh;
   }
   /**
    * @param bool

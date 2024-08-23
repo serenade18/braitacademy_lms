@@ -654,13 +654,6 @@ Route::group(['prefix' => $prefix, 'namespace' => 'Admin', 'middleware' => ['web
                 Route::get('/{name}', 'SettingsController@personalizationPage');
             });
 
-            Route::group(['prefix' => 'update-app'], function () {
-                Route::get('/', 'UpdateController@index');
-                Route::post('/basic', 'UpdateController@basicUpdate');
-                Route::post('/custom-update', 'UpdateController@customUpdate');
-                Route::post('/database', 'UpdateController@databaseUpdate');
-            });
-
             Route::get('/reset-users-login-count', 'SettingsController@resetUsersLoginCount');
             Route::get('/{page}', 'SettingsController@page');
             Route::post('/{name}', 'SettingsController@store');

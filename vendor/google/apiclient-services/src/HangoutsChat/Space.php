@@ -19,6 +19,8 @@ namespace Google\Service\HangoutsChat;
 
 class Space extends \Google\Model
 {
+  protected $accessSettingsType = AccessSettings::class;
+  protected $accessSettingsDataType = '';
   /**
    * @var bool
    */
@@ -26,7 +28,19 @@ class Space extends \Google\Model
   /**
    * @var string
    */
+  public $createTime;
+  /**
+   * @var string
+   */
   public $displayName;
+  /**
+   * @var bool
+   */
+  public $externalUserAllowed;
+  /**
+   * @var bool
+   */
+  public $importMode;
   /**
    * @var string
    */
@@ -50,6 +64,10 @@ class Space extends \Google\Model
    */
   public $spaceType;
   /**
+   * @var string
+   */
+  public $spaceUri;
+  /**
    * @var bool
    */
   public $threaded;
@@ -58,6 +76,20 @@ class Space extends \Google\Model
    */
   public $type;
 
+  /**
+   * @param AccessSettings
+   */
+  public function setAccessSettings(AccessSettings $accessSettings)
+  {
+    $this->accessSettings = $accessSettings;
+  }
+  /**
+   * @return AccessSettings
+   */
+  public function getAccessSettings()
+  {
+    return $this->accessSettings;
+  }
   /**
    * @param bool
    */
@@ -75,6 +107,20 @@ class Space extends \Google\Model
   /**
    * @param string
    */
+  public function setCreateTime($createTime)
+  {
+    $this->createTime = $createTime;
+  }
+  /**
+   * @return string
+   */
+  public function getCreateTime()
+  {
+    return $this->createTime;
+  }
+  /**
+   * @param string
+   */
   public function setDisplayName($displayName)
   {
     $this->displayName = $displayName;
@@ -85,6 +131,34 @@ class Space extends \Google\Model
   public function getDisplayName()
   {
     return $this->displayName;
+  }
+  /**
+   * @param bool
+   */
+  public function setExternalUserAllowed($externalUserAllowed)
+  {
+    $this->externalUserAllowed = $externalUserAllowed;
+  }
+  /**
+   * @return bool
+   */
+  public function getExternalUserAllowed()
+  {
+    return $this->externalUserAllowed;
+  }
+  /**
+   * @param bool
+   */
+  public function setImportMode($importMode)
+  {
+    $this->importMode = $importMode;
+  }
+  /**
+   * @return bool
+   */
+  public function getImportMode()
+  {
+    return $this->importMode;
   }
   /**
    * @param string
@@ -169,6 +243,20 @@ class Space extends \Google\Model
   public function getSpaceType()
   {
     return $this->spaceType;
+  }
+  /**
+   * @param string
+   */
+  public function setSpaceUri($spaceUri)
+  {
+    $this->spaceUri = $spaceUri;
+  }
+  /**
+   * @return string
+   */
+  public function getSpaceUri()
+  {
+    return $this->spaceUri;
   }
   /**
    * @param bool

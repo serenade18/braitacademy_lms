@@ -22,7 +22,15 @@ class VerifyChallengeResponseResult extends \Google\Model
   /**
    * @var string
    */
+  public $attestedDeviceId;
+  /**
+   * @var string
+   */
   public $customerId;
+  /**
+   * @var string
+   */
+  public $deviceEnrollmentId;
   /**
    * @var string
    */
@@ -61,6 +69,20 @@ class VerifyChallengeResponseResult extends \Google\Model
   /**
    * @param string
    */
+  public function setAttestedDeviceId($attestedDeviceId)
+  {
+    $this->attestedDeviceId = $attestedDeviceId;
+  }
+  /**
+   * @return string
+   */
+  public function getAttestedDeviceId()
+  {
+    return $this->attestedDeviceId;
+  }
+  /**
+   * @param string
+   */
   public function setCustomerId($customerId)
   {
     $this->customerId = $customerId;
@@ -71,6 +93,20 @@ class VerifyChallengeResponseResult extends \Google\Model
   public function getCustomerId()
   {
     return $this->customerId;
+  }
+  /**
+   * @param string
+   */
+  public function setDeviceEnrollmentId($deviceEnrollmentId)
+  {
+    $this->deviceEnrollmentId = $deviceEnrollmentId;
+  }
+  /**
+   * @return string
+   */
+  public function getDeviceEnrollmentId()
+  {
+    return $this->deviceEnrollmentId;
   }
   /**
    * @param string

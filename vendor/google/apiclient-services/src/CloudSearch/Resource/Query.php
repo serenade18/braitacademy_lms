@@ -17,6 +17,7 @@
 
 namespace Google\Service\CloudSearch\Resource;
 
+use Google\Service\CloudSearch\DebugResponse;
 use Google\Service\CloudSearch\RemoveActivityRequest;
 use Google\Service\CloudSearch\RemoveActivityResponse;
 use Google\Service\CloudSearch\SearchRequest;
@@ -35,6 +36,25 @@ use Google\Service\CloudSearch\SuggestResponse;
 class Query extends \Google\Service\Resource
 {
   /**
+   * Returns Debug information for Cloud Search Query API provides the search
+   * method. **Note:** This API requires a standard end user account to execute. A
+   * service account can't perform Query API requests directly; to use a service
+   * account to perform queries, set up [Google Workspace domain-wide delegation
+   * of authority](https://developers.google.com/cloud-
+   * search/docs/guides/delegation/). (query.debugSearch)
+   *
+   * @param SearchRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return DebugResponse
+   * @throws \Google\Service\Exception
+   */
+  public function debugSearch(SearchRequest $postBody, $optParams = [])
+  {
+    $params = ['postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('debugSearch', [$params], DebugResponse::class);
+  }
+  /**
    * Provides functionality to remove logged activity for a user. Currently to be
    * used only for Chat 1p clients **Note:** This API requires a standard end user
    * account to execute. A service account can't perform Remove Activity requests
@@ -46,6 +66,7 @@ class Query extends \Google\Service\Resource
    * @param RemoveActivityRequest $postBody
    * @param array $optParams Optional parameters.
    * @return RemoveActivityResponse
+   * @throws \Google\Service\Exception
    */
   public function removeActivity(RemoveActivityRequest $postBody, $optParams = [])
   {
@@ -67,6 +88,7 @@ class Query extends \Google\Service\Resource
    * @param SearchRequest $postBody
    * @param array $optParams Optional parameters.
    * @return SearchResponse
+   * @throws \Google\Service\Exception
    */
   public function search(SearchRequest $postBody, $optParams = [])
   {
@@ -85,6 +107,7 @@ class Query extends \Google\Service\Resource
    * @param SuggestRequest $postBody
    * @param array $optParams Optional parameters.
    * @return SuggestResponse
+   * @throws \Google\Service\Exception
    */
   public function suggest(SuggestRequest $postBody, $optParams = [])
   {

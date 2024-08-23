@@ -30,6 +30,10 @@ class NetworkConfig extends \Google\Model
   /**
    * @var bool
    */
+  public $enableCiliumClusterwideNetworkPolicy;
+  /**
+   * @var bool
+   */
   public $enableFqdnNetworkPolicy;
   /**
    * @var bool
@@ -45,6 +49,10 @@ class NetworkConfig extends \Google\Model
   public $enableMultiNetworking;
   protected $gatewayApiConfigType = GatewayAPIConfig::class;
   protected $gatewayApiConfigDataType = '';
+  /**
+   * @var string
+   */
+  public $inTransitEncryptionConfig;
   /**
    * @var string
    */
@@ -103,6 +111,20 @@ class NetworkConfig extends \Google\Model
   public function getDnsConfig()
   {
     return $this->dnsConfig;
+  }
+  /**
+   * @param bool
+   */
+  public function setEnableCiliumClusterwideNetworkPolicy($enableCiliumClusterwideNetworkPolicy)
+  {
+    $this->enableCiliumClusterwideNetworkPolicy = $enableCiliumClusterwideNetworkPolicy;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableCiliumClusterwideNetworkPolicy()
+  {
+    return $this->enableCiliumClusterwideNetworkPolicy;
   }
   /**
    * @param bool
@@ -173,6 +195,20 @@ class NetworkConfig extends \Google\Model
   public function getGatewayApiConfig()
   {
     return $this->gatewayApiConfig;
+  }
+  /**
+   * @param string
+   */
+  public function setInTransitEncryptionConfig($inTransitEncryptionConfig)
+  {
+    $this->inTransitEncryptionConfig = $inTransitEncryptionConfig;
+  }
+  /**
+   * @return string
+   */
+  public function getInTransitEncryptionConfig()
+  {
+    return $this->inTransitEncryptionConfig;
   }
   /**
    * @param string

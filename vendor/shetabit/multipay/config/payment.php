@@ -32,6 +32,14 @@ return [
             'payButton' => 'پرداخت موفق',
             'cancelButton' => 'پرداخت ناموفق',
         ],
+        'gooyapay' => [
+            'apiPurchaseUrl' => 'https://gooyapay.ir/webservice/rest/PaymentRequest',
+            'apiVerificationUrl' => 'https://gooyapay.ir/webservice/rest/PaymentVerification',
+            'apiPaymentUrl' => 'https://gooyapay.ir/startPay/',
+            'merchantId' => 'XXXX-XXXX-XXXX-XXXXXXXXXXXXXXXXXXXXX',
+            'callbackUrl' => 'http://yoursite.com/path/to',
+            'currency' => 'T', //Can be R, T (Rial, Toman)
+        ],
         'fanavacard' => [
             'baseUri' => 'https://fcp.shaparak.ir',
             'apiPaymentUrl' => '_ipgw_//payment/',
@@ -72,12 +80,10 @@ return [
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using behpardakht',
             'currency' => 'T', //Can be R, T (Rial, Toman)
+            'cumulativeDynamicPayStatus' => false,
         ],
         'digipay' => [
-            'apiOauthUrl' => 'https://api.mydigipay.com/digipay/api/oauth/token',
-            'apiPurchaseUrl' => 'https://api.mydigipay.com/digipay/api/businesses/ticket?type=0',
-            'apiPaymentUrl' => 'https://api.mydigipay.com/digipay/api/purchases/ipg/pay/',
-            'apiVerificationUrl' => 'https://api.mydigipay.com/digipay/api/purchases/verify/',
+            'apiPaymentUrl' => 'https://api.mydigipay.com', // with out '/' at the end
             'username' => 'username',
             'password' => 'password',
             'client_id' => '',
@@ -118,6 +124,17 @@ return [
             'acceptorId' => '',
             'pubKey' => '',
             'currency' => 'T', //Can be R, T (Rial, Toman)
+        ],
+        'jibit' => [
+            'apiPaymentUrl' => 'https://napi.jibit.ir/ppg/v3',
+            'apiKey' => '',
+            'apiSecret' => '',
+           // You can change the token storage path in Laravel like this
+           // 'tokenStoragePath' => function_exists('storage_path') ? storage_path('jibit/') : 'jibit/'
+            'tokenStoragePath' => 'jibit/',
+            'callbackUrl' => 'http://yoursite.com/path/to',
+            'description' => 'payment using jibit',
+            'currency' => 'T', // Can be R, T (Rial, Toman)
         ],
         'nextpay' => [
             'apiPurchaseUrl' => 'https://nextpay.org/nx/gateway/token',
@@ -181,7 +198,6 @@ return [
             'sandboxApiVerificationUrl' => 'https://sandbox.zarinpal.com/pg/services/WebGate/wsdl',
 
             'mode' => 'normal', // can be normal, sandbox
-            'currency' => '',
             'id' => '', // Specify the email of the PayPal Business account
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using paypal',
@@ -256,9 +272,9 @@ return [
             'currency' => 'T', //Can be R, T (Rial, Toman)
         ],
         'sepehr' => [
-            'apiGetToken' => 'https://mabna.shaparak.ir:8081/V1/PeymentApi/GetToken',
-            'apiPaymentUrl' => 'https://mabna.shaparak.ir:8080/pay',
-            'apiVerificationUrl' => 'https://mabna.shaparak.ir:8081/V1/PeymentApi/Advice',
+            'apiGetToken' => 'https://sepehr.shaparak.ir:8081/V1/PeymentApi/GetToken',
+            'apiPaymentUrl' => 'https://sepehr.shaparak.ir:8080/Pay',
+            'apiVerificationUrl' => 'https://sepehr.shaparak.ir:8081/V1/PeymentApi/Advice',
             'terminalId' => '',
             'callbackUrl' => '',
             'description' => 'payment using sepehr(saderat)',
@@ -391,7 +407,41 @@ return [
             'callbackUrl' => '',
             'apiKey' => '',
             'currency' => 'T', //Can be R, T (Rial, Toman)
-        ]
+        ],
+        'toman' => [
+            'base_url' => 'https://escrow-api.toman.ir/api/v1',
+            'shop_slug' => '',
+            'auth_code' => '',
+            'data' => ''
+        ],
+        'bitpay' => [
+            'apiPurchaseUrl' => 'https://bitpay.ir/payment/gateway-send',
+            'apiPaymentUrl' => 'https://bitpay.ir/payment/gateway-{id_get}-get',
+            'apiVerificationUrl' => 'https://bitpay.ir/payment/gateway-result-second',
+            'callbackUrl' => '',
+            'api_token' => '',
+            'description' => 'payment using Bitpay',
+            'currency' => 'R', //Can be R, T (Rial, Toman)
+        ],
+        'minipay' => [
+            'apiPurchaseUrl' => 'https://v1.minipay.me/api/pg/request/',
+            'apiPaymentUrl' => 'https://ipg.minipay.me/',
+            'apiVerificationUrl' => 'https://v1.minipay.me/api/pg/verify/',
+            'merchantId' => '',
+            'callbackUrl' => 'http://yoursite.com/path/to',
+            'description' => 'payment using Minipay.',
+            'currency' => 'T', //Can be R, T (Rial, Toman)
+        ],
+        'snapppay' => [
+            'apiPaymentUrl' => 'https://fms-gateway-staging.apps.public.teh-1.snappcloud.io',
+            'callbackUrl' => 'http://yoursite.com/path/to',
+            'username' => 'username',
+            'password' => 'password',
+            'client_id' => '',
+            'client_secret' => '',
+            'description' => 'payment using Snapp Pay.',
+            'currency' => 'T', //Can be R, T (Rial, Toman)
+        ],
     ],
 
     /*
@@ -408,6 +458,7 @@ return [
     */
     'map' => [
         'local' => \Shetabit\Multipay\Drivers\Local\Local::class,
+        'gooyapay' => \Shetabit\Multipay\Drivers\Gooyapay\Gooyapay::class,
         'fanavacard' => \Shetabit\Multipay\Drivers\Fanavacard\Fanavacard::class,
         'asanpardakht' => \Shetabit\Multipay\Drivers\Asanpardakht\Asanpardakht::class,
         'atipay' => \Shetabit\Multipay\Drivers\Atipay\Atipay::class,
@@ -416,6 +467,7 @@ return [
         'etebarino' => \Shetabit\Multipay\Drivers\Etebarino\Etebarino::class,
         'idpay' => \Shetabit\Multipay\Drivers\Idpay\Idpay::class,
         'irankish' => \Shetabit\Multipay\Drivers\Irankish\Irankish::class,
+        'jibit' => \Shetabit\Multipay\Drivers\Jibit\Jibit::class,
         'nextpay' => \Shetabit\Multipay\Drivers\Nextpay\Nextpay::class,
         'omidpay' => \Shetabit\Multipay\Drivers\Omidpay\Omidpay::class,
         'parsian' => \Shetabit\Multipay\Drivers\Parsian\Parsian::class,
@@ -440,5 +492,9 @@ return [
         'aqayepardakht' => \Shetabit\Multipay\Drivers\Aqayepardakht\Aqayepardakht::class,
         'azki' => \Shetabit\Multipay\Drivers\Azki\Azki::class,
         'payfa' => \Shetabit\Multipay\Drivers\Payfa\Payfa::class,
+        'toman' => \Shetabit\Multipay\Drivers\Toman\Toman::class,
+        'bitpay' => \Shetabit\Multipay\Drivers\Bitpay\Bitpay::class,
+        'minipay' => \Shetabit\Multipay\Drivers\Minipay\Minipay::class,
+        'snapppay'=> \Shetabit\Multipay\Drivers\SnappPay\SnappPay::class,
     ]
 ];

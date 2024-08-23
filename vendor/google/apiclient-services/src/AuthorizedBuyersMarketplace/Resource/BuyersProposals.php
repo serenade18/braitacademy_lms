@@ -49,6 +49,7 @@ class BuyersProposals extends \Google\Service\Resource
    * @param AcceptProposalRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Proposal
+   * @throws \Google\Service\Exception
    */
   public function accept($name, AcceptProposalRequest $postBody, $optParams = [])
   {
@@ -57,13 +58,16 @@ class BuyersProposals extends \Google\Service\Resource
     return $this->call('accept', [$params], Proposal::class);
   }
   /**
-   * Creates a note for this proposal and sends to the seller. (proposals.addNote)
+   * Creates a note for this proposal and sends to the seller. This method is not
+   * supported for proposals with DealType set to 'PRIVATE_AUCTION'.
+   * (proposals.addNote)
    *
    * @param string $proposal Name of the proposal. Format:
    * `buyers/{accountId}/proposals/{proposalId}`
    * @param AddNoteRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Proposal
+   * @throws \Google\Service\Exception
    */
   public function addNote($proposal, AddNoteRequest $postBody, $optParams = [])
   {
@@ -87,6 +91,7 @@ class BuyersProposals extends \Google\Service\Resource
    * @param CancelNegotiationRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Proposal
+   * @throws \Google\Service\Exception
    */
   public function cancelNegotiation($proposal, CancelNegotiationRequest $postBody, $optParams = [])
   {
@@ -102,6 +107,7 @@ class BuyersProposals extends \Google\Service\Resource
    * `buyers/{accountId}/proposals/{proposalId}`
    * @param array $optParams Optional parameters.
    * @return Proposal
+   * @throws \Google\Service\Exception
    */
   public function get($name, $optParams = [])
   {
@@ -128,6 +134,7 @@ class BuyersProposals extends \Google\Service\Resource
    * @opt_param string pageToken The page token as returned from
    * ListProposalsResponse.
    * @return ListProposalsResponse
+   * @throws \Google\Service\Exception
    */
   public function listBuyersProposals($parent, $optParams = [])
   {
@@ -161,6 +168,7 @@ class BuyersProposals extends \Google\Service\Resource
    * or set to default value. Output only fields will be ignored regardless of the
    * value of updateMask.
    * @return Proposal
+   * @throws \Google\Service\Exception
    */
   public function patch($name, Proposal $postBody, $optParams = [])
   {
@@ -181,6 +189,7 @@ class BuyersProposals extends \Google\Service\Resource
    * @param SendRfpRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Proposal
+   * @throws \Google\Service\Exception
    */
   public function sendRfp($buyer, SendRfpRequest $postBody, $optParams = [])
   {

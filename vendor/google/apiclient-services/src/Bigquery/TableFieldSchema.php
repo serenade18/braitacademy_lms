@@ -39,6 +39,12 @@ class TableFieldSchema extends \Google\Collection
   /**
    * @var string
    */
+  public $foreignTypeDefinition;
+  protected $identityColumnInfoType = IdentityColumnInfo::class;
+  protected $identityColumnInfoDataType = '';
+  /**
+   * @var string
+   */
   public $maxLength;
   /**
    * @var string
@@ -54,6 +60,8 @@ class TableFieldSchema extends \Google\Collection
    * @var string
    */
   public $precision;
+  protected $rangeElementTypeType = TableFieldSchemaRangeElementType::class;
+  protected $rangeElementTypeDataType = '';
   /**
    * @var string
    */
@@ -140,6 +148,34 @@ class TableFieldSchema extends \Google\Collection
   /**
    * @param string
    */
+  public function setForeignTypeDefinition($foreignTypeDefinition)
+  {
+    $this->foreignTypeDefinition = $foreignTypeDefinition;
+  }
+  /**
+   * @return string
+   */
+  public function getForeignTypeDefinition()
+  {
+    return $this->foreignTypeDefinition;
+  }
+  /**
+   * @param IdentityColumnInfo
+   */
+  public function setIdentityColumnInfo(IdentityColumnInfo $identityColumnInfo)
+  {
+    $this->identityColumnInfo = $identityColumnInfo;
+  }
+  /**
+   * @return IdentityColumnInfo
+   */
+  public function getIdentityColumnInfo()
+  {
+    return $this->identityColumnInfo;
+  }
+  /**
+   * @param string
+   */
   public function setMaxLength($maxLength)
   {
     $this->maxLength = $maxLength;
@@ -206,6 +242,20 @@ class TableFieldSchema extends \Google\Collection
   public function getPrecision()
   {
     return $this->precision;
+  }
+  /**
+   * @param TableFieldSchemaRangeElementType
+   */
+  public function setRangeElementType(TableFieldSchemaRangeElementType $rangeElementType)
+  {
+    $this->rangeElementType = $rangeElementType;
+  }
+  /**
+   * @return TableFieldSchemaRangeElementType
+   */
+  public function getRangeElementType()
+  {
+    return $this->rangeElementType;
   }
   /**
    * @param string

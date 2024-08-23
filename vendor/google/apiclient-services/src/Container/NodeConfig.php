@@ -30,6 +30,8 @@ class NodeConfig extends \Google\Collection
   public $bootDiskKmsKey;
   protected $confidentialNodesType = ConfidentialNodes::class;
   protected $confidentialNodesDataType = '';
+  protected $containerdConfigType = ContainerdConfig::class;
+  protected $containerdConfigDataType = '';
   /**
    * @var int
    */
@@ -38,6 +40,10 @@ class NodeConfig extends \Google\Collection
    * @var string
    */
   public $diskType;
+  /**
+   * @var bool
+   */
+  public $enableConfidentialStorage;
   protected $ephemeralStorageLocalSsdConfigType = EphemeralStorageLocalSsdConfig::class;
   protected $ephemeralStorageLocalSsdConfigDataType = '';
   protected $fastSocketType = FastSocket::class;
@@ -96,8 +102,14 @@ class NodeConfig extends \Google\Collection
    * @var string[]
    */
   public $resourceLabels;
+  protected $resourceManagerTagsType = ResourceManagerTags::class;
+  protected $resourceManagerTagsDataType = '';
   protected $sandboxConfigType = SandboxConfig::class;
   protected $sandboxConfigDataType = '';
+  protected $secondaryBootDiskUpdateStrategyType = SecondaryBootDiskUpdateStrategy::class;
+  protected $secondaryBootDiskUpdateStrategyDataType = '';
+  protected $secondaryBootDisksType = SecondaryBootDisk::class;
+  protected $secondaryBootDisksDataType = 'array';
   /**
    * @var string
    */
@@ -178,6 +190,20 @@ class NodeConfig extends \Google\Collection
     return $this->confidentialNodes;
   }
   /**
+   * @param ContainerdConfig
+   */
+  public function setContainerdConfig(ContainerdConfig $containerdConfig)
+  {
+    $this->containerdConfig = $containerdConfig;
+  }
+  /**
+   * @return ContainerdConfig
+   */
+  public function getContainerdConfig()
+  {
+    return $this->containerdConfig;
+  }
+  /**
    * @param int
    */
   public function setDiskSizeGb($diskSizeGb)
@@ -204,6 +230,20 @@ class NodeConfig extends \Google\Collection
   public function getDiskType()
   {
     return $this->diskType;
+  }
+  /**
+   * @param bool
+   */
+  public function setEnableConfidentialStorage($enableConfidentialStorage)
+  {
+    $this->enableConfidentialStorage = $enableConfidentialStorage;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableConfidentialStorage()
+  {
+    return $this->enableConfidentialStorage;
   }
   /**
    * @param EphemeralStorageLocalSsdConfig
@@ -472,6 +512,20 @@ class NodeConfig extends \Google\Collection
     return $this->resourceLabels;
   }
   /**
+   * @param ResourceManagerTags
+   */
+  public function setResourceManagerTags(ResourceManagerTags $resourceManagerTags)
+  {
+    $this->resourceManagerTags = $resourceManagerTags;
+  }
+  /**
+   * @return ResourceManagerTags
+   */
+  public function getResourceManagerTags()
+  {
+    return $this->resourceManagerTags;
+  }
+  /**
    * @param SandboxConfig
    */
   public function setSandboxConfig(SandboxConfig $sandboxConfig)
@@ -484,6 +538,34 @@ class NodeConfig extends \Google\Collection
   public function getSandboxConfig()
   {
     return $this->sandboxConfig;
+  }
+  /**
+   * @param SecondaryBootDiskUpdateStrategy
+   */
+  public function setSecondaryBootDiskUpdateStrategy(SecondaryBootDiskUpdateStrategy $secondaryBootDiskUpdateStrategy)
+  {
+    $this->secondaryBootDiskUpdateStrategy = $secondaryBootDiskUpdateStrategy;
+  }
+  /**
+   * @return SecondaryBootDiskUpdateStrategy
+   */
+  public function getSecondaryBootDiskUpdateStrategy()
+  {
+    return $this->secondaryBootDiskUpdateStrategy;
+  }
+  /**
+   * @param SecondaryBootDisk[]
+   */
+  public function setSecondaryBootDisks($secondaryBootDisks)
+  {
+    $this->secondaryBootDisks = $secondaryBootDisks;
+  }
+  /**
+   * @return SecondaryBootDisk[]
+   */
+  public function getSecondaryBootDisks()
+  {
+    return $this->secondaryBootDisks;
   }
   /**
    * @param string

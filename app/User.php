@@ -83,7 +83,8 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role->is_admin;
+        // Check if the role relationship is loaded and is not null
+        return $this->role && $this->role->is_admin;
     }
 
     public function isUser()

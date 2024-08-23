@@ -41,6 +41,10 @@ class AddonsConfig extends \Google\Model
   protected $kubernetesDashboardDataType = '';
   protected $networkPolicyConfigType = NetworkPolicyConfig::class;
   protected $networkPolicyConfigDataType = '';
+  protected $rayOperatorConfigType = RayOperatorConfig::class;
+  protected $rayOperatorConfigDataType = '';
+  protected $statefulHaConfigType = StatefulHAConfig::class;
+  protected $statefulHaConfigDataType = '';
 
   /**
    * @param CloudRunConfig
@@ -195,6 +199,34 @@ class AddonsConfig extends \Google\Model
   public function getNetworkPolicyConfig()
   {
     return $this->networkPolicyConfig;
+  }
+  /**
+   * @param RayOperatorConfig
+   */
+  public function setRayOperatorConfig(RayOperatorConfig $rayOperatorConfig)
+  {
+    $this->rayOperatorConfig = $rayOperatorConfig;
+  }
+  /**
+   * @return RayOperatorConfig
+   */
+  public function getRayOperatorConfig()
+  {
+    return $this->rayOperatorConfig;
+  }
+  /**
+   * @param StatefulHAConfig
+   */
+  public function setStatefulHaConfig(StatefulHAConfig $statefulHaConfig)
+  {
+    $this->statefulHaConfig = $statefulHaConfig;
+  }
+  /**
+   * @return StatefulHAConfig
+   */
+  public function getStatefulHaConfig()
+  {
+    return $this->statefulHaConfig;
   }
 }
 

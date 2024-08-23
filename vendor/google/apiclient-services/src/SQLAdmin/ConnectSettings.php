@@ -39,11 +39,19 @@ class ConnectSettings extends \Google\Collection
    */
   public $kind;
   /**
+   * @var bool
+   */
+  public $pscEnabled;
+  /**
    * @var string
    */
   public $region;
   protected $serverCaCertType = SslCert::class;
   protected $serverCaCertDataType = '';
+  /**
+   * @var string
+   */
+  public $serverCaMode;
 
   /**
    * @param string
@@ -116,6 +124,20 @@ class ConnectSettings extends \Google\Collection
     return $this->kind;
   }
   /**
+   * @param bool
+   */
+  public function setPscEnabled($pscEnabled)
+  {
+    $this->pscEnabled = $pscEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getPscEnabled()
+  {
+    return $this->pscEnabled;
+  }
+  /**
    * @param string
    */
   public function setRegion($region)
@@ -142,6 +164,20 @@ class ConnectSettings extends \Google\Collection
   public function getServerCaCert()
   {
     return $this->serverCaCert;
+  }
+  /**
+   * @param string
+   */
+  public function setServerCaMode($serverCaMode)
+  {
+    $this->serverCaMode = $serverCaMode;
+  }
+  /**
+   * @return string
+   */
+  public function getServerCaMode()
+  {
+    return $this->serverCaMode;
   }
 }
 

@@ -7,6 +7,9 @@ use SebaCarrasco93\LaravelPayku\Traits\DatabaseSimulation;
 use SebaCarrasco93\LaravelPayku\Traits\PrepareOrders;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Support\Collection;
+use SebaCarrasco93\LaravelPayku\Exceptions\CantCreateTransactionId;
+use SebaCarrasco93\LaravelPayku\Exceptions\InvalidResponseStatus;
+use SebaCarrasco93\LaravelPayku\Exceptions\MissingEnvKeys;
 
 class LaravelPayku
 {
@@ -50,6 +53,10 @@ class LaravelPayku
         if (config('laravel-payku.base_url')) {
             return config('laravel-payku.base_url');
         }
+
+        if (config('laravel-payku.environment') == 'production') {
+            return self::URL_API_PROD;
+        }
         
         if (config('app.env') == 'production') {
             return self::URL_API_PROD;
@@ -58,7 +65,7 @@ class LaravelPayku
         return self::URL_API_DEV;
     }
 
-    public function findApiKeys()
+    public function findEnvKeys()
     {
         $found = [];
         
@@ -73,17 +80,17 @@ class LaravelPayku
     {
         $count = count($this->minimumApiKeys);
 
-        if (count($this->findApiKeys()) == $count) {
+        if (count($this->findEnvKeys()) == $count) {
             return true;
         }
 
-        throw new \Exception('Please set all PAYKU keys in your .env file.');
+        throw new MissingEnvKeys();
     }
 
-    public function postApi(string $transaction_id, string $subject, int $amountCLP, string $email)
+    public function postApi(string $transaction_id, string $subject, int $amount_clp, string $email)
     {
         $body = $this->client->request('POST', 'transaction', [
-            'json' => $this->prepareOrder($transaction_id, $subject, $amountCLP, $email),
+            'json' => $this->prepareOrder($transaction_id, $subject, $amount_clp, $email),
         ])->getBody();
         
         return json_decode($body, true);
@@ -99,7 +106,7 @@ class LaravelPayku
     public function handleAPIResponse($response)
     {
         if (! in_array($response['status'], $this->allowedTransactionsStatuses)) {
-            throw new \Exception("Invalid response status: " . $response['status']);
+            throw new InvalidResponseStatus($response);
         }
 
         $this->hasValidResponse = true;
@@ -122,23 +129,23 @@ class LaravelPayku
 
         $firstResponse = $response->except('payment', 'gateway_response')->toArray();
 
-        if ($firstResponse['status'] != 'failed') {
-            $transaction = PaykuTransaction::updateOrCreate(['id' => $response['id']], $firstResponse);
+        if ($firstResponse['status'] === 'failed') {
+            throw new CantCreateTransactionId($response);
+        }
 
-            if (isset($response['payment'])) {
-                $payment = collect($response['payment']);
-                if ($payment->count()) {
-                    $transaction->payment()->create($payment->toArray());
-                }
+        $transaction = PaykuTransaction::updateOrCreate(['id' => $response['id']], $firstResponse);
+
+        if (isset($response['payment'])) {
+            $payment = collect($response['payment']);
+            if ($payment->count()) {
+                $transaction->payment()->create($payment->toArray());
             }
-        } else {
-            throw new \Exception("Can't create your transaction with ID ${transaction_id}");
         }
     }
 
-    public function create(string $transaction_id, string $subject, int $amountCLP, string $email)
+    public function create(string $transaction_id, string $subject, int $amount_clp, string $email)
     {
-        $response = $this->postApi($transaction_id, $subject, $amountCLP, $email);
+        $response = $this->postApi($transaction_id, $subject, $amount_clp, $email);
         $database = $this->saveAPIResponse($response, $transaction_id);
 
         return redirect()->away($response['url']);
@@ -155,21 +162,28 @@ class LaravelPayku
 
     public function notify($order)
     {
-        return PaykuTransaction::whereOrder($order)->firstOrFail();
+        return PaykuTransaction::whereOrder($order)
+            ->firstOrFail();
     }
 
     public function findById($id)
     {
-        return PaykuTransaction::whereId($id)->firstOrFail();
+        return PaykuTransaction::whereId($id)
+            ->firstOrFail();
     }
 
-    public function hasStatusSuccess($id)
+    public function hasStatus(string $id, string $status)
     {
-        return $this->findById($id)->status == 'success';
+        return $this->findById($id)->status === $status;
     }
 
-    public function hasStatusPending($id)
+    public function hasStatusSuccess(string $id)
     {
-        return $this->findById($id)->status == 'pending';
+        return $this->hasStatus($id, 'success');
+    }
+
+    public function hasStatusPending(string $id)
+    {
+        return $this->hasStatus($id, 'pending');
     }
 }

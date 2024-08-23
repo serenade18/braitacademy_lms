@@ -173,6 +173,17 @@
                     </form>
 
                     <div class="text-center mt-20">
+                        <span class="badge badge-circle-gray300 text-secondary d-inline-flex align-items-center justify-content-center">{{ trans('auth.or') }}</span>
+                    </div>
+
+                    @if(!empty(getFeaturesSettings('show_google_login_button')))
+                        <a href="/google" target="_blank" class="social-login mt-20 p-10 text-center d-flex align-items-center justify-content-center">
+                            <img src="/assets/default/img/auth/google.svg" class="mr-auto" alt=" google svg"/>
+                            <span class="flex-grow-1">{{ trans('auth.google_login') }}</span>
+                        </a>
+                    @endif
+
+                    <div class="text-center mt-20">
                         <span class="text-secondary">
                             {{ trans('auth.already_have_an_account') }}
                             <a href="/login" class="text-secondary font-weight-bold">{{ trans('auth.login') }}</a>

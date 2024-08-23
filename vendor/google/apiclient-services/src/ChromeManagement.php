@@ -53,7 +53,9 @@ class ChromeManagement extends \Google\Service
   public $customers_reports;
   public $customers_telemetry_devices;
   public $customers_telemetry_events;
+  public $customers_telemetry_notificationConfigs;
   public $customers_telemetry_users;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the ChromeManagement service.
@@ -66,6 +68,7 @@ class ChromeManagement extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://chromemanagement.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://chromemanagement.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
     $this->version = 'v1';
@@ -87,6 +90,58 @@ class ChromeManagement extends \Google\Service
                   'required' => true,
                 ],
                 'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'fetchDevicesRequestingExtension' => [
+              'path' => 'v1/{+customer}/apps:fetchDevicesRequestingExtension',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'extensionId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'fetchUsersRequestingExtension' => [
+              'path' => 'v1/{+customer}/apps:fetchUsersRequestingExtension',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'extensionId' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -181,6 +236,28 @@ class ChromeManagement extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'orgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'countChromeCrashEvents' => [
+              'path' => 'v1/{+customer}/reports:countChromeCrashEvents',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'orgUnitId' => [
                   'location' => 'query',
@@ -297,6 +374,96 @@ class ChromeManagement extends \Google\Service
                   'type' => 'integer',
                 ],
                 'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'countPrintJobsByPrinter' => [
+              'path' => 'v1/{+customer}/reports:countPrintJobsByPrinter',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'printerOrgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'countPrintJobsByUser' => [
+              'path' => 'v1/{+customer}/reports:countPrintJobsByUser',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'printerOrgUnitId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'enumeratePrintJobs' => [
+              'path' => 'v1/{+customer}/reports:enumeratePrintJobs',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'customer' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'filter' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'printerOrgUnitId' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -421,6 +588,54 @@ class ChromeManagement extends \Google\Service
                   'type' => 'string',
                 ],
                 'readMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->customers_telemetry_notificationConfigs = new ChromeManagement\Resource\CustomersTelemetryNotificationConfigs(
+        $this,
+        $this->serviceName,
+        'notificationConfigs',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/telemetry/notificationConfigs',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/telemetry/notificationConfigs',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],

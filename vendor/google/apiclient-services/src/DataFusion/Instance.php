@@ -35,6 +35,10 @@ class Instance extends \Google\Collection
   protected $cryptoKeyConfigType = CryptoKeyConfig::class;
   protected $cryptoKeyConfigDataType = '';
   /**
+   * @var bool
+   */
+  public $dataplexDataLineageIntegrationEnabled;
+  /**
    * @var string
    */
   public $dataprocServiceAccount;
@@ -76,6 +80,8 @@ class Instance extends \Google\Collection
    * @var string[]
    */
   public $labels;
+  protected $maintenancePolicyType = MaintenancePolicy::class;
+  protected $maintenancePolicyDataType = '';
   /**
    * @var string
    */
@@ -90,6 +96,10 @@ class Instance extends \Google\Collection
    * @var string
    */
   public $p4ServiceAccount;
+  /**
+   * @var string
+   */
+  public $patchRevision;
   /**
    * @var bool
    */
@@ -130,6 +140,10 @@ class Instance extends \Google\Collection
    * @var string
    */
   public $version;
+  /**
+   * @var string
+   */
+  public $workforceIdentityServiceEndpoint;
   /**
    * @var string
    */
@@ -204,6 +218,20 @@ class Instance extends \Google\Collection
   public function getCryptoKeyConfig()
   {
     return $this->cryptoKeyConfig;
+  }
+  /**
+   * @param bool
+   */
+  public function setDataplexDataLineageIntegrationEnabled($dataplexDataLineageIntegrationEnabled)
+  {
+    $this->dataplexDataLineageIntegrationEnabled = $dataplexDataLineageIntegrationEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getDataplexDataLineageIntegrationEnabled()
+  {
+    return $this->dataplexDataLineageIntegrationEnabled;
   }
   /**
    * @param string
@@ -360,6 +388,20 @@ class Instance extends \Google\Collection
     return $this->labels;
   }
   /**
+   * @param MaintenancePolicy
+   */
+  public function setMaintenancePolicy(MaintenancePolicy $maintenancePolicy)
+  {
+    $this->maintenancePolicy = $maintenancePolicy;
+  }
+  /**
+   * @return MaintenancePolicy
+   */
+  public function getMaintenancePolicy()
+  {
+    return $this->maintenancePolicy;
+  }
+  /**
    * @param string
    */
   public function setName($name)
@@ -414,6 +456,20 @@ class Instance extends \Google\Collection
   public function getP4ServiceAccount()
   {
     return $this->p4ServiceAccount;
+  }
+  /**
+   * @param string
+   */
+  public function setPatchRevision($patchRevision)
+  {
+    $this->patchRevision = $patchRevision;
+  }
+  /**
+   * @return string
+   */
+  public function getPatchRevision()
+  {
+    return $this->patchRevision;
   }
   /**
    * @param bool
@@ -554,6 +610,20 @@ class Instance extends \Google\Collection
   public function getVersion()
   {
     return $this->version;
+  }
+  /**
+   * @param string
+   */
+  public function setWorkforceIdentityServiceEndpoint($workforceIdentityServiceEndpoint)
+  {
+    $this->workforceIdentityServiceEndpoint = $workforceIdentityServiceEndpoint;
+  }
+  /**
+   * @return string
+   */
+  public function getWorkforceIdentityServiceEndpoint()
+  {
+    return $this->workforceIdentityServiceEndpoint;
   }
   /**
    * @param string

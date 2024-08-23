@@ -23,8 +23,8 @@ trait InitRecordings
         $request = Fluent($parameters);
         $recordings = new GetRecordingsParameters();
 
-        $recordings->setMeetingId(implode(',', (array) $request->get('meetingID')));
-        $recordings->setRecordId(implode(',', (array) $request->get('recordID')));
+        $recordings->setMeetingID(implode(',', (array) $request->get('meetingID')));
+        $recordings->setRecordID(implode(',', (array) $request->get('recordID')));
         $recordings->setState($request->get('state', config('bigbluebutton.getRecordings.state')));
 
         return $recordings;
@@ -40,10 +40,11 @@ trait InitRecordings
     public function initPublishRecordings($parameters)
     {
         $request = Fluent($parameters);
-        $recordings = new PublishRecordingsParameters(null, $request->get('publish', true));
-        $recordings->setRecordingId(implode(',', (array) $request->get('recordID')));
 
-        return $recordings;
+        return new PublishRecordingsParameters(
+            implode(',', (array) $request->get('recordID')),
+            $request->get('publish', true)
+        );
     }
 
     /**

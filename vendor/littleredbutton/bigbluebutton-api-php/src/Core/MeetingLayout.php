@@ -22,10 +22,11 @@ declare(strict_types=1);
 
 namespace BigBlueButton\Core;
 
+/* @deprecated Use \BigBlueButton\Enum\MeetingLayout instead */
 final class MeetingLayout
 {
-    public const CUSTOM_LAYOUT = 'CUSTOM_LAYOUT';
-    public const SMART_LAYOUT = 'SMART_LAYOUT';
-    public const PRESENTATION_FOCUS = 'PRESENTATION_FOCUS';
-    public const VIDEO_FOCUS = 'VIDEO_FOCUS';
+    public const CUSTOM_LAYOUT = \BigBlueButton\Enum\MeetingLayout::CUSTOM_LAYOUT;
+    public const SMART_LAYOUT = \BigBlueButton\Enum\MeetingLayout::SMART_LAYOUT;
+    public const PRESENTATION_FOCUS = \BigBlueButton\Enum\MeetingLayout::PRESENTATION_FOCUS;
+    public const VIDEO_FOCUS = \BigBlueButton\Enum\MeetingLayout::VIDEO_FOCUS;
 }

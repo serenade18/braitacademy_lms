@@ -58,7 +58,7 @@
     "docs": "https://github.com/littleredbutton/bigbluebutton-api-php/blob/master/README.md"
   },
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.4",
     "ext-curl": "*",
     "ext-simplexml": "*",
     "ext-mbstring": "*",
@@ -74,7 +74,7 @@
   "require-dev": {
     "psr/http-client": "^1.0",
     "psr/http-factory": "^1.0",
-    "psr/http-message": "^1.0",
+    "psr/http-message": "^1.0 || ^2.0",
     "symfony/dotenv": "^3.4|^4.0|^5.0",
     "symfony/http-client-contracts": "^1.1|^2.0",
     "symfony/http-client": "^4.4|^5.0",
@@ -102,9 +102,9 @@
     "test-functional": "tools/phpunit --testsuite=\"BigBlueButton functional test suite\" --exclude-group=functional-legacy",
     "cs-fix": "tools/php-cs-fixer fix --allow-risky=yes",
     "cs-test": "tools/php-cs-fixer fix --dry-run --allow-risky=yes",
-    "psalm": "psalm --threads=1",
-    "psalm-clear": "psalm --clear-cache && psalm --clear-global-cache",
-    "psalm-fix": "psalm --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType",
+    "psalm": "tools/psalm --threads=1",
+    "psalm-clear": "tools/psalm --clear-cache && tools/psalm --clear-global-cache",
+    "psalm-fix": "tools/psalm --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType",
     "post-install-cmd": "tools/composer-git-hooks add --ignore-lock",
     "post-update-cmd": "tools/composer-git-hooks update"
   },
@@ -124,12 +124,11 @@
       "brainmaestro/composer-git-hooks": "^2.8",
       "extensions": {
         "phpunit/phpunit": {
-          "fakerphp/faker": "^1.14"
+          "fakerphp/faker": "1.20.*"
         }
       },
       "friendsofphp/php-cs-fixer": "^3.3",
-      "php-coveralls/php-coveralls": "^2.4",
-      "phpunit/phpunit": "^8",
+      "phpunit/phpunit": "^9",
       "vimeo/psalm": "^4.22"
     }
   }

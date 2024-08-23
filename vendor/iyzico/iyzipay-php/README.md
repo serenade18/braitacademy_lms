@@ -7,7 +7,7 @@ You can sign up for an iyzico account at https://iyzico.com
 
 # Requirements
 
-PHP 5.3 and later.
+PHP 5.6 and later.
 
 ### Note
 
@@ -172,8 +172,7 @@ Card Number      | Bank                       | Card Type
 Card Number      | Country
 -----------      | -------
 4054180000000007 | Non-Turkish (Debit)
-5400010000000004 | Non-Turkish (Credit)  
-6221060000000004 | Iran  
+5400010000000004 | Non-Turkish (Credit)   
 
 Test cards to get specific *error* codes:
 
@@ -219,3 +218,4 @@ Or to run an individual test file:
 ```bash
 ./vendor/bin/phpunit tests/Iyzipay/Tests/Model/PaymentTest.php
 ```
+Test file is testing...

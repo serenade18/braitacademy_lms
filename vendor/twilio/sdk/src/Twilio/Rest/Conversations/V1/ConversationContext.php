@@ -92,7 +92,7 @@ class ConversationContext extends InstanceContext
     public function fetch(): ConversationInstance
     {
 
-        $payload = $this->version->fetch('GET', $this->uri);
+        $payload = $this->version->fetch('GET', $this->uri, [], []);
 
         return new ConversationInstance(
             $this->version,
@@ -133,6 +133,10 @@ class ConversationContext extends InstanceContext
                 $options['timersClosed'],
             'UniqueName' =>
                 $options['uniqueName'],
+            'Bindings.Email.Address' =>
+                $options['bindingsEmailAddress'],
+            'Bindings.Email.Name' =>
+                $options['bindingsEmailName'],
         ]);
 
         $headers = Values::of(['X-Twilio-Webhook-Enabled' => $options['xTwilioWebhookEnabled']]);

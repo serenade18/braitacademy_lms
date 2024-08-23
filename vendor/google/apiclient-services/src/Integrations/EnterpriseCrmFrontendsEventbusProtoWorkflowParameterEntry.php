@@ -25,6 +25,10 @@ class EnterpriseCrmFrontendsEventbusProtoWorkflowParameterEntry extends \Google\
   protected $childrenType = EnterpriseCrmFrontendsEventbusProtoWorkflowParameterEntry::class;
   protected $childrenDataType = 'array';
   /**
+   * @var bool
+   */
+  public $containsLargeData;
+  /**
    * @var string
    */
   public $dataType;
@@ -68,6 +72,10 @@ class EnterpriseCrmFrontendsEventbusProtoWorkflowParameterEntry extends \Google\
    * @var string
    */
   public $protoDefPath;
+  /**
+   * @var bool
+   */
+  public $required;
 
   /**
    * @param EnterpriseCrmEventbusProtoAttributes
@@ -96,6 +104,20 @@ class EnterpriseCrmFrontendsEventbusProtoWorkflowParameterEntry extends \Google\
   public function getChildren()
   {
     return $this->children;
+  }
+  /**
+   * @param bool
+   */
+  public function setContainsLargeData($containsLargeData)
+  {
+    $this->containsLargeData = $containsLargeData;
+  }
+  /**
+   * @return bool
+   */
+  public function getContainsLargeData()
+  {
+    return $this->containsLargeData;
   }
   /**
    * @param string
@@ -264,6 +286,20 @@ class EnterpriseCrmFrontendsEventbusProtoWorkflowParameterEntry extends \Google\
   public function getProtoDefPath()
   {
     return $this->protoDefPath;
+  }
+  /**
+   * @param bool
+   */
+  public function setRequired($required)
+  {
+    $this->required = $required;
+  }
+  /**
+   * @return bool
+   */
+  public function getRequired()
+  {
+    return $this->required;
   }
 }
 

@@ -48,6 +48,12 @@ class Instance extends \Google\Collection
   public $name;
   protected $networksType = NetworkConfig::class;
   protected $networksDataType = 'array';
+  protected $replicationType = Replication::class;
+  protected $replicationDataType = '';
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
   /**
    * @var bool
    */
@@ -64,6 +70,10 @@ class Instance extends \Google\Collection
    * @var string[]
    */
   public $suspensionReasons;
+  /**
+   * @var string[]
+   */
+  public $tags;
   /**
    * @var string
    */
@@ -182,6 +192,34 @@ class Instance extends \Google\Collection
     return $this->networks;
   }
   /**
+   * @param Replication
+   */
+  public function setReplication(Replication $replication)
+  {
+    $this->replication = $replication;
+  }
+  /**
+   * @return Replication
+   */
+  public function getReplication()
+  {
+    return $this->replication;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
    * @param bool
    */
   public function setSatisfiesPzs($satisfiesPzs)
@@ -236,6 +274,20 @@ class Instance extends \Google\Collection
   public function getSuspensionReasons()
   {
     return $this->suspensionReasons;
+  }
+  /**
+   * @param string[]
+   */
+  public function setTags($tags)
+  {
+    $this->tags = $tags;
+  }
+  /**
+   * @return string[]
+   */
+  public function getTags()
+  {
+    return $this->tags;
   }
   /**
    * @param string

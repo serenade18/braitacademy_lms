@@ -48,6 +48,8 @@ class AnalyticsData extends \Google\Service
       "https://www.googleapis.com/auth/analytics.readonly";
 
   public $properties;
+  public $properties_audienceExports;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the AnalyticsData service.
@@ -60,6 +62,7 @@ class AnalyticsData extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://analyticsdata.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://analyticsdata.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
     $this->version = 'v1beta';
@@ -136,6 +139,64 @@ class AnalyticsData extends \Google\Service
               'httpMethod' => 'POST',
               'parameters' => [
                 'property' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->properties_audienceExports = new AnalyticsData\Resource\PropertiesAudienceExports(
+        $this,
+        $this->serviceName,
+        'audienceExports',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1beta/{+parent}/audienceExports',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1beta/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1beta/{+parent}/audienceExports',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'query' => [
+              'path' => 'v1beta/{+name}:query',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,

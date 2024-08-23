@@ -19,6 +19,8 @@
 
 namespace BigBlueButton\Parameters;
 
+use BigBlueButton\Enum\Role;
+
 /**
  * Class JoinMeetingParametersTest.
  *
@@ -26,24 +28,20 @@ namespace BigBlueButton\Parameters;
  * @method $this     setFullName(string $fullName)
  * @method string    getMeetingID()
  * @method $this     setMeetingID(string $id)
- * @method string    getPassword()
- * @method $this     setPassword(string $password)
  * @method string    getCreateTime()
  * @method $this     setCreateTime(string $createTime)
  * @method string    getUserID()
  * @method $this     setUserID(string $userID)
  * @method string    getWebVoiceConf()
  * @method $this     setWebVoiceConf(string $webVoiceConf)
- * @method string    getConfigToken()
- * @method $this     setConfigToken(string $configToken)
  * @method string    getDefaultLayout()
  * @method $this     setDefaultLayout(string $defaultLayout)
  * @method string    getAvatarURL()
  * @method $this     setAvatarURL(string $avatarURL)
  * @method bool|null isRedirect()
  * @method $this     setRedirect(bool $redirect)
- * @method string    getClientURL()
- * @method $this     setClientURL(string $clientURL)
+ * @method string    getErrorRedirectUrl()
+ * @method $this     setErrorRedirectUrl(string $errorRedirectUrl)
  * @method bool|null isGuest()
  * @method $this     setGuest(bool $guest)
  * @method string    getRole()
@@ -53,8 +51,11 @@ namespace BigBlueButton\Parameters;
  */
 class JoinMeetingParameters extends UserDataParameters
 {
-    public const MODERATOR = 'MODERATOR';
-    public const VIEWER = 'VIEWER';
+    /* @deprecated and will be removed in 6.0. Use BigBlueButton\Enum\Role::MODERATOR instead */
+    public const MODERATOR = Role::MODERATOR;
+
+    /* @deprecated and will be removed in 6.0. Use BigBlueButton\Enum\Role::VIEWER instead */
+    public const VIEWER = Role::VIEWER;
 
     /**
      * @var string
@@ -67,7 +68,7 @@ class JoinMeetingParameters extends UserDataParameters
     protected $meetingID;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $password;
 
@@ -109,12 +110,12 @@ class JoinMeetingParameters extends UserDataParameters
     /**
      * @var string
      */
-    protected $clientURL;
+    protected $errorRedirectUrl;
 
     /**
-     * @var bool
+     * @var string
      */
-    protected $joinViaHtml5;
+    protected $clientURL;
 
     /**
      * @var bool
@@ -131,133 +132,83 @@ class JoinMeetingParameters extends UserDataParameters
      */
     protected $excludeFromDashboard;
 
-    /**
-     * JoinMeetingParametersTest constructor.
-     *
-     * @param string $meetingId
-     */
-    public function __construct(string $meetingID, string $fullName, string $password)
+    public function __construct(string $meetingID, string $fullName, $passwordOrRole)
     {
+        if (!$passwordOrRole instanceof Role) {
+            @trigger_error(sprintf('Passing a password as the third parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Pass the role for the joining user instead.', self::class, self::class), \E_USER_DEPRECATED);
+        }
+
         $this->meetingID = $meetingID;
         $this->fullName = $fullName;
-        $this->password = $password;
+
+        if (Role::MODERATOR === $passwordOrRole || Role::VIEWER === $passwordOrRole) {
+            $this->role = $passwordOrRole;
+        } else {
+            $this->password = $passwordOrRole;
+        }
     }
 
     /**
-     * @deprecated use getMeetingID()
-     *
-     * @return string
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
      */
-    public function getMeetingId()
+    public function getPassword(): string
     {
-        return $this->meetingID;
+        if (null === $this->password) {
+            throw new \RuntimeException(sprintf('Password was not passed to "%s".', self::class));
+        }
+
+        return $this->password;
     }
 
     /**
-     * @deprecated use setMeetingID()
-     *
-     * @return JoinMeetingParameters
-     */
-    public function setMeetingId(string $meetingID)
-    {
-        $this->meetingID = $meetingID;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated use getCreateTime()
-     *
-     * @return int
-     */
-    public function getCreationTime()
-    {
-        return $this->createTime;
-    }
-
-    /**
-     * @deprecated use setCreateTime()
-     *
-     * @return JoinMeetingParameters
-     */
-    public function setCreationTime(int $createTime)
-    {
-        $this->createTime = $createTime;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated use getFullName()
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->fullName;
-    }
-
-    /**
-     * @deprecated use setFullName()
-     *
-     * @return JoinMeetingParameters
-     */
-    public function setUsername(string $fullName)
-    {
-        $this->fullName = $fullName;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated use getUserID()
-     *
-     * @return string
-     */
-    public function getUserId()
-    {
-        return $this->userID;
-    }
-
-    /**
-     * @deprecated use setUserID()
-     *
-     * @return JoinMeetingParameters
-     */
-    public function setUserId(string $userID)
-    {
-        $this->userID = $userID;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
      *
      * @return $this
      */
-    public function setJoinViaHtml5(bool $joinViaHtml5): self
+    public function setPassword(string $password): self
     {
-        @trigger_error(
-            sprintf('Using "%s()" is deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.', __METHOD__),
-            \E_USER_DEPRECATED
-        );
-
-        $this->joinViaHtml5 = $joinViaHtml5;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * @deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.
+     * @deprecated since 5.1 and will be removed in 6.0. Old BigBlueButton flash client parameter.
      */
-    public function isJoinViaHtml5(): bool
+    public function getConfigToken(): ?string
     {
-        @trigger_error(
-            sprintf('Using "%s()" is deprecated since version 4.3 and will be removed in version 5.0. The API parameter was removed from BigBlueButton and has no effect anymore.', __METHOD__),
-            \E_USER_DEPRECATED
-        );
+        return $this->configToken;
+    }
 
-        return $this->joinViaHtml5;
+    /**
+     * @deprecated since 5.1 and will be removed in 6.0. Old BigBlueButton flash client parameter.
+     *
+     * @return $this
+     */
+    public function setConfigToken(string $configToken): self
+    {
+        $this->configToken = $configToken;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated and will be removed in 6.0. Old BigBlueButton flash client parameter.
+     */
+    public function getClientURL(): ?string
+    {
+        return $this->clientURL;
+    }
+
+    /**
+     * @deprecated and will be removed in 6.0. Old BigBlueButton flash client parameter.
+     *
+     * @return $this
+     */
+    public function setClientURL(string $clientURL): self
+    {
+        $this->clientURL = $clientURL;
+
+        return $this;
     }
 }

@@ -17,7 +17,6 @@
 
 namespace Google\Service\CCAIPlatform\Resource;
 
-use Google\Service\CCAIPlatform\AuthenticationConfig;
 use Google\Service\CCAIPlatform\ContactCenter;
 use Google\Service\CCAIPlatform\ListContactCentersResponse;
 use Google\Service\CCAIPlatform\Operation;
@@ -55,6 +54,7 @@ class ProjectsLocationsContactCenters extends \Google\Service\Resource
    * be a valid UUID with the exception that zero UUID is not supported
    * (00000000-0000-0000-0000-000000000000).
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function create($parent, ContactCenter $postBody, $optParams = [])
   {
@@ -80,6 +80,7 @@ class ProjectsLocationsContactCenters extends \Google\Service\Resource
    * be a valid UUID with the exception that zero UUID is not supported
    * (00000000-0000-0000-0000-000000000000).
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function delete($name, $optParams = [])
   {
@@ -93,27 +94,13 @@ class ProjectsLocationsContactCenters extends \Google\Service\Resource
    * @param string $name Required. Name of the resource
    * @param array $optParams Optional parameters.
    * @return ContactCenter
+   * @throws \Google\Service\Exception
    */
   public function get($name, $optParams = [])
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
     return $this->call('get', [$params], ContactCenter::class);
-  }
-  /**
-   * (contactCenters.getAuthenticationConfig)
-   *
-   * @param string $name Required. The name of the AuthenticationConfig resource.
-   * Format: projects/{project}/locations/{location}/contactCenters/{contact_cente
-   * r}/authentication-config
-   * @param array $optParams Optional parameters.
-   * @return AuthenticationConfig
-   */
-  public function getAuthenticationConfig($name, $optParams = [])
-  {
-    $params = ['name' => $name];
-    $params = array_merge($params, $optParams);
-    return $this->call('getAuthentication-config', [$params], AuthenticationConfig::class);
   }
   /**
    * Lists ContactCenters in a given project and location.
@@ -129,6 +116,7 @@ class ProjectsLocationsContactCenters extends \Google\Service\Resource
    * @opt_param string pageToken A token identifying a page of results the server
    * should return.
    * @return ListContactCentersResponse
+   * @throws \Google\Service\Exception
    */
   public function listProjectsLocationsContactCenters($parent, $optParams = [])
   {
@@ -160,30 +148,13 @@ class ProjectsLocationsContactCenters extends \Google\Service\Resource
    * full request. A field will be overwritten if it is in the mask. If the user
    * does not provide a mask then all fields will be overwritten.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function patch($name, ContactCenter $postBody, $optParams = [])
   {
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('patch', [$params], Operation::class);
-  }
-  /**
-   * (contactCenters.updateAuthenticationConfig)
-   *
-   * @param string $name Name of authentication config. Format: projects/{project}
-   * /locations/{location}/contactCenters/{contact_center}/authentication-config
-   * @param AuthenticationConfig $postBody
-   * @param array $optParams Optional parameters.
-   *
-   * @opt_param string updateMask Required. Indicates which fields in the provided
-   * authentication config to update. Must be specified and non-empty.
-   * @return AuthenticationConfig
-   */
-  public function updateAuthenticationConfig($name, AuthenticationConfig $postBody, $optParams = [])
-  {
-    $params = ['name' => $name, 'postBody' => $postBody];
-    $params = array_merge($params, $optParams);
-    return $this->call('updateAuthentication-config', [$params], AuthenticationConfig::class);
   }
 }
 

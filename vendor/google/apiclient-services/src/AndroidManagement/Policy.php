@@ -91,6 +91,10 @@ class Policy extends \Google\Collection
    */
   public $createWindowsDisabled;
   /**
+   * @var string
+   */
+  public $credentialProviderPolicyDefault;
+  /**
    * @var bool
    */
   public $credentialsConfigDisabled;
@@ -114,6 +118,8 @@ class Policy extends \Google\Collection
   protected $deviceOwnerLockScreenInfoDataType = '';
   protected $deviceRadioStateType = DeviceRadioState::class;
   protected $deviceRadioStateDataType = '';
+  protected $displaySettingsType = DisplaySettings::class;
+  protected $displaySettingsDataType = '';
   /**
    * @var string
    */
@@ -236,6 +242,10 @@ class Policy extends \Google\Collection
    * @var string
    */
   public $preferentialNetworkService;
+  /**
+   * @var string
+   */
+  public $printingPolicy;
   /**
    * @var bool
    */
@@ -610,6 +620,20 @@ class Policy extends \Google\Collection
     return $this->createWindowsDisabled;
   }
   /**
+   * @param string
+   */
+  public function setCredentialProviderPolicyDefault($credentialProviderPolicyDefault)
+  {
+    $this->credentialProviderPolicyDefault = $credentialProviderPolicyDefault;
+  }
+  /**
+   * @return string
+   */
+  public function getCredentialProviderPolicyDefault()
+  {
+    return $this->credentialProviderPolicyDefault;
+  }
+  /**
    * @param bool
    */
   public function setCredentialsConfigDisabled($credentialsConfigDisabled)
@@ -720,6 +744,20 @@ class Policy extends \Google\Collection
   public function getDeviceRadioState()
   {
     return $this->deviceRadioState;
+  }
+  /**
+   * @param DisplaySettings
+   */
+  public function setDisplaySettings(DisplaySettings $displaySettings)
+  {
+    $this->displaySettings = $displaySettings;
+  }
+  /**
+   * @return DisplaySettings
+   */
+  public function getDisplaySettings()
+  {
+    return $this->displaySettings;
   }
   /**
    * @param string
@@ -1224,6 +1262,20 @@ class Policy extends \Google\Collection
   public function getPreferentialNetworkService()
   {
     return $this->preferentialNetworkService;
+  }
+  /**
+   * @param string
+   */
+  public function setPrintingPolicy($printingPolicy)
+  {
+    $this->printingPolicy = $printingPolicy;
+  }
+  /**
+   * @return string
+   */
+  public function getPrintingPolicy()
+  {
+    return $this->printingPolicy;
   }
   /**
    * @param bool

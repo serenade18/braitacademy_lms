@@ -17,6 +17,7 @@
 
 namespace Google\Service\DatabaseMigrationService\Resource;
 
+use Google\Service\DatabaseMigrationService\DemoteDestinationRequest;
 use Google\Service\DatabaseMigrationService\GenerateSshScriptRequest;
 use Google\Service\DatabaseMigrationService\GenerateTcpProxyScriptRequest;
 use Google\Service\DatabaseMigrationService\ListMigrationJobsResponse;
@@ -61,6 +62,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * UUID. The ID must contain only letters (a-z, A-Z), numbers (0-9), underscores
    * (_), and hyphens (-). The maximum length is 40 characters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function create($parent, MigrationJob $postBody, $optParams = [])
   {
@@ -83,12 +85,32 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens
    * (-). The maximum length is 40 characters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function delete($name, $optParams = [])
   {
     $params = ['name' => $name];
     $params = array_merge($params, $optParams);
     return $this->call('delete', [$params], Operation::class);
+  }
+  /**
+   * Demotes the destination database to become a read replica of the source. This
+   * is applicable for the following migrations: 1. MySQL to Cloud SQL for MySQL
+   * 2. PostgreSQL to Cloud SQL for PostgreSQL 3. PostgreSQL to AlloyDB for
+   * PostgreSQL. (migrationJobs.demoteDestination)
+   *
+   * @param string $name Name of the migration job resource to demote its
+   * destination.
+   * @param DemoteDestinationRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   * @throws \Google\Service\Exception
+   */
+  public function demoteDestination($name, DemoteDestinationRequest $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('demoteDestination', [$params], Operation::class);
   }
   /**
    * Generate a SSH configuration script to configure the reverse SSH
@@ -99,6 +121,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param GenerateSshScriptRequest $postBody
    * @param array $optParams Optional parameters.
    * @return SshScript
+   * @throws \Google\Service\Exception
    */
   public function generateSshScript($migrationJob, GenerateSshScriptRequest $postBody, $optParams = [])
   {
@@ -115,6 +138,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param GenerateTcpProxyScriptRequest $postBody
    * @param array $optParams Optional parameters.
    * @return TcpProxyScript
+   * @throws \Google\Service\Exception
    */
   public function generateTcpProxyScript($migrationJob, GenerateTcpProxyScriptRequest $postBody, $optParams = [])
   {
@@ -128,6 +152,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param string $name Required. Name of the migration job resource to get.
    * @param array $optParams Optional parameters.
    * @return MigrationJob
+   * @throws \Google\Service\Exception
    */
   public function get($name, $optParams = [])
   {
@@ -158,6 +183,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * documentation](https://cloud.google.com/iam/help/conditions/resource-
    * policies).
    * @return Policy
+   * @throws \Google\Service\Exception
    */
   public function getIamPolicy($resource, $optParams = [])
   {
@@ -194,6 +220,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * paginating, all other parameters provided to migrationJobs.list must match
    * the call that provided the page token.
    * @return ListMigrationJobsResponse
+   * @throws \Google\Service\Exception
    */
   public function listProjectsLocationsMigrationJobs($parent, $optParams = [])
   {
@@ -218,6 +245,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @opt_param string updateMask Required. Field mask is used to specify the
    * fields to be overwritten by the update in the conversion workspace resource.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function patch($name, MigrationJob $postBody, $optParams = [])
   {
@@ -234,6 +262,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param PromoteMigrationJobRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function promote($name, PromoteMigrationJobRequest $postBody, $optParams = [])
   {
@@ -250,6 +279,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param RestartMigrationJobRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function restart($name, RestartMigrationJobRequest $postBody, $optParams = [])
   {
@@ -265,6 +295,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param ResumeMigrationJobRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function resume($name, ResumeMigrationJobRequest $postBody, $optParams = [])
   {
@@ -284,6 +315,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param SetIamPolicyRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Policy
+   * @throws \Google\Service\Exception
    */
   public function setIamPolicy($resource, SetIamPolicyRequest $postBody, $optParams = [])
   {
@@ -298,6 +330,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param StartMigrationJobRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function start($name, StartMigrationJobRequest $postBody, $optParams = [])
   {
@@ -312,6 +345,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param StopMigrationJobRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function stop($name, StopMigrationJobRequest $postBody, $optParams = [])
   {
@@ -334,6 +368,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param TestIamPermissionsRequest $postBody
    * @param array $optParams Optional parameters.
    * @return TestIamPermissionsResponse
+   * @throws \Google\Service\Exception
    */
   public function testIamPermissions($resource, TestIamPermissionsRequest $postBody, $optParams = [])
   {
@@ -349,6 +384,7 @@ class ProjectsLocationsMigrationJobs extends \Google\Service\Resource
    * @param VerifyMigrationJobRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function verify($name, VerifyMigrationJobRequest $postBody, $optParams = [])
   {

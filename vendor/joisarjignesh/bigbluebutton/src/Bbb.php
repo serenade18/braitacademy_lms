@@ -13,11 +13,8 @@ use BigBlueButton\Parameters\HooksDestroyParameters;
 use BigBlueButton\Parameters\IsMeetingRunningParameters;
 use BigBlueButton\Parameters\JoinMeetingParameters;
 use BigBlueButton\Parameters\PublishRecordingsParameters;
-use BigBlueButton\Parameters\SetConfigXMLParameters;
 use BigBlueButton\Parameters\UpdateRecordingsParameters;
 use JoisarJignesh\Bigbluebutton\Bigbluebutton as BigBlueButtonServer;
-use JoisarJignesh\Bigbluebutton\Services\InitConfigXml;
-use JoisarJignesh\Bigbluebutton\Services\InitExtra;
 use JoisarJignesh\Bigbluebutton\Services\InitHooks;
 use JoisarJignesh\Bigbluebutton\Services\InitMeeting;
 use JoisarJignesh\Bigbluebutton\Services\InitRecordings;
@@ -50,7 +47,7 @@ class Bbb
     /**
      * for specific server instance.
      *
-     * @param $serverName
+     * @param  $serverName
      * @return Bbb
      *
      * @throws \Exception
@@ -120,7 +117,7 @@ class Bbb
     /**
      * $meeting.
      *
-     * @param $meeting
+     * @param  $meeting
      *
      * required fields
      * meetingID
@@ -142,7 +139,7 @@ class Bbb
     }
 
     /**
-     * @param $meeting
+     * @param  $meeting
      *
      * required fields:
      * meetingID
@@ -168,8 +165,8 @@ class Bbb
     /**
      *  Join meeting.
      *
-     * @param $meeting
-     * required fields
+     * @param  $meeting
+     *                   required fields
      *
      *  meetingID
      *  userName join by name
@@ -192,10 +189,10 @@ class Bbb
     /**
      *  Returns information about the meeting.
      *
-     * @param $meeting
-     * required fields
-     * meetingID
-     * moderatorPW must be there moderator password
+     * @param  $meeting
+     *                   required fields
+     *                   meetingID
+     *                   moderatorPW must be there moderator password
      * @return \Illuminate\Support\Collection
      */
     public function getMeetingInfo($meeting)
@@ -213,9 +210,9 @@ class Bbb
     }
 
     /**
-     * @param $parameters
+     * @param  $parameters
      *
-     *  required fields
+     * required fields
      * meetingID
      * meetingName
      * userName
@@ -252,9 +249,9 @@ class Bbb
     }
 
     /**
-     * @param $recording
-     * required fields
-     * meetingID
+     * @param  $recording
+     *                     required fields
+     *                     meetingID
      *
      * optional fields
      * recordID
@@ -281,9 +278,9 @@ class Bbb
     }
 
     /**
-     * @param $recording
-     * recordID as string(separated by comma)
-     * publish as bool
+     * @param  $recording
+     *                     recordID as string(separated by comma)
+     *                     publish as bool
      * @return bool
      */
     public function publishRecordings($recording)
@@ -304,7 +301,7 @@ class Bbb
     }
 
     /**
-     * @param $recording
+     * @param  $recording
      *
      * required fields
      * recordingID
@@ -322,7 +319,7 @@ class Bbb
     }
 
     /**
-     * @param $recording
+     * @param  $recording
      *
      * required fields
      * recordingID
@@ -350,7 +347,7 @@ class Bbb
     }
 
     /**
-     * @param $hooks
+     * @param  $hooks
      * @return \Illuminate\Support\Collection
      */
     public function hooksCreate($hooks)
@@ -365,7 +362,7 @@ class Bbb
     }
 
     /**
-     * @param $hooks
+     * @param  $hooks
      * @return \Illuminate\Support\Collection
      */
     public function hooksDestroy($hooks)

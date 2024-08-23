@@ -26,6 +26,8 @@ class GeneratedApksPerSigningKey extends \Google\Collection
   public $certificateSha256Hash;
   protected $generatedAssetPackSlicesType = GeneratedAssetPackSlice::class;
   protected $generatedAssetPackSlicesDataType = 'array';
+  protected $generatedRecoveryModulesType = GeneratedRecoveryApk::class;
+  protected $generatedRecoveryModulesDataType = 'array';
   protected $generatedSplitApksType = GeneratedSplitApk::class;
   protected $generatedSplitApksDataType = 'array';
   protected $generatedStandaloneApksType = GeneratedStandaloneApk::class;
@@ -62,6 +64,20 @@ class GeneratedApksPerSigningKey extends \Google\Collection
   public function getGeneratedAssetPackSlices()
   {
     return $this->generatedAssetPackSlices;
+  }
+  /**
+   * @param GeneratedRecoveryApk[]
+   */
+  public function setGeneratedRecoveryModules($generatedRecoveryModules)
+  {
+    $this->generatedRecoveryModules = $generatedRecoveryModules;
+  }
+  /**
+   * @return GeneratedRecoveryApk[]
+   */
+  public function getGeneratedRecoveryModules()
+  {
+    return $this->generatedRecoveryModules;
   }
   /**
    * @param GeneratedSplitApk[]

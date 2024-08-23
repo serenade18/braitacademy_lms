@@ -511,20 +511,33 @@ class Tpv
     }
 
     /**
-     * Return path Javascript to Insite
+     * Returns the path to the Redsys JavaScript file for the specified environment and version.
      *
-     * @param string $env test or live
-     * @return string string path javascript
+     * @param string $environment Environment: test or live.
+     * @param string $version JavaScript file version: 2 or 3.
+     * @return string JavaScript file path.
      */
-    public static function getJsPath($environment = 'test'){
-        if($environment == 'test'){
-            return 'https://sis-t.redsys.es:25443/sis/NC/sandbox/redsysV2.js';
+    public static function getJsPath($environment = 'test', $version = '2'){
+
+        // Stores the array of JavaScript file paths.
+        static $jsPaths = [
+            'test' => [
+                '2' => 'https://sis-t.redsys.es:25443/sis/NC/sandbox/redsysV2.js',
+                '3' => 'https://sis-t.redsys.es:25443/sis/NC/sandbox/redsysV3.js',
+            ],
+            'live' => [
+                '2' => 'https://sis.redsys.es/sis/NC/redsysV2.js',
+                '3' => 'https://sis.redsys.es/sis/NC/redsysV3.js',
+            ],
+        ];
+
+        // Checks if the environment and version are valid.
+        if (!isset($jsPaths[$environment][$version])) {
+            throw new TpvException('Invalid environment or version');
         }
-        elseif($environment == 'live'){
-            return 'https://sis.redsys.es/sis/NC/redsysV2.js';
-        }else{
-            throw new TpvException('Add test or live');
-        }
+
+        // Returns the JavaScript file path.
+        return $jsPaths[$environment][$version];
     }
 
     /**
@@ -607,16 +620,28 @@ class Tpv
     /**
      * Payment type
      *
-     * @param string $method [T o C = Sólo Tarjeta (mostrará sólo el formulario para datos de tarjeta)
-     *                       R = Pago por Transferencia, D = Domiciliación]
+     * @param string $method
+     * [
+     *      T o C = Sólo Tarjeta (mostrará sólo el formulario para datos de tarjeta)
+     *      R = Pago por Transferencia,
+     *      D = Domiciliación
+     *      z = Bizum
+     *      p = PayPal
+     *      N = Masterpass
+     *      xpay = GooglePay y ApplePay
+     * ]
      *
      * @return $this
      * @throws Exception
      */
-    public function setMethod($method = 'T')
+    public function setMethod($method = 'C')
     {
         if ($this->isEmpty($method)) {
             throw new TpvException('Add pay method');
+        }
+
+        if (!in_array($method, ['T', 'C', 'R', 'D', 'z', 'p', 'N', 'xpay'])) {
+            throw new TpvException('Pay method is not valid');
         }
 
         $this->_setParameters['DS_MERCHANT_PAYMETHODS'] = trim($method);
@@ -864,7 +889,7 @@ class Tpv
         $signatureReceived = $postData["Ds_Signature"];
         $signature = $this->generateMerchantSignatureNotification($key, $parameters);
 
-        return ($signature === $signatureReceived);
+        return hash_equals($signature, $signatureReceived);
     }
 
     /**

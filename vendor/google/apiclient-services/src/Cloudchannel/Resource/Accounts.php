@@ -55,6 +55,7 @@ class Accounts extends \Google\Service\Resource
    * @param GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse
+   * @throws \Google\Service\Exception
    */
   public function checkCloudIdentityAccountsExist($parent, GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest $postBody, $optParams = [])
   {
@@ -74,9 +75,10 @@ class Accounts extends \Google\Service\Resource
    * backend. Contact Cloud Channel support. Return value: A list of service email
    * addresses. (accounts.listSubscribers)
    *
-   * @param string $account Required. Resource name of the account.
+   * @param string $account Optional. Resource name of the account.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string integrator Optional. Resource name of the integrator.
    * @opt_param int pageSize Optional. The maximum number of service accounts to
    * return. The service may return fewer than this value. If unspecified, returns
    * at most 100 service accounts. The maximum value is 1000; the server will
@@ -86,6 +88,7 @@ class Accounts extends \Google\Service\Resource
    * paginating, all other parameters provided to `ListSubscribers` must match the
    * call that provided the page token.
    * @return GoogleCloudChannelV1ListSubscribersResponse
+   * @throws \Google\Service\Exception
    */
   public function listSubscribers($account, $optParams = [])
   {
@@ -101,14 +104,18 @@ class Accounts extends \Google\Service\Resource
    * PERMISSION_DENIED: * The customer doesn't belong to the reseller and has no
    * auth token. * The customer provided incorrect reseller information when
    * generating auth token. * The reseller account making the request is different
-   * from the reseller account in the query. * INVALID_ARGUMENT: Required request
-   * parameters are missing or invalid. Return value: List of TransferableOffer
-   * for the given customer and SKU. (accounts.listTransferableOffers)
+   * from the reseller account in the query. * The reseller is not authorized to
+   * transact on this Product. See
+   * https://support.google.com/channelservices/answer/9759265 * INVALID_ARGUMENT:
+   * Required request parameters are missing or invalid. Return value: List of
+   * TransferableOffer for the given customer and SKU.
+   * (accounts.listTransferableOffers)
    *
    * @param string $parent Required. The resource name of the reseller's account.
    * @param GoogleCloudChannelV1ListTransferableOffersRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleCloudChannelV1ListTransferableOffersResponse
+   * @throws \Google\Service\Exception
    */
   public function listTransferableOffers($parent, GoogleCloudChannelV1ListTransferableOffersRequest $postBody, $optParams = [])
   {
@@ -132,6 +139,7 @@ class Accounts extends \Google\Service\Resource
    * @param GoogleCloudChannelV1ListTransferableSkusRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleCloudChannelV1ListTransferableSkusResponse
+   * @throws \Google\Service\Exception
    */
   public function listTransferableSkus($parent, GoogleCloudChannelV1ListTransferableSkusRequest $postBody, $optParams = [])
   {
@@ -152,10 +160,11 @@ class Accounts extends \Google\Service\Resource
    * value: The topic name with the registered service email address.
    * (accounts.register)
    *
-   * @param string $account Required. Resource name of the account.
+   * @param string $account Optional. Resource name of the account.
    * @param GoogleCloudChannelV1RegisterSubscriberRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleCloudChannelV1RegisterSubscriberResponse
+   * @throws \Google\Service\Exception
    */
   public function register($account, GoogleCloudChannelV1RegisterSubscriberRequest $postBody, $optParams = [])
   {
@@ -178,10 +187,11 @@ class Accounts extends \Google\Service\Resource
    * unregistered the service email address. Returns a success response if the
    * service email address wasn't registered with the topic. (accounts.unregister)
    *
-   * @param string $account Required. Resource name of the account.
+   * @param string $account Optional. Resource name of the account.
    * @param GoogleCloudChannelV1UnregisterSubscriberRequest $postBody
    * @param array $optParams Optional parameters.
    * @return GoogleCloudChannelV1UnregisterSubscriberResponse
+   * @throws \Google\Service\Exception
    */
   public function unregister($account, GoogleCloudChannelV1UnregisterSubscriberRequest $postBody, $optParams = [])
   {

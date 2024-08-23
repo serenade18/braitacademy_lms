@@ -28,7 +28,15 @@ class AwsS3Data extends \Google\Model
   /**
    * @var string
    */
+  public $cloudfrontDomain;
+  /**
+   * @var string
+   */
   public $credentialsSecret;
+  /**
+   * @var bool
+   */
+  public $managedPrivateNetwork;
   /**
    * @var string
    */
@@ -69,6 +77,20 @@ class AwsS3Data extends \Google\Model
   /**
    * @param string
    */
+  public function setCloudfrontDomain($cloudfrontDomain)
+  {
+    $this->cloudfrontDomain = $cloudfrontDomain;
+  }
+  /**
+   * @return string
+   */
+  public function getCloudfrontDomain()
+  {
+    return $this->cloudfrontDomain;
+  }
+  /**
+   * @param string
+   */
   public function setCredentialsSecret($credentialsSecret)
   {
     $this->credentialsSecret = $credentialsSecret;
@@ -79,6 +101,20 @@ class AwsS3Data extends \Google\Model
   public function getCredentialsSecret()
   {
     return $this->credentialsSecret;
+  }
+  /**
+   * @param bool
+   */
+  public function setManagedPrivateNetwork($managedPrivateNetwork)
+  {
+    $this->managedPrivateNetwork = $managedPrivateNetwork;
+  }
+  /**
+   * @return bool
+   */
+  public function getManagedPrivateNetwork()
+  {
+    return $this->managedPrivateNetwork;
   }
   /**
    * @param string

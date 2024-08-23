@@ -35,6 +35,10 @@ class GoogleCloudRecaptchaenterpriseV1Event extends \Google\Collection
   /**
    * @var string
    */
+  public $fraudPrevention;
+  /**
+   * @var string
+   */
   public $hashedAccountId;
   /**
    * @var string[]
@@ -62,6 +66,8 @@ class GoogleCloudRecaptchaenterpriseV1Event extends \Google\Collection
    * @var string
    */
   public $userAgent;
+  protected $userInfoType = GoogleCloudRecaptchaenterpriseV1UserInfo::class;
+  protected $userInfoDataType = '';
   /**
    * @var string
    */
@@ -112,6 +118,20 @@ class GoogleCloudRecaptchaenterpriseV1Event extends \Google\Collection
   public function getFirewallPolicyEvaluation()
   {
     return $this->firewallPolicyEvaluation;
+  }
+  /**
+   * @param string
+   */
+  public function setFraudPrevention($fraudPrevention)
+  {
+    $this->fraudPrevention = $fraudPrevention;
+  }
+  /**
+   * @return string
+   */
+  public function getFraudPrevention()
+  {
+    return $this->fraudPrevention;
   }
   /**
    * @param string
@@ -224,6 +244,20 @@ class GoogleCloudRecaptchaenterpriseV1Event extends \Google\Collection
   public function getUserAgent()
   {
     return $this->userAgent;
+  }
+  /**
+   * @param GoogleCloudRecaptchaenterpriseV1UserInfo
+   */
+  public function setUserInfo(GoogleCloudRecaptchaenterpriseV1UserInfo $userInfo)
+  {
+    $this->userInfo = $userInfo;
+  }
+  /**
+   * @return GoogleCloudRecaptchaenterpriseV1UserInfo
+   */
+  public function getUserInfo()
+  {
+    return $this->userInfo;
   }
   /**
    * @param string

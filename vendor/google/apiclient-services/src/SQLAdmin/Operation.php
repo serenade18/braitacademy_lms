@@ -19,6 +19,10 @@ namespace Google\Service\SQLAdmin;
 
 class Operation extends \Google\Model
 {
+  protected $acquireSsrsLeaseContextType = AcquireSsrsLeaseContext::class;
+  protected $acquireSsrsLeaseContextDataType = '';
+  protected $apiWarningType = ApiWarning::class;
+  protected $apiWarningDataType = '';
   protected $backupContextType = BackupContext::class;
   protected $backupContextDataType = '';
   /**
@@ -76,6 +80,34 @@ class Operation extends \Google\Model
    */
   public $user;
 
+  /**
+   * @param AcquireSsrsLeaseContext
+   */
+  public function setAcquireSsrsLeaseContext(AcquireSsrsLeaseContext $acquireSsrsLeaseContext)
+  {
+    $this->acquireSsrsLeaseContext = $acquireSsrsLeaseContext;
+  }
+  /**
+   * @return AcquireSsrsLeaseContext
+   */
+  public function getAcquireSsrsLeaseContext()
+  {
+    return $this->acquireSsrsLeaseContext;
+  }
+  /**
+   * @param ApiWarning
+   */
+  public function setApiWarning(ApiWarning $apiWarning)
+  {
+    $this->apiWarning = $apiWarning;
+  }
+  /**
+   * @return ApiWarning
+   */
+  public function getApiWarning()
+  {
+    return $this->apiWarning;
+  }
   /**
    * @param BackupContext
    */

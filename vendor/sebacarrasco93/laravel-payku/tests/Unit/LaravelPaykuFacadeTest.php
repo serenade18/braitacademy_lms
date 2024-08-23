@@ -47,7 +47,7 @@ class LaravelPaykuFacadeTest extends TestCase
         $this->assertEquals([
             'private_token' => 'someprivatetoken',
             'public_token' => 'somepublictoken',
-        ], LaravelPayku::findApiKeys());
+        ], LaravelPayku::findEnvKeys());
     }
 
     /** @test */

@@ -70,7 +70,7 @@ class DeviceContext extends InstanceContext
     public function fetch(): DeviceInstance
     {
 
-        $payload = $this->version->fetch('GET', $this->uri);
+        $payload = $this->version->fetch('GET', $this->uri, [], []);
 
         return new DeviceInstance(
             $this->version,
@@ -99,6 +99,8 @@ class DeviceContext extends InstanceContext
                 $options['targetApp'],
             'LoggingEnabled' =>
                 Serialize::booleanToString($options['loggingEnabled']),
+            'RestartApp' =>
+                Serialize::booleanToString($options['restartApp']),
         ]);
 
         $payload = $this->version->update('POST', $this->uri, [], $data);

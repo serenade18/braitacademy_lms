@@ -55,9 +55,11 @@ class Cloudchannel extends \Google\Service
   public $accounts_reports;
   public $accounts_skuGroups;
   public $accounts_skuGroups_billableSkus;
+  public $integrators;
   public $operations;
   public $products;
   public $products_skus;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the Cloudchannel service.
@@ -70,6 +72,7 @@ class Cloudchannel extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://cloudchannel.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://cloudchannel.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
     $this->version = 'v1';
@@ -99,6 +102,10 @@ class Cloudchannel extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+                'integrator' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
                 'pageSize' => [
                   'location' => 'query',
@@ -956,6 +963,74 @@ class Cloudchannel extends \Google\Service
                   'type' => 'integer',
                 ],
                 'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->integrators = new Cloudchannel\Resource\Integrators(
+        $this,
+        $this->serviceName,
+        'integrators',
+        [
+          'methods' => [
+            'listSubscribers' => [
+              'path' => 'v1/{+integrator}:listSubscribers',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'integrator' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'account' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'register' => [
+              'path' => 'v1/{+integrator}:register',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'integrator' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'account' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'serviceAccount' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'unregister' => [
+              'path' => 'v1/{+integrator}:unregister',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'integrator' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'account' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'serviceAccount' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],

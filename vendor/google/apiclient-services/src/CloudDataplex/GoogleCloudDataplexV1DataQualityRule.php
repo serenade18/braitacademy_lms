@@ -49,8 +49,14 @@ class GoogleCloudDataplexV1DataQualityRule extends \Google\Model
   protected $rowConditionExpectationDataType = '';
   protected $setExpectationType = GoogleCloudDataplexV1DataQualityRuleSetExpectation::class;
   protected $setExpectationDataType = '';
+  protected $sqlAssertionType = GoogleCloudDataplexV1DataQualityRuleSqlAssertion::class;
+  protected $sqlAssertionDataType = '';
   protected $statisticRangeExpectationType = GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation::class;
   protected $statisticRangeExpectationDataType = '';
+  /**
+   * @var bool
+   */
+  public $suspended;
   protected $tableConditionExpectationType = GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation::class;
   protected $tableConditionExpectationDataType = '';
   public $threshold;
@@ -198,6 +204,20 @@ class GoogleCloudDataplexV1DataQualityRule extends \Google\Model
     return $this->setExpectation;
   }
   /**
+   * @param GoogleCloudDataplexV1DataQualityRuleSqlAssertion
+   */
+  public function setSqlAssertion(GoogleCloudDataplexV1DataQualityRuleSqlAssertion $sqlAssertion)
+  {
+    $this->sqlAssertion = $sqlAssertion;
+  }
+  /**
+   * @return GoogleCloudDataplexV1DataQualityRuleSqlAssertion
+   */
+  public function getSqlAssertion()
+  {
+    return $this->sqlAssertion;
+  }
+  /**
    * @param GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation
    */
   public function setStatisticRangeExpectation(GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation $statisticRangeExpectation)
@@ -210,6 +230,20 @@ class GoogleCloudDataplexV1DataQualityRule extends \Google\Model
   public function getStatisticRangeExpectation()
   {
     return $this->statisticRangeExpectation;
+  }
+  /**
+   * @param bool
+   */
+  public function setSuspended($suspended)
+  {
+    $this->suspended = $suspended;
+  }
+  /**
+   * @return bool
+   */
+  public function getSuspended()
+  {
+    return $this->suspended;
   }
   /**
    * @param GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation

@@ -17,6 +17,8 @@
 
 namespace Google\Service\Translate\Resource;
 
+use Google\Service\Translate\AdaptiveMtTranslateRequest;
+use Google\Service\Translate\AdaptiveMtTranslateResponse;
 use Google\Service\Translate\BatchTranslateDocumentRequest;
 use Google\Service\Translate\BatchTranslateTextRequest;
 use Google\Service\Translate\DetectLanguageRequest;
@@ -43,6 +45,22 @@ use Google\Service\Translate\TranslateTextResponse;
 class ProjectsLocations extends \Google\Service\Resource
 {
   /**
+   * Translate text using Adaptive MT. (locations.adaptiveMtTranslate)
+   *
+   * @param string $parent Required. Location to make a regional call. Format:
+   * `projects/{project-number-or-id}/locations/{location-id}`.
+   * @param AdaptiveMtTranslateRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return AdaptiveMtTranslateResponse
+   * @throws \Google\Service\Exception
+   */
+  public function adaptiveMtTranslate($parent, AdaptiveMtTranslateRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('adaptiveMtTranslate', [$params], AdaptiveMtTranslateResponse::class);
+  }
+  /**
    * Translates a large volume of document in asynchronous batch mode. This
    * function provides real-time output as the inputs are being processed. If
    * caller cancels a request, the partial results (for an input file, it's all or
@@ -58,6 +76,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * @param BatchTranslateDocumentRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function batchTranslateDocument($parent, BatchTranslateDocumentRequest $postBody, $optParams = [])
   {
@@ -82,6 +101,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * @param BatchTranslateTextRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Operation
+   * @throws \Google\Service\Exception
    */
   public function batchTranslateText($parent, BatchTranslateTextRequest $postBody, $optParams = [])
   {
@@ -102,6 +122,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * @param DetectLanguageRequest $postBody
    * @param array $optParams Optional parameters.
    * @return DetectLanguageResponse
+   * @throws \Google\Service\Exception
    */
   public function detectLanguage($parent, DetectLanguageRequest $postBody, $optParams = [])
   {
@@ -115,6 +136,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * @param string $name Resource name for the location.
    * @param array $optParams Optional parameters.
    * @return Location
+   * @throws \Google\Service\Exception
    */
   public function get($name, $optParams = [])
   {
@@ -146,6 +168,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * by the specified model. If missing, we get supported languages of Google
    * general NMT model.
    * @return SupportedLanguages
+   * @throws \Google\Service\Exception
    */
   public function getSupportedLanguages($parent, $optParams = [])
   {
@@ -169,6 +192,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * @opt_param string pageToken A page token received from the `next_page_token`
    * field in the response. Send that page token to receive the subsequent page.
    * @return ListLocationsResponse
+   * @throws \Google\Service\Exception
    */
   public function listProjectsLocations($name, $optParams = [])
   {
@@ -188,6 +212,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * @param RomanizeTextRequest $postBody
    * @param array $optParams Optional parameters.
    * @return RomanizeTextResponse
+   * @throws \Google\Service\Exception
    */
   public function romanizeText($parent, RomanizeTextRequest $postBody, $optParams = [])
   {
@@ -208,6 +233,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * @param TranslateDocumentRequest $postBody
    * @param array $optParams Optional parameters.
    * @return TranslateDocumentResponse
+   * @throws \Google\Service\Exception
    */
   public function translateDocument($parent, TranslateDocumentRequest $postBody, $optParams = [])
   {
@@ -229,6 +255,7 @@ class ProjectsLocations extends \Google\Service\Resource
    * @param TranslateTextRequest $postBody
    * @param array $optParams Optional parameters.
    * @return TranslateTextResponse
+   * @throws \Google\Service\Exception
    */
   public function translateText($parent, TranslateTextRequest $postBody, $optParams = [])
   {

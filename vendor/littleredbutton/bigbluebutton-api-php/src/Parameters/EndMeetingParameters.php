@@ -24,8 +24,6 @@ namespace BigBlueButton\Parameters;
  *
  * @method string getMeetingID()
  * @method $this  setMeetingID(string $id)
- * @method string getPassword()
- * @method $this  setPassword(string $password)
  */
 class EndMeetingParameters extends BaseParameters
 {
@@ -35,34 +33,40 @@ class EndMeetingParameters extends BaseParameters
     protected $meetingID;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $password;
 
-    public function __construct(string $meetingID, string $password)
+    public function __construct(string $meetingID, ?string $password = null)
     {
+        if (\func_num_args() === 2) {
+            @trigger_error(sprintf('Passing $password parameter to constructor of "%s" is deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter to end a meeting.', self::class), \E_USER_DEPRECATED);
+        }
+
         $this->password = $password;
         $this->meetingID = $meetingID;
     }
 
     /**
-     * @deprecated use getMeetingID()
-     *
-     * @return string
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
      */
-    public function getMeetingId()
+    public function getPassword(): string
     {
-        return $this->meetingID;
+        if (null === $this->password) {
+            throw new \RuntimeException(sprintf('Password was not passed to "%s".', self::class));
+        }
+
+        return $this->password;
     }
 
     /**
-     * @deprecated use setMeetingID()
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
      *
-     * @return EndMeetingParameters
+     * @return $this
      */
-    public function setMeetingId(string $meetingID)
+    public function setPassword(string $password): self
     {
-        $this->meetingID = $meetingID;
+        $this->password = $password;
 
         return $this;
     }

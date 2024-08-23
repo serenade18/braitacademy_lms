@@ -20,6 +20,8 @@ namespace Google\Service\Compute;
 class InstanceGroupManager extends \Google\Collection
 {
   protected $collection_key = 'versions';
+  protected $allInstancesConfigType = InstanceGroupManagerAllInstancesConfig::class;
+  protected $allInstancesConfigDataType = '';
   protected $autoHealingPoliciesType = InstanceGroupManagerAutoHealingPolicy::class;
   protected $autoHealingPoliciesDataType = 'array';
   /**
@@ -75,6 +77,14 @@ class InstanceGroupManager extends \Google\Collection
    */
   public $region;
   /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
+  /**
    * @var string
    */
   public $selfLink;
@@ -99,6 +109,20 @@ class InstanceGroupManager extends \Google\Collection
    */
   public $zone;
 
+  /**
+   * @param InstanceGroupManagerAllInstancesConfig
+   */
+  public function setAllInstancesConfig(InstanceGroupManagerAllInstancesConfig $allInstancesConfig)
+  {
+    $this->allInstancesConfig = $allInstancesConfig;
+  }
+  /**
+   * @return InstanceGroupManagerAllInstancesConfig
+   */
+  public function getAllInstancesConfig()
+  {
+    return $this->allInstancesConfig;
+  }
   /**
    * @param InstanceGroupManagerAutoHealingPolicy[]
    */
@@ -322,6 +346,34 @@ class InstanceGroupManager extends \Google\Collection
   public function getRegion()
   {
     return $this->region;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param string

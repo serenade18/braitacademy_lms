@@ -20,6 +20,8 @@
 
 namespace BigBlueButton\Core;
 
+use BigBlueButton\Enum\Role;
+
 /**
  * Class Meeting.
  */
@@ -61,12 +63,12 @@ class Meeting
     private $dialNumber;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $attendeePassword;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $moderatorPassword;
 
@@ -114,6 +116,11 @@ class Meeting
      * @var string
      */
     private $internalMeetingId;
+
+    /**
+     * @var string
+     */
+    private $parentMeetingID;
 
     /**
      * @var bool
@@ -175,6 +182,7 @@ class Meeting
         $this->duration = (int) $xml->duration;
         $this->hasUserJoined = $xml->hasUserJoined->__toString() === 'true';
         $this->internalMeetingId = $xml->internalMeetingID->__toString();
+        $this->parentMeetingID = $xml->parentMeetingID->__toString();
         $this->isRecording = $xml->recording->__toString() === 'true';
         $this->startTime = (float) $xml->startTime;
         $this->endTime = (float) $xml->endTime;
@@ -183,178 +191,123 @@ class Meeting
         $this->isBreakout = $xml->isBreakout->__toString() === 'true';
     }
 
-    /**
-     * @return string
-     */
-    public function getMeetingId()
+    public function getMeetingId(): string
     {
         return $this->meetingId;
     }
 
-    /**
-     * @return string
-     */
-    public function getMeetingName()
+    public function getMeetingName(): string
     {
         return $this->meetingName;
     }
 
-    /**
-     * @return float
-     */
-    public function getCreationTime()
+    public function getCreationTime(): float
     {
         return $this->creationTime;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreationDate()
+    public function getCreationDate(): string
     {
         return $this->creationDate;
     }
 
-    /**
-     * @return int
-     */
-    public function getVoiceBridge()
+    public function getVoiceBridge(): int
     {
         return $this->voiceBridge;
     }
 
-    /**
-     * @return string
-     */
-    public function getDialNumber()
+    public function getDialNumber(): string
     {
         return $this->dialNumber;
     }
 
     /**
-     * @return string
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
      */
-    public function getAttendeePassword()
+    public function getAttendeePassword(): string
     {
         return $this->attendeePassword;
     }
 
     /**
-     * @return string
+     * @deprecated since 5.1 and will be removed in 6.0. Recent BigBlueButton versions does not require the password parameter.
      */
-    public function getModeratorPassword()
+    public function getModeratorPassword(): string
     {
         return $this->moderatorPassword;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasBeenForciblyEnded()
+    public function hasBeenForciblyEnded(): bool
     {
         return $this->hasBeenForciblyEnded;
     }
 
-    /**
-     * @return bool
-     */
-    public function isRunning()
+    public function isRunning(): bool
     {
         return $this->isRunning;
     }
 
-    /**
-     * @return int
-     */
-    public function getParticipantCount()
+    public function getParticipantCount(): int
     {
         return $this->participantCount;
     }
 
-    /**
-     * @return int
-     */
-    public function getListenerCount()
+    public function getListenerCount(): int
     {
         return $this->listenerCount;
     }
 
-    /**
-     * @return int
-     */
-    public function getVoiceParticipantCount()
+    public function getVoiceParticipantCount(): int
     {
         return $this->voiceParticipantCount;
     }
 
-    /**
-     * @return int
-     */
-    public function getVideoCount()
+    public function getVideoCount(): int
     {
         return $this->videoCount;
     }
 
-    /**
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasUserJoined()
+    public function hasUserJoined(): bool
     {
         return $this->hasUserJoined;
     }
 
-    /**
-     * @return string
-     */
-    public function getInternalMeetingId()
+    public function getInternalMeetingId(): string
     {
         return $this->internalMeetingId;
     }
 
-    /**
-     * @return bool
-     */
-    public function isRecording()
+    public function getParentMeetingID(): string
+    {
+        return $this->parentMeetingID;
+    }
+
+    public function isRecording(): bool
     {
         return $this->isRecording;
     }
 
-    /**
-     * @return float
-     */
-    public function getStartTime()
+    public function getStartTime(): float
     {
         return $this->startTime;
     }
 
-    /**
-     * @return float
-     */
-    public function getEndTime()
+    public function getEndTime(): float
     {
         return $this->endTime;
     }
 
-    /**
-     * @return int
-     */
-    public function getMaxUsers()
+    public function getMaxUsers(): int
     {
         return $this->maxUsers;
     }
 
-    /**
-     * @return int
-     */
-    public function getModeratorCount()
+    public function getModeratorCount(): int
     {
         return $this->moderatorCount;
     }
@@ -362,7 +315,7 @@ class Meeting
     /**
      * @return Attendee[]
      */
-    public function getAttendees()
+    public function getAttendees(): array
     {
         if ($this->attendees === null) {
             $this->attendees = [];
@@ -384,7 +337,7 @@ class Meeting
         $attendees = $this->getAttendees();
 
         $moderators = array_filter($attendees, function ($attendee) {
-            return $attendee->getRole() === 'MODERATOR';
+            return $attendee->getRole() === Role::MODERATOR;
         });
 
         return array_values($moderators);
@@ -400,16 +353,13 @@ class Meeting
         $attendees = $this->getAttendees();
 
         $viewers = array_filter($attendees, function ($attendee) {
-            return $attendee->getRole() === 'VIEWER';
+            return $attendee->getRole() === Role::VIEWER;
         });
 
         return array_values($viewers);
     }
 
-    /**
-     * @return array
-     */
-    public function getMetas()
+    public function getMetas(): array
     {
         if ($this->metas === null) {
             $this->metas = [];

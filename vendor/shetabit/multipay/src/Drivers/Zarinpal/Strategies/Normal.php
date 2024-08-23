@@ -59,7 +59,7 @@ class Normal extends Driver
      */
     public function purchase()
     {
-        $metadata = [];
+        $amount = $this->invoice->getAmount() * ($this->settings->currency == 'T' ? 10 : 1); // convert to rial
 
         if (!empty($this->invoice->getDetails()['description'])) {
             $description = $this->invoice->getDetails()['description'];
@@ -67,21 +67,13 @@ class Normal extends Driver
             $description = $this->settings->description;
         }
 
-        if (!empty($this->invoice->getDetails()['mobile'])) {
-            $metadata['mobile'] = $this->invoice->getDetails()['mobile'];
-        }
-
-        if (!empty($this->invoice->getDetails()['email'])) {
-            $metadata['email'] = $this->invoice->getDetails()['email'];
-        }
-
         $data = [
             "merchant_id" => $this->settings->merchantId,
-            "amount" => $this->invoice->getAmount() * ($this->settings->currency == 'T' ? 10 : 1), // convert to rial
+            "amount" => $amount,
             "currency" => 'IRR',
             "callback_url" => $this->settings->callbackUrl,
             "description" => $description,
-            "metadata" => array_merge($this->invoice->getDetails() ?? [], $metadata),
+            "metadata" => $this->metadata(),
         ];
 
         $response = $this
@@ -161,7 +153,21 @@ class Normal extends Driver
             throw new InvalidPaymentException($this->translateStatus($bodyResponse), $bodyResponse);
         }
 
-        return $this->createReceipt($result['data']['ref_id']);
+        $refId = $result['data']['ref_id'];
+
+        $receipt =  $this->createReceipt($refId);
+        $receipt->detail([
+            'code' => $result['data']['code'],
+            'message' => $result['data']['message'] ?? null,
+            'card_hash' => $result['data']['card_hash'] ?? null,
+            'card_pan' => $result['data']['card_pan'] ?? null,
+            'ref_id' => $refId,
+            'fee_type' => $result['data']['fee_type'] ?? null,
+            'fee' => $result['data']['fee'] ?? null,
+            'order_id' => $result['data']['order_id'] ?? null,
+        ]);
+
+        return $receipt;
     }
 
     /**
@@ -241,5 +247,20 @@ class Normal extends Driver
         $unknownError = 'خطای ناشناخته رخ داده است. در صورت کسر مبلغ از حساب حداکثر پس از 72 ساعت به حسابتان برمیگردد';
 
         return array_key_exists($status, $translations) ? $translations[$status] : $unknownError;
+    }
+
+    private function metadata(): array
+    {
+        $metadata = [];
+
+        if (!empty($this->invoice->getDetails()['mobile'])) {
+            $metadata['mobile'] = $this->invoice->getDetails()['mobile'];
+        }
+
+        if (!empty($this->invoice->getDetails()['email'])) {
+            $metadata['email'] = $this->invoice->getDetails()['email'];
+        }
+
+        return array_merge($this->invoice->getDetails() ?? [], $metadata);
     }
 }

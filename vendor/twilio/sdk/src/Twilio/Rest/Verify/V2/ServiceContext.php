@@ -102,7 +102,7 @@ class ServiceContext extends InstanceContext
     public function fetch(): ServiceInstance
     {
 
-        $payload = $this->version->fetch('GET', $this->uri);
+        $payload = $this->version->fetch('GET', $this->uri, [], []);
 
         return new ServiceInstance(
             $this->version,
@@ -159,6 +159,8 @@ class ServiceContext extends InstanceContext
                 $options['totpSkew'],
             'DefaultTemplateSid' =>
                 $options['defaultTemplateSid'],
+            'VerifyEventSubscriptionEnabled' =>
+                Serialize::booleanToString($options['verifyEventSubscriptionEnabled']),
         ]);
 
         $payload = $this->version->update('POST', $this->uri, [], $data);

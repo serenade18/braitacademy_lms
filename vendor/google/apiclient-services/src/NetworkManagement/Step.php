@@ -57,18 +57,28 @@ class Step extends \Google\Model
   protected $instanceDataType = '';
   protected $loadBalancerType = LoadBalancerInfo::class;
   protected $loadBalancerDataType = '';
+  protected $loadBalancerBackendInfoType = LoadBalancerBackendInfo::class;
+  protected $loadBalancerBackendInfoDataType = '';
+  protected $natType = NatInfo::class;
+  protected $natDataType = '';
   protected $networkType = NetworkInfo::class;
   protected $networkDataType = '';
   /**
    * @var string
    */
   public $projectId;
+  protected $proxyConnectionType = ProxyConnectionInfo::class;
+  protected $proxyConnectionDataType = '';
   protected $routeType = RouteInfo::class;
   protected $routeDataType = '';
+  protected $serverlessNegType = ServerlessNegInfo::class;
+  protected $serverlessNegDataType = '';
   /**
    * @var string
    */
   public $state;
+  protected $storageBucketType = StorageBucketInfo::class;
+  protected $storageBucketDataType = '';
   protected $vpcConnectorType = VpcConnectorInfo::class;
   protected $vpcConnectorDataType = '';
   protected $vpnGatewayType = VpnGatewayInfo::class;
@@ -315,6 +325,34 @@ class Step extends \Google\Model
     return $this->loadBalancer;
   }
   /**
+   * @param LoadBalancerBackendInfo
+   */
+  public function setLoadBalancerBackendInfo(LoadBalancerBackendInfo $loadBalancerBackendInfo)
+  {
+    $this->loadBalancerBackendInfo = $loadBalancerBackendInfo;
+  }
+  /**
+   * @return LoadBalancerBackendInfo
+   */
+  public function getLoadBalancerBackendInfo()
+  {
+    return $this->loadBalancerBackendInfo;
+  }
+  /**
+   * @param NatInfo
+   */
+  public function setNat(NatInfo $nat)
+  {
+    $this->nat = $nat;
+  }
+  /**
+   * @return NatInfo
+   */
+  public function getNat()
+  {
+    return $this->nat;
+  }
+  /**
    * @param NetworkInfo
    */
   public function setNetwork(NetworkInfo $network)
@@ -343,6 +381,20 @@ class Step extends \Google\Model
     return $this->projectId;
   }
   /**
+   * @param ProxyConnectionInfo
+   */
+  public function setProxyConnection(ProxyConnectionInfo $proxyConnection)
+  {
+    $this->proxyConnection = $proxyConnection;
+  }
+  /**
+   * @return ProxyConnectionInfo
+   */
+  public function getProxyConnection()
+  {
+    return $this->proxyConnection;
+  }
+  /**
    * @param RouteInfo
    */
   public function setRoute(RouteInfo $route)
@@ -357,6 +409,20 @@ class Step extends \Google\Model
     return $this->route;
   }
   /**
+   * @param ServerlessNegInfo
+   */
+  public function setServerlessNeg(ServerlessNegInfo $serverlessNeg)
+  {
+    $this->serverlessNeg = $serverlessNeg;
+  }
+  /**
+   * @return ServerlessNegInfo
+   */
+  public function getServerlessNeg()
+  {
+    return $this->serverlessNeg;
+  }
+  /**
    * @param string
    */
   public function setState($state)
@@ -369,6 +435,20 @@ class Step extends \Google\Model
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param StorageBucketInfo
+   */
+  public function setStorageBucket(StorageBucketInfo $storageBucket)
+  {
+    $this->storageBucket = $storageBucket;
+  }
+  /**
+   * @return StorageBucketInfo
+   */
+  public function getStorageBucket()
+  {
+    return $this->storageBucket;
   }
   /**
    * @param VpcConnectorInfo

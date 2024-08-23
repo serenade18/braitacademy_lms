@@ -32,13 +32,13 @@ class Record
     private $startTime;
     private $endTime;
     private $participantCount;
-    private $playbackType;
-    private $playbackUrl;
-    private $playbackLength;
     private $metas = [];
 
     /** @var PlaybackFormat[] */
     private $playbackFormats = [];
+    private $playbackType;
+    private $playbackUrl;
+    private $playbackLength;
 
     public function __construct(\SimpleXMLElement $xml)
     {
@@ -63,104 +63,47 @@ class Record
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getRecordId()
+    public function getRecordId(): string
     {
         return $this->recordId;
     }
 
-    /**
-     * @return string
-     */
-    public function getMeetingId()
+    public function getMeetingId(): string
     {
         return $this->meetingId;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPublished()
+    public function isPublished(): bool
     {
         return $this->isPublished;
     }
 
-    /**
-     * @return string
-     */
-    public function getState()
+    public function getState(): string
     {
         return $this->state;
     }
 
-    /**
-     * @return string
-     */
-    public function getStartTime()
+    public function getStartTime(): float
     {
         return $this->startTime;
     }
 
-    /**
-     * @return string
-     */
-    public function getEndTime()
+    public function getEndTime(): float
     {
         return $this->endTime;
     }
 
-    /**
-     * @return int Number of participants
-     */
-    public function getParticipantCount()
+    public function getParticipantCount(): int
     {
         return $this->participantCount;
     }
 
-    /**
-     * @deprecated since 4.2. Use getPlaybackFormats() instead.
-     *
-     * @return string
-     */
-    public function getPlaybackType()
-    {
-        return $this->playbackType;
-    }
-
-    /**
-     * @deprecated since 4.2. Use getPlaybackFormats() instead.
-     *
-     * @return string
-     */
-    public function getPlaybackUrl()
-    {
-        return $this->playbackUrl;
-    }
-
-    /**
-     * @deprecated since 4.2. Use getPlaybackFormats() instead.
-     *
-     * @return string
-     */
-    public function getPlaybackLength()
-    {
-        return $this->playbackLength;
-    }
-
-    /**
-     * @return array
-     */
-    public function getMetas()
+    public function getMetas(): array
     {
         return $this->metas;
     }

@@ -66,7 +66,7 @@
                     </div>
 
                     @if(!empty(getFeaturesSettings('show_google_login_button')))
-                        <a href="/google" target="_blank" class="social-login mt-20 p-10 text-center d-flex align-items-center justify-content-center">
+                        <a href="/google" class="social-login mt-20 p-10 text-center d-flex align-items-center justify-content-center">
                             <img src="/assets/default/img/auth/google.svg" class="mr-auto" alt=" google svg"/>
                             <span class="flex-grow-1">{{ trans('auth.google_login') }}</span>
                         </a>
@@ -80,7 +80,7 @@
                     @endif
 
                     <div class="mt-30 text-center">
-                        <a href="/forget-password" target="_blank">{{ trans('auth.forget_your_password') }}</a>
+                        <a href="/forget-password" class="text-secondary font-weight-bold" target="_blank">{{ trans('auth.forget_your_password') }}</a>
                     </div>
 
                     <div class="mt-20 text-center">

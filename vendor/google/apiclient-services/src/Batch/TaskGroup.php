@@ -37,6 +37,10 @@ class TaskGroup extends \Google\Collection
    */
   public $requireHostsFile;
   /**
+   * @var bool
+   */
+  public $runAsNonRoot;
+  /**
    * @var string
    */
   public $schedulingPolicy;
@@ -108,6 +112,20 @@ class TaskGroup extends \Google\Collection
   public function getRequireHostsFile()
   {
     return $this->requireHostsFile;
+  }
+  /**
+   * @param bool
+   */
+  public function setRunAsNonRoot($runAsNonRoot)
+  {
+    $this->runAsNonRoot = $runAsNonRoot;
+  }
+  /**
+   * @return bool
+   */
+  public function getRunAsNonRoot()
+  {
+    return $this->runAsNonRoot;
   }
   /**
    * @param string

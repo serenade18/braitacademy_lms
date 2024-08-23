@@ -24,6 +24,8 @@ namespace BigBlueButton\Parameters;
  * @method $this     setCallbackURL(string $url)
  * @method string    getMeetingID()
  * @method $this     setMeetingID(string $id)
+ * @method string    getEventID()
+ * @method $this     setEventID(string $id)
  * @method bool|null isGetRaw()
  * @method $this     setGetRaw(bool $getRaw)
  */
@@ -40,6 +42,11 @@ class HooksCreateParameters extends BaseParameters
     protected $meetingID;
 
     /**
+     * @var string
+     */
+    protected $eventID;
+
+    /**
      * @var bool
      */
     protected $getRaw;
@@ -47,59 +54,5 @@ class HooksCreateParameters extends BaseParameters
     public function __construct(string $callbackURL)
     {
         $this->callbackURL = $callbackURL;
-    }
-
-    /**
-     * @deprecated use getCallbackURL() instead
-     *
-     * @return string
-     */
-    public function getCallbackUrl()
-    {
-        return $this->callbackURL;
-    }
-
-    /**
-     * @deprecated use setCallbackURL() instead
-     *
-     * @return HooksCreateParameters
-     */
-    public function setCallbackUrl(string $callbackURL)
-    {
-        $this->callbackURL = $callbackURL;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated use getMeetingID() instead
-     *
-     * @return string
-     */
-    public function getMeetingId()
-    {
-        return $this->meetingID;
-    }
-
-    /**
-     * @deprecated use setMeetingID() instead
-     *
-     * @return HooksCreateParameters
-     */
-    public function setMeetingId(string $meetingID)
-    {
-        $this->meetingID = $meetingID;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated use isGetRaw()
-     *
-     * @return bool
-     */
-    public function getRaw()
-    {
-        return $this->getRaw;
     }
 }

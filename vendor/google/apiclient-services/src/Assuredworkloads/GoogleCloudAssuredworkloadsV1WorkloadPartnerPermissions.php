@@ -22,12 +22,48 @@ class GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions extends \Google\Mo
   /**
    * @var bool
    */
+  public $accessTransparencyLogsSupportCaseViewer;
+  /**
+   * @var bool
+   */
+  public $assuredWorkloadsMonitoring;
+  /**
+   * @var bool
+   */
   public $dataLogsViewer;
   /**
    * @var bool
    */
-  public $remediateFolderViolations;
+  public $serviceAccessApprover;
 
+  /**
+   * @param bool
+   */
+  public function setAccessTransparencyLogsSupportCaseViewer($accessTransparencyLogsSupportCaseViewer)
+  {
+    $this->accessTransparencyLogsSupportCaseViewer = $accessTransparencyLogsSupportCaseViewer;
+  }
+  /**
+   * @return bool
+   */
+  public function getAccessTransparencyLogsSupportCaseViewer()
+  {
+    return $this->accessTransparencyLogsSupportCaseViewer;
+  }
+  /**
+   * @param bool
+   */
+  public function setAssuredWorkloadsMonitoring($assuredWorkloadsMonitoring)
+  {
+    $this->assuredWorkloadsMonitoring = $assuredWorkloadsMonitoring;
+  }
+  /**
+   * @return bool
+   */
+  public function getAssuredWorkloadsMonitoring()
+  {
+    return $this->assuredWorkloadsMonitoring;
+  }
   /**
    * @param bool
    */
@@ -45,16 +81,16 @@ class GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions extends \Google\Mo
   /**
    * @param bool
    */
-  public function setRemediateFolderViolations($remediateFolderViolations)
+  public function setServiceAccessApprover($serviceAccessApprover)
   {
-    $this->remediateFolderViolations = $remediateFolderViolations;
+    $this->serviceAccessApprover = $serviceAccessApprover;
   }
   /**
    * @return bool
    */
-  public function getRemediateFolderViolations()
+  public function getServiceAccessApprover()
   {
-    return $this->remediateFolderViolations;
+    return $this->serviceAccessApprover;
   }
 }
 

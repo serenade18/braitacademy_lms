@@ -22,6 +22,12 @@ class Finding extends \Google\Collection
   protected $collection_key = 'processes';
   protected $accessType = Access::class;
   protected $accessDataType = '';
+  protected $applicationType = Application::class;
+  protected $applicationDataType = '';
+  protected $attackExposureType = AttackExposure::class;
+  protected $attackExposureDataType = '';
+  protected $backupDisasterRecoveryType = BackupDisasterRecovery::class;
+  protected $backupDisasterRecoveryDataType = '';
   /**
    * @var string
    */
@@ -30,6 +36,8 @@ class Finding extends \Google\Collection
    * @var string
    */
   public $category;
+  protected $cloudArmorType = CloudArmor::class;
+  protected $cloudArmorDataType = '';
   protected $cloudDlpDataProfileType = CloudDlpDataProfile::class;
   protected $cloudDlpDataProfileDataType = '';
   protected $cloudDlpInspectionType = CloudDlpInspection::class;
@@ -70,6 +78,8 @@ class Finding extends \Google\Collection
    * @var string
    */
   public $findingClass;
+  protected $groupMembershipsType = GroupMembership::class;
+  protected $groupMembershipsDataType = 'array';
   protected $iamBindingsType = IamBinding::class;
   protected $iamBindingsDataType = 'array';
   protected $indicatorType = Indicator::class;
@@ -78,6 +88,10 @@ class Finding extends \Google\Collection
   protected $kernelRootkitDataType = '';
   protected $kubernetesType = Kubernetes::class;
   protected $kubernetesDataType = '';
+  protected $loadBalancersType = LoadBalancer::class;
+  protected $loadBalancersDataType = 'array';
+  protected $logEntriesType = LogEntry::class;
+  protected $logEntriesDataType = 'array';
   protected $mitreAttackType = MitreAttack::class;
   protected $mitreAttackDataType = '';
   /**
@@ -88,6 +102,8 @@ class Finding extends \Google\Collection
    * @var string
    */
   public $mute;
+  protected $muteInfoType = MuteInfo::class;
+  protected $muteInfoDataType = '';
   /**
    * @var string
    */
@@ -104,6 +120,10 @@ class Finding extends \Google\Collection
    * @var string
    */
   public $nextSteps;
+  protected $notebookType = Notebook::class;
+  protected $notebookDataType = '';
+  protected $orgPoliciesType = OrgPolicy::class;
+  protected $orgPoliciesDataType = 'array';
   /**
    * @var string
    */
@@ -120,6 +140,8 @@ class Finding extends \Google\Collection
   public $resourceName;
   protected $securityMarksType = SecurityMarks::class;
   protected $securityMarksDataType = '';
+  protected $securityPostureType = SecurityPosture::class;
+  protected $securityPostureDataType = '';
   /**
    * @var string
    */
@@ -132,6 +154,8 @@ class Finding extends \Google\Collection
    * @var string
    */
   public $state;
+  protected $toxicCombinationType = ToxicCombination::class;
+  protected $toxicCombinationDataType = '';
   protected $vulnerabilityType = Vulnerability::class;
   protected $vulnerabilityDataType = '';
 
@@ -148,6 +172,48 @@ class Finding extends \Google\Collection
   public function getAccess()
   {
     return $this->access;
+  }
+  /**
+   * @param Application
+   */
+  public function setApplication(Application $application)
+  {
+    $this->application = $application;
+  }
+  /**
+   * @return Application
+   */
+  public function getApplication()
+  {
+    return $this->application;
+  }
+  /**
+   * @param AttackExposure
+   */
+  public function setAttackExposure(AttackExposure $attackExposure)
+  {
+    $this->attackExposure = $attackExposure;
+  }
+  /**
+   * @return AttackExposure
+   */
+  public function getAttackExposure()
+  {
+    return $this->attackExposure;
+  }
+  /**
+   * @param BackupDisasterRecovery
+   */
+  public function setBackupDisasterRecovery(BackupDisasterRecovery $backupDisasterRecovery)
+  {
+    $this->backupDisasterRecovery = $backupDisasterRecovery;
+  }
+  /**
+   * @return BackupDisasterRecovery
+   */
+  public function getBackupDisasterRecovery()
+  {
+    return $this->backupDisasterRecovery;
   }
   /**
    * @param string
@@ -176,6 +242,20 @@ class Finding extends \Google\Collection
   public function getCategory()
   {
     return $this->category;
+  }
+  /**
+   * @param CloudArmor
+   */
+  public function setCloudArmor(CloudArmor $cloudArmor)
+  {
+    $this->cloudArmor = $cloudArmor;
+  }
+  /**
+   * @return CloudArmor
+   */
+  public function getCloudArmor()
+  {
+    return $this->cloudArmor;
   }
   /**
    * @param CloudDlpDataProfile
@@ -388,6 +468,20 @@ class Finding extends \Google\Collection
     return $this->findingClass;
   }
   /**
+   * @param GroupMembership[]
+   */
+  public function setGroupMemberships($groupMemberships)
+  {
+    $this->groupMemberships = $groupMemberships;
+  }
+  /**
+   * @return GroupMembership[]
+   */
+  public function getGroupMemberships()
+  {
+    return $this->groupMemberships;
+  }
+  /**
    * @param IamBinding[]
    */
   public function setIamBindings($iamBindings)
@@ -444,6 +538,34 @@ class Finding extends \Google\Collection
     return $this->kubernetes;
   }
   /**
+   * @param LoadBalancer[]
+   */
+  public function setLoadBalancers($loadBalancers)
+  {
+    $this->loadBalancers = $loadBalancers;
+  }
+  /**
+   * @return LoadBalancer[]
+   */
+  public function getLoadBalancers()
+  {
+    return $this->loadBalancers;
+  }
+  /**
+   * @param LogEntry[]
+   */
+  public function setLogEntries($logEntries)
+  {
+    $this->logEntries = $logEntries;
+  }
+  /**
+   * @return LogEntry[]
+   */
+  public function getLogEntries()
+  {
+    return $this->logEntries;
+  }
+  /**
    * @param MitreAttack
    */
   public function setMitreAttack(MitreAttack $mitreAttack)
@@ -484,6 +606,20 @@ class Finding extends \Google\Collection
   public function getMute()
   {
     return $this->mute;
+  }
+  /**
+   * @param MuteInfo
+   */
+  public function setMuteInfo(MuteInfo $muteInfo)
+  {
+    $this->muteInfo = $muteInfo;
+  }
+  /**
+   * @return MuteInfo
+   */
+  public function getMuteInfo()
+  {
+    return $this->muteInfo;
   }
   /**
    * @param string
@@ -540,6 +676,34 @@ class Finding extends \Google\Collection
   public function getNextSteps()
   {
     return $this->nextSteps;
+  }
+  /**
+   * @param Notebook
+   */
+  public function setNotebook(Notebook $notebook)
+  {
+    $this->notebook = $notebook;
+  }
+  /**
+   * @return Notebook
+   */
+  public function getNotebook()
+  {
+    return $this->notebook;
+  }
+  /**
+   * @param OrgPolicy[]
+   */
+  public function setOrgPolicies($orgPolicies)
+  {
+    $this->orgPolicies = $orgPolicies;
+  }
+  /**
+   * @return OrgPolicy[]
+   */
+  public function getOrgPolicies()
+  {
+    return $this->orgPolicies;
   }
   /**
    * @param string
@@ -612,6 +776,20 @@ class Finding extends \Google\Collection
     return $this->securityMarks;
   }
   /**
+   * @param SecurityPosture
+   */
+  public function setSecurityPosture(SecurityPosture $securityPosture)
+  {
+    $this->securityPosture = $securityPosture;
+  }
+  /**
+   * @return SecurityPosture
+   */
+  public function getSecurityPosture()
+  {
+    return $this->securityPosture;
+  }
+  /**
    * @param string
    */
   public function setSeverity($severity)
@@ -652,6 +830,20 @@ class Finding extends \Google\Collection
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param ToxicCombination
+   */
+  public function setToxicCombination(ToxicCombination $toxicCombination)
+  {
+    $this->toxicCombination = $toxicCombination;
+  }
+  /**
+   * @return ToxicCombination
+   */
+  public function getToxicCombination()
+  {
+    return $this->toxicCombination;
   }
   /**
    * @param Vulnerability

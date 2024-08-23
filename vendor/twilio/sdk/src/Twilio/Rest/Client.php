@@ -20,7 +20,6 @@ use Twilio\Base\BaseClient as BaseClient;
  *
  * @property Accounts $accounts
  * @property Api $api
- * @property Autopilot $autopilot
  * @property Bulkexports $bulkexports
  * @property Chat $chat
  * @property Content $content
@@ -32,7 +31,6 @@ use Twilio\Base\BaseClient as BaseClient;
  * @property Intelligence $intelligence
  * @property IpMessaging $ipMessaging
  * @property Lookups $lookups
- * @property Media $media
  * @property Messaging $messaging
  * @property Microvisor $microvisor
  * @property Monitor $monitor
@@ -100,7 +98,6 @@ use Twilio\Base\BaseClient as BaseClient;
 class Client extends BaseClient {
     protected $_accounts;
     protected $_api;
-    protected $_autopilot;
     protected $_bulkexports;
     protected $_chat;
     protected $_content;
@@ -112,7 +109,6 @@ class Client extends BaseClient {
     protected $_intelligence;
     protected $_ipMessaging;
     protected $_lookups;
-    protected $_media;
     protected $_messaging;
     protected $_microvisor;
     protected $_monitor;
@@ -156,17 +152,6 @@ class Client extends BaseClient {
             $this->_api = new Api($this);
         }
         return $this->_api;
-    }
-    /**
-     * Access the Autopilot Twilio Domain
-     *
-     * @return Autopilot Autopilot Twilio Domain
-     */
-    protected function getAutopilot(): Autopilot {
-        if (!$this->_autopilot) {
-            $this->_autopilot = new Autopilot($this);
-        }
-        return $this->_autopilot;
     }
     /**
      * Access the Bulkexports Twilio Domain
@@ -288,17 +273,6 @@ class Client extends BaseClient {
             $this->_lookups = new Lookups($this);
         }
         return $this->_lookups;
-    }
-    /**
-     * Access the Media Twilio Domain
-     *
-     * @return Media Media Twilio Domain
-     */
-    protected function getMedia(): Media {
-        if (!$this->_media) {
-            $this->_media = new Media($this);
-        }
-        return $this->_media;
     }
     /**
      * Access the Messaging Twilio Domain
@@ -619,7 +593,7 @@ class Client extends BaseClient {
         return $this->api->v2010->account->messages;
     }
     /**
-     * @param string $sid The Twilio-provided string that uniquely identifies the Message resource to fetch.
+     * @param string $sid The SID of the Message resource to be fetched
     */
     protected function contextMessages(string $sid): \Twilio\Rest\Api\V2010\Account\MessageContext {
         return $this->api->v2010->account->messages($sid);

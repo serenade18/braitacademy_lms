@@ -44,12 +44,14 @@ class Baremetalsolution extends \Google\Service
   public $projects_locations_networks;
   public $projects_locations_nfsShares;
   public $projects_locations_operations;
+  public $projects_locations_osImages;
   public $projects_locations_provisioningConfigs;
   public $projects_locations_provisioningQuotas;
   public $projects_locations_sshKeys;
   public $projects_locations_volumes;
   public $projects_locations_volumes_luns;
   public $projects_locations_volumes_snapshots;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the Baremetalsolution service.
@@ -62,6 +64,7 @@ class Baremetalsolution extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://baremetalsolution.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://baremetalsolution.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
     $this->version = 'v2';
@@ -125,8 +128,28 @@ class Baremetalsolution extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'disableHyperthreading' => [
+              'path' => 'v2/{+name}:disableHyperthreading',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'disableInteractiveSerialConsole' => [
               'path' => 'v2/{+name}:disableInteractiveSerialConsole',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'enableHyperthreading' => [
+              'path' => 'v2/{+name}:enableHyperthreading',
               'httpMethod' => 'POST',
               'parameters' => [
                 'name' => [
@@ -177,6 +200,16 @@ class Baremetalsolution extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'loadAuthInfo' => [
+              'path' => 'v2/{+name}:loadAuthInfo',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'patch' => [
               'path' => 'v2/{+name}',
               'httpMethod' => 'PATCH',
@@ -189,6 +222,16 @@ class Baremetalsolution extends \Google\Service
                 'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'reimage' => [
+              'path' => 'v2/{+name}:reimage',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],'rename' => [
@@ -411,6 +454,44 @@ class Baremetalsolution extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_osImages = new Baremetalsolution\Resource\ProjectsLocationsOsImages(
+        $this,
+        $this->serviceName,
+        'osImages',
+        [
+          'methods' => [
+            'get' => [
+              'path' => 'v2/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v2/{+parent}/osImages',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],

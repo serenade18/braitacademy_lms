@@ -104,10 +104,10 @@ dd(bigbluebutton()->isConnect()); //using helper method
 use BigBlueButton\Parameters\CreateMeetingParameters;
 
 $meetingParams = new CreateMeetingParameters($meetingID, $meetingName);
-$meetingParams->setModeratorPassword('moderatorPassword');
-$meetingParams->setAttendeePassword('attendeePassword');
+$meetingParams->setModeratorPW('moderatorPassword');
+$meetingParams->setAttendeePW('attendeePassword');
 
-\Bigblubutton::create($meetingParams);
+\Bigbluebutton::create($meetingParams);
 ```
 
 3.By passing array it will return CreateMeetingParameters object for overwrite methods

@@ -19,6 +19,8 @@ namespace Google\Service\Playdeveloperreporting;
 
 class GooglePlayDeveloperReportingV1beta1ErrorReport extends \Google\Model
 {
+  protected $appVersionType = GooglePlayDeveloperReportingV1beta1AppVersion::class;
+  protected $appVersionDataType = '';
   protected $deviceModelType = GooglePlayDeveloperReportingV1beta1DeviceModelSummary::class;
   protected $deviceModelDataType = '';
   /**
@@ -43,7 +45,25 @@ class GooglePlayDeveloperReportingV1beta1ErrorReport extends \Google\Model
    * @var string
    */
   public $type;
+  /**
+   * @var string
+   */
+  public $vcsInformation;
 
+  /**
+   * @param GooglePlayDeveloperReportingV1beta1AppVersion
+   */
+  public function setAppVersion(GooglePlayDeveloperReportingV1beta1AppVersion $appVersion)
+  {
+    $this->appVersion = $appVersion;
+  }
+  /**
+   * @return GooglePlayDeveloperReportingV1beta1AppVersion
+   */
+  public function getAppVersion()
+  {
+    return $this->appVersion;
+  }
   /**
    * @param GooglePlayDeveloperReportingV1beta1DeviceModelSummary
    */
@@ -141,6 +161,20 @@ class GooglePlayDeveloperReportingV1beta1ErrorReport extends \Google\Model
   public function getType()
   {
     return $this->type;
+  }
+  /**
+   * @param string
+   */
+  public function setVcsInformation($vcsInformation)
+  {
+    $this->vcsInformation = $vcsInformation;
+  }
+  /**
+   * @return string
+   */
+  public function getVcsInformation()
+  {
+    return $this->vcsInformation;
   }
 }
 

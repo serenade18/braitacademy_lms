@@ -2,7 +2,6 @@
 
 namespace Shetabit\Multipay\Drivers\Sepehr;
 
-use Illuminate\Support\Facades\Log;
 use Shetabit\Multipay\Abstracts\Driver;
 use Shetabit\Multipay\Exceptions\InvalidPaymentException;
 use Shetabit\Multipay\Exceptions\PurchaseFailedException;
@@ -104,11 +103,11 @@ class Sepehr extends Driver
      */
     public function verify(): ReceiptInterface
     {
-        $resp_code = Request::input('respcode');
+        $responseCode = Request::input('respcode');
         $amount = $this->invoice->getAmount() * ($this->settings->currency == 'T' ? 10 : 1); // convert to rial
 
-        if ($resp_code != 0) {
-            $this->notVerified($resp_code);
+        if ($responseCode != 0) {
+            $this->notVerified($responseCode);
         }
 
         $data_query = 'digitalreceipt=' . Request::input('digitalreceipt') . '&Tid=' . $this->settings->terminalId;

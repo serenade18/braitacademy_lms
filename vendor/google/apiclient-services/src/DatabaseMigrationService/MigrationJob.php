@@ -48,6 +48,10 @@ class MigrationJob extends \Google\Model
   /**
    * @var string
    */
+  public $dumpType;
+  /**
+   * @var string
+   */
   public $duration;
   /**
    * @var string
@@ -67,6 +71,8 @@ class MigrationJob extends \Google\Model
    * @var string
    */
   public $name;
+  protected $performanceConfigType = PerformanceConfig::class;
+  protected $performanceConfigDataType = '';
   /**
    * @var string
    */
@@ -79,6 +85,8 @@ class MigrationJob extends \Google\Model
   public $source;
   protected $sourceDatabaseType = DatabaseType::class;
   protected $sourceDatabaseDataType = '';
+  protected $sqlserverHomogeneousMigrationJobConfigType = SqlServerHomogeneousMigrationJobConfig::class;
+  protected $sqlserverHomogeneousMigrationJobConfigDataType = '';
   /**
    * @var string
    */
@@ -211,6 +219,20 @@ class MigrationJob extends \Google\Model
   /**
    * @param string
    */
+  public function setDumpType($dumpType)
+  {
+    $this->dumpType = $dumpType;
+  }
+  /**
+   * @return string
+   */
+  public function getDumpType()
+  {
+    return $this->dumpType;
+  }
+  /**
+   * @param string
+   */
   public function setDuration($duration)
   {
     $this->duration = $duration;
@@ -293,6 +315,20 @@ class MigrationJob extends \Google\Model
     return $this->name;
   }
   /**
+   * @param PerformanceConfig
+   */
+  public function setPerformanceConfig(PerformanceConfig $performanceConfig)
+  {
+    $this->performanceConfig = $performanceConfig;
+  }
+  /**
+   * @return PerformanceConfig
+   */
+  public function getPerformanceConfig()
+  {
+    return $this->performanceConfig;
+  }
+  /**
    * @param string
    */
   public function setPhase($phase)
@@ -347,6 +383,20 @@ class MigrationJob extends \Google\Model
   public function getSourceDatabase()
   {
     return $this->sourceDatabase;
+  }
+  /**
+   * @param SqlServerHomogeneousMigrationJobConfig
+   */
+  public function setSqlserverHomogeneousMigrationJobConfig(SqlServerHomogeneousMigrationJobConfig $sqlserverHomogeneousMigrationJobConfig)
+  {
+    $this->sqlserverHomogeneousMigrationJobConfig = $sqlserverHomogeneousMigrationJobConfig;
+  }
+  /**
+   * @return SqlServerHomogeneousMigrationJobConfig
+   */
+  public function getSqlserverHomogeneousMigrationJobConfig()
+  {
+    return $this->sqlserverHomogeneousMigrationJobConfig;
   }
   /**
    * @param string

@@ -27,6 +27,10 @@ class GoogleCloudDocumentaiV1ProcessRequest extends \Google\Model
   protected $gcsDocumentDataType = '';
   protected $inlineDocumentType = GoogleCloudDocumentaiV1Document::class;
   protected $inlineDocumentDataType = '';
+  /**
+   * @var string[]
+   */
+  public $labels;
   protected $processOptionsType = GoogleCloudDocumentaiV1ProcessOptions::class;
   protected $processOptionsDataType = '';
   protected $rawDocumentType = GoogleCloudDocumentaiV1RawDocument::class;
@@ -77,6 +81,20 @@ class GoogleCloudDocumentaiV1ProcessRequest extends \Google\Model
   public function getInlineDocument()
   {
     return $this->inlineDocument;
+  }
+  /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
   }
   /**
    * @param GoogleCloudDocumentaiV1ProcessOptions

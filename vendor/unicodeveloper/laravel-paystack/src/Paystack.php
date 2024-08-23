@@ -119,6 +119,7 @@ class Paystack
                 "amount" => intval(request()->amount) * $quantity,
                 "reference" => request()->reference,
                 "email" => request()->email,
+                "channels" => request()->channels,
                 "plan" => request()->plan,
                 "first_name" => request()->first_name,
                 "last_name" => request()->last_name,
@@ -412,17 +413,20 @@ class Paystack
     /**
      * Create a customer
      */
-    public function createCustomer()
+    public function createCustomer($data = null)
     {
-        $data = [
-            "email" => request()->email,
-            "first_name" => request()->fname,
-            "last_name" => request()->lname,
-            "phone" => request()->phone,
-            "metadata" => request()->additional_info /* key => value pairs array */
+        if ($data == null) {
 
-        ];
+            $data = [
+                "email" => request()->email,
+                "first_name" => request()->fname,
+                "last_name" => request()->lname,
+                "phone" => request()->phone,
+                "metadata" => request()->additional_info /* key => value pairs array */
 
+            ];
+        }
+        
         $this->setRequestOptions();
         return $this->setHttpResponse('/customer', 'POST', $data)->getResponse();
     }
@@ -693,5 +697,33 @@ class Paystack
 
         $this->setRequestOptions();
         return $this->setHttpResponse("/subaccount/{$subaccount_code}", "PUT", array_filter($data))->getResponse();
+    }
+
+    
+    /**
+     * Get a list of all supported banks and their properties
+     * @param $country - The country from which to obtain the list of supported banks, $per_page - Specifies how many records to retrieve per page , 
+     * $use_cursor - Flag to enable cursor pagination on the endpoint
+     * @return array
+     */
+    public function getBanks(?string $country, int $per_page = 50, bool $use_cursor = false)
+    {
+        if (!$country)
+            $country = request()->country ?? 'nigeria';
+
+        $this->setRequestOptions();
+        return $this->setHttpResponse("/bank/?country=" . $country . "&use_cursor=" . $use_cursor . "&perPage=" . (int) $per_page, "GET")->getResponse();
+    }
+
+    /**
+     * Confirm an account belongs to the right customer
+     * @param $account_number - Account Number, $bank_code - You can get the list of bank codes by calling the List Banks endpoint
+     * @return array
+     */
+    public function confirmAccount(string $account_number, string $bank_code)
+    {
+
+        $this->setRequestOptions();
+        return $this->setHttpResponse("/bank/resolve/?account_number=" . $account_number . "&bank_code=" . $bank_code, "GET")->getResponse();
     }
 }

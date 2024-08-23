@@ -89,7 +89,7 @@ class MessageContext extends InstanceContext
     public function fetch(): MessageInstance
     {
 
-        $payload = $this->version->fetch('GET', $this->uri);
+        $payload = $this->version->fetch('GET', $this->uri, [], []);
 
         return new MessageInstance(
             $this->version,
@@ -123,6 +123,8 @@ class MessageContext extends InstanceContext
                 Serialize::iso8601DateTime($options['dateUpdated']),
             'Attributes' =>
                 $options['attributes'],
+            'Subject' =>
+                $options['subject'],
         ]);
 
         $headers = Values::of(['X-Twilio-Webhook-Enabled' => $options['xTwilioWebhookEnabled']]);

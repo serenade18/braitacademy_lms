@@ -78,6 +78,8 @@ class Cluster extends \Google\Collection
    * @var string
    */
   public $endpoint;
+  protected $enterpriseConfigType = EnterpriseConfig::class;
+  protected $enterpriseConfigDataType = '';
   /**
    * @var string
    */
@@ -168,6 +170,8 @@ class Cluster extends \Google\Collection
   protected $nodePoolsDataType = 'array';
   protected $notificationConfigType = NotificationConfig::class;
   protected $notificationConfigDataType = '';
+  protected $parentProductConfigType = ParentProductConfig::class;
+  protected $parentProductConfigDataType = '';
   protected $privateClusterConfigType = PrivateClusterConfig::class;
   protected $privateClusterConfigDataType = '';
   protected $releaseChannelType = ReleaseChannel::class;
@@ -178,6 +182,14 @@ class Cluster extends \Google\Collection
   public $resourceLabels;
   protected $resourceUsageExportConfigType = ResourceUsageExportConfig::class;
   protected $resourceUsageExportConfigDataType = '';
+  /**
+   * @var bool
+   */
+  public $satisfiesPzi;
+  /**
+   * @var bool
+   */
+  public $satisfiesPzs;
   protected $securityPostureConfigType = SecurityPostureConfig::class;
   protected $securityPostureConfigDataType = '';
   /**
@@ -494,6 +506,20 @@ class Cluster extends \Google\Collection
   public function getEndpoint()
   {
     return $this->endpoint;
+  }
+  /**
+   * @param EnterpriseConfig
+   */
+  public function setEnterpriseConfig(EnterpriseConfig $enterpriseConfig)
+  {
+    $this->enterpriseConfig = $enterpriseConfig;
+  }
+  /**
+   * @return EnterpriseConfig
+   */
+  public function getEnterpriseConfig()
+  {
+    return $this->enterpriseConfig;
   }
   /**
    * @param string
@@ -930,6 +956,20 @@ class Cluster extends \Google\Collection
     return $this->notificationConfig;
   }
   /**
+   * @param ParentProductConfig
+   */
+  public function setParentProductConfig(ParentProductConfig $parentProductConfig)
+  {
+    $this->parentProductConfig = $parentProductConfig;
+  }
+  /**
+   * @return ParentProductConfig
+   */
+  public function getParentProductConfig()
+  {
+    return $this->parentProductConfig;
+  }
+  /**
    * @param PrivateClusterConfig
    */
   public function setPrivateClusterConfig(PrivateClusterConfig $privateClusterConfig)
@@ -984,6 +1024,34 @@ class Cluster extends \Google\Collection
   public function getResourceUsageExportConfig()
   {
     return $this->resourceUsageExportConfig;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzi($satisfiesPzi)
+  {
+    $this->satisfiesPzi = $satisfiesPzi;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzi()
+  {
+    return $this->satisfiesPzi;
+  }
+  /**
+   * @param bool
+   */
+  public function setSatisfiesPzs($satisfiesPzs)
+  {
+    $this->satisfiesPzs = $satisfiesPzs;
+  }
+  /**
+   * @return bool
+   */
+  public function getSatisfiesPzs()
+  {
+    return $this->satisfiesPzs;
   }
   /**
    * @param SecurityPostureConfig

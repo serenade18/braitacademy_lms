@@ -51,6 +51,7 @@ class SQLAdmin extends \Google\Service
   public $sslCerts;
   public $tiers;
   public $users;
+  public $rootUrlTemplate;
 
   /**
    * Constructs the internal representation of the SQLAdmin service.
@@ -63,6 +64,7 @@ class SQLAdmin extends \Google\Service
   {
     parent::__construct($clientOrConfig);
     $this->rootUrl = $rootUrl ?: 'https://sqladmin.googleapis.com/';
+    $this->rootUrlTemplate = $rootUrl ?: 'https://sqladmin.UNIVERSE_DOMAIN/';
     $this->servicePath = '';
     $this->batchPath = 'batch';
     $this->version = 'v1';
@@ -345,7 +347,22 @@ class SQLAdmin extends \Google\Service
         'instances',
         [
           'methods' => [
-            'addServerCa' => [
+            'acquireSsrsLease' => [
+              'path' => 'v1/projects/{project}/instances/{instance}/acquireSsrsLease',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instance' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'addServerCa' => [
               'path' => 'v1/projects/{project}/instances/{instance}/addServerCa',
               'httpMethod' => 'POST',
               'parameters' => [
@@ -378,6 +395,21 @@ class SQLAdmin extends \Google\Service
             ],'delete' => [
               'path' => 'v1/projects/{project}/instances/{instance}',
               'httpMethod' => 'DELETE',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instance' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'demote' => [
+              'path' => 'v1/projects/{project}/instances/{instance}/demote',
+              'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
                   'location' => 'path',
@@ -541,9 +573,28 @@ class SQLAdmin extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'failover' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
               ],
             ],'reencrypt' => [
               'path' => 'v1/projects/{project}/instances/{instance}/reencrypt',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instance' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'releaseSsrsLease' => [
+              'path' => 'v1/projects/{project}/instances/{instance}/releaseSsrsLease',
               'httpMethod' => 'POST',
               'parameters' => [
                 'project' => [
@@ -645,6 +696,25 @@ class SQLAdmin extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],'switchover' => [
+              'path' => 'v1/projects/{project}/instances/{instance}/switchover',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'project' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'instance' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'dbTimeout' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'truncateLog' => [

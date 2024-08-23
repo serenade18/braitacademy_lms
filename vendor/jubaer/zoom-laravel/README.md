@@ -1,6 +1,8 @@
-# Laravel package for Zoom
+# zoom-laravel
 
-Laravel Zoom API Package
+[![Latest Stable Version](http://poser.pugx.org/jubaer/zoom-laravel/v)](https://packagist.org/packages/jubaer/zoom-laravel) [![Total Downloads](http://poser.pugx.org/jubaer/zoom-laravel/downloads)](https://packagist.org/packages/jubaer/zoom-laravel) [![Latest Unstable Version](http://poser.pugx.org/jubaer/zoom-laravel/v/unstable)](https://packagist.org/packages/jubaer/zoom-laravel) [![License](http://poser.pugx.org/jubaer/zoom-laravel/license)](https://packagist.org/packages/jubaer/zoom-laravel) [![PHP Version Require](http://poser.pugx.org/jubaer/zoom-laravel/require/php)](https://packagist.org/packages/jubaer/zoom-laravel)
+
+The Laravel Zoom API Client is a powerful and comprehensive package designed to provide Laravel users with a unified and consistent approach to integrating Zoom APIs into their applications. With this package, developers can seamlessly interact with Zoom's feature-rich video communication platform, enabling them to create, manage, and enhance their Zoom meetings and webinars effortlessly.
 
 ## Installation
 
@@ -68,22 +70,22 @@ for a user specific user zoom configuration add User model:
 
 ### How to get Zoom API credentials
 
-- Go to https://marketplace.zoom.us/develop/create and create a Server-to-Server OAuth app
-- ![](1.png)
+- Go to [https://marketplace.zoom.us/develop/create](https://marketplace.zoom.us/develop/create) and create a Server-to-Server OAuth app
+ ![](1.png)
 - then click on Continue
-- ![](2.png)
+ ![](2.png)
 - then fill up the form and click on Continue
-- ![](3.png)
+ ![](3.png)
 - then click on Continue
-- ![](4.png)
 - then click on Add Scopes
-- ![](5.png)
+ ![](5.png)
 - then mark all scopes and click on Done
-- ![](6.png)
-- ![](7.png)
+ ![](6.png)
 - then click on Continue
 - then activate your app
 - then copy your API Key and API Secret
+
+
 
 ## Usage
 
@@ -102,8 +104,7 @@ At present we cover the following modules
 ### Create a meeting
 
 ```php
-    $zoom = new Zoom();
-    $meetings = $zoom->createMeeting([
+    $meetings = Zoom::createMeeting([
                     "agenda" => 'your agenda',
                     "topic" => 'your topic',
                     "type" => 2, // 1 => instant, 2 => scheduled, 3 => recurring with no fixed time, 8 => recurring with fixed time
@@ -133,15 +134,13 @@ At present we cover the following modules
 ### Get a meeting
 
 ```php
-    $zoom = new Zoom();
-    $meeting = $zoom->getMeeting($meetingId);
+    $meeting = Zoom::getMeeting($meetingId);
 ```
 
 ### Update a meeting
 
 ```php
-    $zoom = new Zoom();
-    $meeting = $zoom->updateMeeting($meetingId, [
+    $meeting = Zoom::updateMeeting($meetingId, [
                     "agenda" => 'your agenda',
                     "topic" => 'your topic',
                     "type" => 2, // 1 => instant, 2 => scheduled, 3 => recurring with no fixed time, 8 => recurring with fixed time
@@ -169,43 +168,37 @@ At present we cover the following modules
 ### Delete a meeting
 
 ```php
-    $zoom = new Zoom();
-    $meeting = $zoom->deleteMeeting($meetingId);
+    $meeting = Zoom::deleteMeeting($meetingId);
 ```
 
 ### Get all meetings
 
 ```php
-    $zoom = new Zoom();
-    $meetings = $zoom->getAllMeeting();
+    $meetings = Zoom::getAllMeeting();
 ```
 
 ### Get a meeting
 
 ```php
-    $zoom = new Zoom();
-    $meeting = $zoom->getMeeting($meetingId);
+    $meeting = Zoom::getMeeting($meetingId);
 ```
 
 ### Get all upcoming meetings
 
 ```php
-    $zoom = new Zoom();
-    $meetings = $zoom->getUpcomingMeeting();
+    $meetings = Zoom::getUpcomingMeeting();
 ```
 
 ### Get all past meetings
 
 ```php
-    $zoom = new Zoom();
-    $meetings = $zoom->getPreviousMeetings();
+    $meetings = Zoom::getPreviousMeetings();
 ```
 
 ### reschedule meeting
 
 ```php
-    $zoom = new Zoom();
-    $meetings = $zoom->rescheduleMeeting($meetingId, [
+    $meetings = Zoom::rescheduleMeeting($meetingId, [
                     "agenda" => 'your agenda',
                     "topic" => 'your topic',
                     "type" => 2, // 1 => instant, 2 => scheduled, 3 => recurring with no fixed time, 8 => recurring with fixed time
@@ -233,30 +226,26 @@ At present we cover the following modules
 ### end meeting
 
 ```php
-    $zoom = new Zoom();
-    $meetings = $zoom->endMeeting($meetingId);
+    $meetings = Zoom::endMeeting($meetingId);
 ```
 
 ### delete meeting
 
 ```php
-    $zoom = new Zoom();
-    $meetings = $zoom->deleteMeeting($meetingId);
+    $meetings = Zoom::deleteMeeting($meetingId);
 ```
 
 ### recover meeting
 
 ```php
-    $zoom = new Zoom();
-    $meetings = $zoom->recoverMeeting($meetingId);
+    $meetings = Zoom::recoverMeeting($meetingId);
 ```
 
 
 ### Get all users
 
 ```php
-    $zoom = new Zoom();
-    $users = $zoom->getUsers(['status' => 'active']); // values are 'active', 'inactive', 'pending'. default is active. and you can pass page_size and page_number as well
+    $users = Zoom::getUsers(['status' => 'active']); // values are 'active', 'inactive', 'pending'. default is active. and you can pass page_size and page_number as well
 ```
 
 
@@ -264,7 +253,7 @@ At present we cover the following modules
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-## Contributing
+
 
 ### Security
 

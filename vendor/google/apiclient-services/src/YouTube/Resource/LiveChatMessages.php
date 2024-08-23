@@ -35,6 +35,7 @@ class LiveChatMessages extends \Google\Service\Resource
    *
    * @param string $id
    * @param array $optParams Optional parameters.
+   * @throws \Google\Service\Exception
    */
   public function delete($id, $optParams = [])
   {
@@ -52,6 +53,7 @@ class LiveChatMessages extends \Google\Service\Resource
    * @param LiveChatMessage $postBody
    * @param array $optParams Optional parameters.
    * @return LiveChatMessage
+   * @throws \Google\Service\Exception
    */
   public function insert($part, LiveChatMessage $postBody, $optParams = [])
   {
@@ -80,12 +82,31 @@ class LiveChatMessages extends \Google\Service\Resource
    * @opt_param string profileImageSize Specifies the size of the profile image
    * that should be returned for each user.
    * @return LiveChatMessageListResponse
+   * @throws \Google\Service\Exception
    */
   public function listLiveChatMessages($liveChatId, $part, $optParams = [])
   {
     $params = ['liveChatId' => $liveChatId, 'part' => $part];
     $params = array_merge($params, $optParams);
     return $this->call('list', [$params], LiveChatMessageListResponse::class);
+  }
+  /**
+   * Transition a durable chat event. (liveChatMessages.transition)
+   *
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string id The ID that uniquely identify the chat message event to
+   * transition.
+   * @opt_param string status The status to which the chat event is going to
+   * transition.
+   * @return LiveChatMessage
+   * @throws \Google\Service\Exception
+   */
+  public function transition($optParams = [])
+  {
+    $params = [];
+    $params = array_merge($params, $optParams);
+    return $this->call('transition', [$params], LiveChatMessage::class);
   }
 }
 

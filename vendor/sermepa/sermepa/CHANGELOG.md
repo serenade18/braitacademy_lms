@@ -2,6 +2,62 @@
 
 All Notable changes to `Redsys` will be documented in this file
 
+## Version 1.4.8 (2024-03-05)
+### Added
+- Implementation of the `xpay` method within the `setMethod` functionality to support GooglePay and ApplePay.
+
+- TDD (Test Driven Development) implementation for enhanced code reliability and maintainability.
+
+### Changed
+- Possible internal changes were made to integrate the `xpay` method and accommodate the TDD implementation, ensuring code consistency.
+
+### Fixed
+- None
+
+## Version 1.4.7 (2024-02-24)
+### Added
+- Static validation methods for convenience and reusability.
+
+- Tests for the new methods and functionalities, ensuring code quality and stability.
+
+### Changed
+- Possible internal changes were made to implement the new features.
+### Fixed
+- None
+
+## Version 1.4.6 (2023-10-28)
+
+### Added
+- Test for method getPathJs
+
+- I just added a second optional parameter, $version, was added to the getJsPath() method to allow users to specify the version of the Redsys JavaScript file they want to use. The default version is 2 for compatibility reasons, but users can specify 3 to get the latest Redsys JavaScript file.
+
+### Changed
+- None
+### Fixed
+- None
+
+## Version 1.4.5 (2023-09-26)
+
+### Added
+- Tag 1.4.5
+
+### Changed
+- Method `check` updated in `Tpv.php` to enhance security and improve validation of signatures. The change involved replacing strict comparison (`===`) with `hash_equals()` for signature validation.
+
+### Fixed
+- None
+
+## Version 1.4.4 (2023-08-07)
+
+### Added
+- Merge pull request from diegomarty.
+- Changed value by default in setMethod: T to C.
+- Added validation for this parameters: 'T', 'C', 'R', 'D', 'z', 'p', 'N'
+- Added new test for setMethod
+### Fixed
+- Nothing
+
 ## Version 1.4.3 (2023-02-16)
 
 ### Added

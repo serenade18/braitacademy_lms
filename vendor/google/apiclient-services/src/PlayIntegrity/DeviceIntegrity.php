@@ -20,11 +20,29 @@ namespace Google\Service\PlayIntegrity;
 class DeviceIntegrity extends \Google\Collection
 {
   protected $collection_key = 'deviceRecognitionVerdict';
+  protected $deviceRecallType = DeviceRecall::class;
+  protected $deviceRecallDataType = '';
   /**
    * @var string[]
    */
   public $deviceRecognitionVerdict;
+  protected $recentDeviceActivityType = RecentDeviceActivity::class;
+  protected $recentDeviceActivityDataType = '';
 
+  /**
+   * @param DeviceRecall
+   */
+  public function setDeviceRecall(DeviceRecall $deviceRecall)
+  {
+    $this->deviceRecall = $deviceRecall;
+  }
+  /**
+   * @return DeviceRecall
+   */
+  public function getDeviceRecall()
+  {
+    return $this->deviceRecall;
+  }
   /**
    * @param string[]
    */
@@ -38,6 +56,20 @@ class DeviceIntegrity extends \Google\Collection
   public function getDeviceRecognitionVerdict()
   {
     return $this->deviceRecognitionVerdict;
+  }
+  /**
+   * @param RecentDeviceActivity
+   */
+  public function setRecentDeviceActivity(RecentDeviceActivity $recentDeviceActivity)
+  {
+    $this->recentDeviceActivity = $recentDeviceActivity;
+  }
+  /**
+   * @return RecentDeviceActivity
+   */
+  public function getRecentDeviceActivity()
+  {
+    return $this->recentDeviceActivity;
   }
 }
 

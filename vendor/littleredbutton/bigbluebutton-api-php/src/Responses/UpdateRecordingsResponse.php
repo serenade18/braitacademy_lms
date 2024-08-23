@@ -24,11 +24,15 @@ namespace BigBlueButton\Responses;
  */
 class UpdateRecordingsResponse extends BaseResponse
 {
-    /**
-     * @return bool
-     */
-    public function isUpdated()
+    public const KEY_NOT_FOUND = 'notFound';
+
+    public function isUpdated(): bool
     {
         return $this->rawXml->updated->__toString() === 'true';
+    }
+
+    public function isNotFound(): bool
+    {
+        return $this->getMessageKey() === self::KEY_NOT_FOUND;
     }
 }
