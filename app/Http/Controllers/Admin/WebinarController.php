@@ -376,6 +376,7 @@ class WebinarController extends Controller
         }
 
         $data['price'] = !empty($data['price']) ? convertPriceToDefaultCurrency($data['price']) : null;
+        $data['certificate_price'] = !empty($data['certificate_price']) ? convertPriceToDefaultCurrency($data['certificate_price']) : null;
         $data['organization_price'] = !empty($data['organization_price']) ? convertPriceToDefaultCurrency($data['organization_price']) : null;
 
         $webinar = Webinar::create([
@@ -401,6 +402,7 @@ class WebinarController extends Controller
             'enable_waitlist' => (!empty($data['enable_waitlist'])),
             'access_days' => $data['access_days'] ?? null,
             'price' => $data['price'],
+            'certificate_price' => $data['certificate_price'],
             'organization_price' => $data['organization_price'] ?? null,
             'points' => $data['points'] ?? null,
             'category_id' => $data['category_id'],
@@ -690,6 +692,7 @@ class WebinarController extends Controller
         $changedCreator = ($webinar->creator_id != $newCreatorId);
 
         $data['price'] = !empty($data['price']) ? convertPriceToDefaultCurrency($data['price']) : null;
+        $data['certificate_price'] = !empty($data['certificate_price']) ? convertPriceToDefaultCurrency($data['certificate_price']) : null;
         $data['organization_price'] = !empty($data['organization_price']) ? convertPriceToDefaultCurrency($data['organization_price']) : null;
 
         $webinar->update([
@@ -715,6 +718,7 @@ class WebinarController extends Controller
             'forum' => $data['forum'],
             'access_days' => $data['access_days'] ?? null,
             'price' => $data['price'],
+            'certificate_price' => $data['certificate_price'],
             'organization_price' => $data['organization_price'] ?? null,
             'category_id' => $data['category_id'],
             'points' => $data['points'] ?? null,

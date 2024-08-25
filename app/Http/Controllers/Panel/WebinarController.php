@@ -55,7 +55,6 @@ class WebinarController extends Controller
         return view(getTemplate() . '.panel.webinar.index', $data);
     }
 
-
     public function invitations(Request $request)
     {
         $user = auth()->user();
@@ -312,11 +311,13 @@ class WebinarController extends Controller
             'thumbnail' => 'required',
             'image_cover' => 'required',
             'description' => 'required',
+            'certificate_price' => 'nullable|numeric',
         ];
 
         $this->validate($request, $rules);
 
         $data = $request->all();
+
 
         if (empty($data['video_demo'])) {
             $data['video_demo_source'] = null;
@@ -335,6 +336,7 @@ class WebinarController extends Controller
             'thumbnail' => $data['thumbnail'],
             'image_cover' => $data['image_cover'],
             'video_demo' => $data['video_demo'],
+            'certificate_price' => $data['certificate_price'],
             'video_demo_source' => $data['video_demo'] ? $data['video_demo_source'] : null,
             'status' => ((!empty($data['draft']) and $data['draft'] == 1) or (!empty($data['get_next']) and $data['get_next'] == 1)) ? Webinar::$isDraft : Webinar::$pending,
             'created_at' => time(),

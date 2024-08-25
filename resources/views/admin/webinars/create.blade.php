@@ -383,18 +383,10 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                <label class="" for="includePaidCertificateSwitch">Paid Certificate</label>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" name="certificate" class="custom-control-input" id="includePaidCertificateSwitch" {{ !empty($webinar) && $webinar-> null ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="includePaidCertificateSwitch"></label>
-                                                </div>
-                                            </div>
-
                                             <div class="form-group mt-15">
-                                                <label class="input-label">Certificate Price ({{ $currency }})</label>
-                                                <input type="text" name="price" value="{{ (!empty($webinar) and !empty($webinar->price)) ? convertPriceToUserCurrency($webinar->price) : old('price') }}" class="form-control @error('price')  is-invalid @enderror" placeholder="{{ trans('public.0_for_free') }}"/>
-                                                @error('price')
+                                                <label class="input-label">{{ trans('public.certificate_price') }} ({{ $currency }})</label>
+                                                <input type="text" name="certificate_price" value="{{ (!empty($webinar) and !empty($webinar->certificate_price)) ? convertPriceToUserCurrency($webinar->certificate_price) : old('certificate_price') }}" class="form-control @error('certificate_price')  is-invalid @enderror" placeholder="{{ trans('public.0_for_free') }}"/>
+                                                @error('certificate_price')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>

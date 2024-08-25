@@ -601,17 +601,9 @@ unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
-                                                <label class="" for="includePaidCertificateSwitch">Paid Certificate</label>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" name="certificate" class="custom-control-input" id="includePaidCertificateSwitch" <?php echo e(!empty($webinar) && $webinar-> null ? 'checked' : ''); ?>>
-                                                    <label class="custom-control-label" for="includePaidCertificateSwitch"></label>
-                                                </div>
-                                            </div>
-
                                             <div class="form-group mt-15">
-                                                <label class="input-label">Certificate Price (<?php echo e($currency); ?>)</label>
-                                                <input type="text" name="price" value="<?php echo e((!empty($webinar) and !empty($webinar->price)) ? convertPriceToUserCurrency($webinar->price) : old('price')); ?>" class="form-control <?php $__errorArgs = ['price'];
+                                                <label class="input-label"><?php echo e(trans('public.certificate_price')); ?> (<?php echo e($currency); ?>)</label>
+                                                <input type="text" name="certificate_price" value="<?php echo e((!empty($webinar) and !empty($webinar->certificate_price)) ? convertPriceToUserCurrency($webinar->certificate_price) : old('certificate_price')); ?>" class="form-control <?php $__errorArgs = ['certificate_price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -619,7 +611,7 @@ $message = $__bag->first($__errorArgs[0]); ?>  is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" placeholder="<?php echo e(trans('public.0_for_free')); ?>"/>
-                                                <?php $__errorArgs = ['price'];
+                                                <?php $__errorArgs = ['certificate_price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }

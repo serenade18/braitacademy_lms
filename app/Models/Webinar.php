@@ -978,6 +978,20 @@ class Webinar extends Model implements TranslatableContract
         return $price;
     }
 
+    public function getCertificatePrice()
+    {
+        // Assuming `certificate_price` is a column in your `webinars` table
+        $certificatePrice = $this->certificate_price;
+
+        // If there are any special conditions or discounts, you can apply them here
+        $specialOffer = $this->activeSpecialOffer();
+        if (!empty($specialOffer)) {
+            $certificatePrice = $certificatePrice - ($certificatePrice * $specialOffer->percent / 100);
+        }
+
+        return $certificatePrice;
+    }
+
     public function getStudentsIds()
     {
         $studentsIds = Sale::query()->where('webinar_id', $this->id)

@@ -84,6 +84,7 @@ return [
     'reminder' => 'Reminder',
     'calendar' => 'Calendar',
     'price' => 'Price',
+    'certificate_price' => 'Certificate Price',
     '0_for_free' => 'Enter 0 for Free',
     'free' => 'Free',
     'enroll_on_webinar' => 'Enroll on Course',
