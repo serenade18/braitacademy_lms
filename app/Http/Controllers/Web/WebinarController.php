@@ -28,6 +28,271 @@ class WebinarController extends Controller
     use CheckContentLimitationTrait;
     use InstallmentsTrait;
 
+    public function certificate($slug, $justReturnData = false)
+    {
+        $user = null;
+
+        if (auth()->check()) {
+            $user = auth()->user();
+        }
+
+
+        if (!$justReturnData) {
+            $contentLimitation = $this->checkContentLimitation($user, true);
+            if ($contentLimitation != "ok") {
+                return $contentLimitation;
+            }
+        }
+
+        $course = Webinar::where('slug', $slug)
+            ->with([
+                'quizzes' => function ($query) {
+                    $query->where('status', 'active')
+                        ->with(['quizResults', 'quizQuestions']);
+                },
+                'tags',
+                'prerequisites' => function ($query) {
+                    $query->with(['prerequisiteWebinar' => function ($query) {
+                        $query->with(['teacher' => function ($qu) {
+                            $qu->select('id', 'full_name', 'avatar');
+                        }]);
+                    }]);
+                    $query->orderBy('order', 'asc');
+                },
+                'faqs' => function ($query) {
+                    $query->orderBy('order', 'asc');
+                },
+                'webinarExtraDescription' => function ($query) {
+                    $query->orderBy('order', 'asc');
+                },
+                'chapters' => function ($query) use ($user) {
+                    $query->where('status', WebinarChapter::$chapterActive);
+                    $query->orderBy('order', 'asc');
+
+                    $query->with([
+                        'chapterItems' => function ($query) {
+                            $query->orderBy('order', 'asc');
+                        }
+                    ]);
+                },
+                'files' => function ($query) use ($user) {
+                    $query->join('webinar_chapters', 'webinar_chapters.id', '=', 'files.chapter_id')
+                        ->select('files.*', DB::raw('webinar_chapters.order as chapterOrder'))
+                        ->where('files.status', WebinarChapter::$chapterActive)
+                        ->orderBy('chapterOrder', 'asc')
+                        ->orderBy('files.order', 'asc')
+                        ->with([
+                            'learningStatus' => function ($query) use ($user) {
+                                $query->where('user_id', !empty($user) ? $user->id : null);
+                            }
+                        ]);
+                },
+                'textLessons' => function ($query) use ($user) {
+                    $query->where('status', WebinarChapter::$chapterActive)
+                        ->withCount(['attachments'])
+                        ->orderBy('order', 'asc')
+                        ->with([
+                            'learningStatus' => function ($query) use ($user) {
+                                $query->where('user_id', !empty($user) ? $user->id : null);
+                            }
+                        ]);
+                },
+                'sessions' => function ($query) use ($user) {
+                    $query->where('status', WebinarChapter::$chapterActive)
+                        ->orderBy('order', 'asc')
+                        ->with([
+                            'learningStatus' => function ($query) use ($user) {
+                                $query->where('user_id', !empty($user) ? $user->id : null);
+                            }
+                        ]);
+                },
+                'assignments' => function ($query) {
+                    $query->where('status', WebinarChapter::$chapterActive);
+                },
+                'tickets' => function ($query) {
+                    $query->orderBy('order', 'asc');
+                },
+                'filterOptions',
+                'category',
+                'teacher',
+                'reviews' => function ($query) {
+                    $query->where('status', 'active');
+                    $query->with([
+                        'comments' => function ($query) {
+                            $query->where('status', 'active');
+                        },
+                        'creator' => function ($qu) {
+                            $qu->select('id', 'full_name', 'avatar');
+                        }
+                    ]);
+                },
+                'comments' => function ($query) {
+                    $query->where('status', 'active');
+                    $query->whereNull('reply_id');
+                    $query->with([
+                        'user' => function ($query) {
+                            $query->select('id', 'full_name', 'role_name', 'role_id', 'avatar', 'avatar_settings');
+                        },
+                        'replies' => function ($query) {
+                            $query->where('status', 'active');
+                            $query->with([
+                                'user' => function ($query) {
+                                    $query->select('id', 'full_name', 'role_name', 'role_id', 'avatar', 'avatar_settings');
+                                }
+                            ]);
+                        }
+                    ]);
+                    $query->orderBy('created_at', 'desc');
+                },
+            ])
+            ->withCount([
+                'sales' => function ($query) {
+                    $query->whereNull('refund_at');
+                },
+                'noticeboards'
+            ])
+            ->where('status', 'active')
+            ->first();
+
+        if (empty($course)) {
+            return $justReturnData ? false : back();
+        }
+
+        if (!$justReturnData) {
+            $installmentLimitation = $this->installmentContentLimitation($user, $course->id, 'webinar_id');
+
+            if ($installmentLimitation != "ok") {
+                return $installmentLimitation;
+            }
+        }
+
+        $hasBought = $course->checkUserHasBought($user, true, true);
+        $isPrivate = $course->private;
+
+        if (!empty($user) and ($user->id == $course->creator_id or $user->organ_id == $course->creator_id or $user->isAdmin())) {
+            $isPrivate = false;
+        }
+
+        if ($isPrivate and $hasBought) { // check the user has bought the course or not
+            $isPrivate = false;
+        }
+
+        if ($isPrivate) {
+            return $justReturnData ? false : back();
+        }
+
+        $isFavorite = false;
+
+        if (!empty($user)) {
+            $isFavorite = Favorite::where('webinar_id', $course->id)
+                ->where('user_id', $user->id)
+                ->first();
+        }
+
+        $webinarContentCount = 0;
+        if (!empty($course->sessions)) {
+            $webinarContentCount += $course->sessions->count();
+        }
+        if (!empty($course->files)) {
+            $webinarContentCount += $course->files->count();
+        }
+        if (!empty($course->textLessons)) {
+            $webinarContentCount += $course->textLessons->count();
+        }
+        if (!empty($course->quizzes)) {
+            $webinarContentCount += $course->quizzes->count();
+        }
+        if (!empty($course->assignments)) {
+            $webinarContentCount += $course->assignments->count();
+        }
+
+        $advertisingBanners = AdvertisingBanner::where('published', true)
+            ->whereIn('position', ['course', 'course_sidebar'])
+            ->get();
+
+        $sessionsWithoutChapter = $course->sessions->whereNull('chapter_id');
+
+        $filesWithoutChapter = $course->files->whereNull('chapter_id');
+
+        $textLessonsWithoutChapter = $course->textLessons->whereNull('chapter_id');
+
+        $quizzes = $course->quizzes->whereNull('chapter_id');
+
+        if ($user) {
+            $quizzes = $this->checkQuizzesResults($user, $quizzes);
+
+            if (!empty($course->chapters) and count($course->chapters)) {
+                foreach ($course->chapters as $chapter) {
+                    if (!empty($chapter->chapterItems) and count($chapter->chapterItems)) {
+                        foreach ($chapter->chapterItems as $chapterItem) {
+                            if (!empty($chapterItem->quiz)) {
+                                $chapterItem->quiz = $this->checkQuizResults($user, $chapterItem->quiz);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!empty($course->quizzes) and count($course->quizzes)) {
+                $course->quizzes = $this->checkQuizzesResults($user, $course->quizzes);
+            }
+        }
+
+        $pageRobot = getPageRobot('course_show'); // index
+        $canSale = ($course->canSale() and !$hasBought);
+
+        /* Installments */
+        $showInstallments = true;
+        $overdueInstallmentOrders = $this->checkUserHasOverdueInstallment($user);
+
+        if ($overdueInstallmentOrders->isNotEmpty() and getInstallmentsSettings('disable_instalments_when_the_user_have_an_overdue_installment')) {
+            $showInstallments = false;
+        }
+
+        if ($canSale and !empty($course->price) and $course->price > 0 and $showInstallments and getInstallmentsSettings('status') and (empty($user) or $user->enable_installments)) {
+            $installmentPlans = new InstallmentPlans($user);
+            $installments = $installmentPlans->getPlans('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
+        }
+
+        /* Cashback Rules */
+        if ($canSale and !empty($course->price) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
+            $cashbackRulesMixin = new CashbackRules($user);
+            $cashbackRules = $cashbackRulesMixin->getRules('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
+        }
+
+        $data = [
+            'pageTitle' => $course->title,
+            'pageDescription' => $course->seo_description,
+            'pageRobot' => $pageRobot,
+            'pageMetaImage' => $course->getImage(),
+            'course' => $course,
+            'isFavorite' => $isFavorite,
+            'hasBought' => $hasBought,
+            'user' => $user,
+            'webinarContentCount' => $webinarContentCount,
+            'advertisingBanners' => $advertisingBanners->where('position', 'course'),
+            'advertisingBannersSidebar' => $advertisingBanners->where('position', 'course_sidebar'),
+            'activeSpecialOffer' => $course->activeSpecialOffer(),
+            'sessionsWithoutChapter' => $sessionsWithoutChapter,
+            'filesWithoutChapter' => $filesWithoutChapter,
+            'textLessonsWithoutChapter' => $textLessonsWithoutChapter,
+            'quizzes' => $quizzes,
+            'installments' => $installments ?? null,
+            'cashbackRules' => $cashbackRules ?? null,
+        ];
+
+        // check for certificate
+        if (!empty($user)) {
+            $course->makeCourseCertificateForUser($user);
+        }
+
+        if ($justReturnData) {
+            return $data;
+        }
+
+        return view('web.default.course.index', $data);
+    }
+
     public function course($slug, $justReturnData = false)
     {
         $user = null;
@@ -882,4 +1147,62 @@ class WebinarController extends Controller
 
         abort(404);
     }
+
+    public function purchaseCertificate(Request $request)
+    {
+        $user = auth()->user();
+
+        // Check if the user is authenticated and if the feature for direct certificate purchase is enabled
+        if (!empty($user) && !empty(getFeaturesSettings('certificate_purchase_button_status'))) {
+            // Validate the incoming request data
+            $this->validate($request, [
+                'certificate_id' => 'required',
+                'webinar_id' => 'required|exists:webinars,id',
+            ]);
+
+            // Extract the data from the request
+            $data = $request->except('_token');
+
+            // Get the webinar and certificate information
+            $webinarId = $data['webinar_id'];
+            $certificateId = $data['certificate_id'];
+
+            // Retrieve the webinar that is active and not private
+            $webinar = Webinar::where('id', $webinarId)
+                ->where('private', false)
+                ->where('status', 'active')
+                ->first();
+
+            // Check if the webinar exists
+            if (!empty($webinar)) {
+                // Get the certificate details
+                $courseCertificate = Certificate::find($certificateId);
+
+                // Check if the certificate exists and has a price
+                if (!empty($courseCertificate) && $courseCertificate->certificate_price > 0) {
+                    // Create a fake cart for the certificate purchase
+                    $fakeCarts = collect();
+                    $fakeCart = new Cart();
+                    $fakeCart->creator_id = $user->id;
+                    $fakeCart->webinar_id = $webinarId;
+                    $fakeCart->ticket_id = $ticketId;
+                    $fakeCart->special_offer_id = null; // If applicable
+                    $fakeCart->created_at = time();
+
+                    $fakeCarts->add($fakeCart);
+
+                    // Process the checkout through the CartController
+                    $cartController = new CartController();
+                    return $cartController->checkout(new Request(), $fakeCarts);
+                } else {
+                    // Return an error if the certificate doesn't exist or has no price
+                    return response()->json(['message' => 'Certificate does not exist or price is not set.'], 400);
+                }
+            }
+        }
+
+        // If user is not authenticated or the feature is disabled, return a 404 error
+        abort(404);
+    }
+
 }

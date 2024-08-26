@@ -7,31 +7,41 @@
         @php
             $hasCertificateItem = true;
             $certificateAttribute = '';
-            if ($course->certificate_price === null) {
-                $certificateAttribute = !empty($courseCertificate) ? $courseCertificate->id : '';
-            }
+
+            // Check if the certificate price is greater than 0
+            if ($course->certificate_price > 0) {
+                // Generate the route if the price is valid
+                $certificateAttribute = route('certificate.show', ['slug' => $course->slug]);
+            } else {
+                // Use course certificate ID if the price is null
+                $certificateAttribute = !empty($courseCertificate) 
+                    ? url('panel/certificates/webinars/' . $courseCertificate->id . '/show')
+                    : '';
+            }   
         @endphp
 
-        <div class="course-certificate-item cursor-pointer p-10 border border-gray200 rounded-sm mb-15" data-course-certificate="{{ $certificateAttribute }}">
-            <div class="d-flex align-items-center">
-                <span class="chapter-icon bg-gray300 mr-10">
-                    <i data-feather="award" class="text-gray" width="16" height="16"></i>
-                </span>
+        @if($course->certificate_price > 0)
+            <a href="{{ $certificateAttribute }}" class="d-flex align-items-center cursor-pointer">
+        @else
+            <a href="{{ $certificateAttribute }}" class="d-flex align-items-center cursor-pointer">
+        @endif    
+            <span class="chapter-icon bg-gray300 mr-10">
+                <i data-feather="award" class="text-gray" width="16" height="16"></i>
+            </span>
 
-                <div class="flex-grow-1">
-                    <span class="font-weight-500 font-14 text-dark-blue d-block">{{ trans('update.course_certificate') }}</span>
+            <div class="flex-grow-1">
+                <span class="font-weight-500 font-14 text-dark-blue d-block">{{ trans('update.course_certificate') }}</span>
 
-                    <div class="d-flex align-items-center">
-                        @if(!empty($courseCertificate))
-                            <span class="font-12 text-gray">{{ trans("public.date") }}: {{ dateTimeFormat($courseCertificate->created_at, 'j F Y') }}</span>
-                        @else
-                            <span class="font-12 text-gray">{{ trans("update.not_achieve") }}</span>
-                        @endif
-                    </div>
+                <div class="d-flex align-items-center">
+                    @if(!empty($courseCertificate))
+                        <span class="font-12 text-gray">{{ trans("public.date") }}: {{ dateTimeFormat($courseCertificate->created_at, 'j F Y') }}</span>
+                    @else
+                        <span class="font-12 text-gray">{{ trans("update.not_achieve") }}</span>
+                    @endif
                 </div>
-
             </div>
-        </div>
+
+        </a>
     @endif
 
     @if(!empty($course->quizzes) and count($course->quizzes))
