@@ -3,12 +3,16 @@
 @endphp
 
 <div class="content-tab p-15 pb-50">
-    @if($course->certificate)
+    @if($course->certificate )
         @php
             $hasCertificateItem = true;
+            $certificateAttribute = '';
+            if ($course->certificate_price === null) {
+                $certificateAttribute = !empty($courseCertificate) ? $courseCertificate->id : '';
+            }
         @endphp
 
-        <div class="course-certificate-item cursor-pointer p-10 border border-gray200 rounded-sm mb-15" data-course-certificate="{{ !empty($courseCertificate) ? $courseCertificate->id : '' }}">
+        <div class="course-certificate-item cursor-pointer p-10 border border-gray200 rounded-sm mb-15" data-course-certificate="{{ $certificateAttribute }}">
             <div class="d-flex align-items-center">
                 <span class="chapter-icon bg-gray300 mr-10">
                     <i data-feather="award" class="text-gray" width="16" height="16"></i>
