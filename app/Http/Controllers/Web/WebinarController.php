@@ -189,56 +189,8 @@ class WebinarController extends Controller
                 ->first();
         }
 
-        $webinarContentCount = 0;
-        if (!empty($course->sessions)) {
-            $webinarContentCount += $course->sessions->count();
-        }
-        if (!empty($course->files)) {
-            $webinarContentCount += $course->files->count();
-        }
-        if (!empty($course->textLessons)) {
-            $webinarContentCount += $course->textLessons->count();
-        }
-        if (!empty($course->quizzes)) {
-            $webinarContentCount += $course->quizzes->count();
-        }
-        if (!empty($course->assignments)) {
-            $webinarContentCount += $course->assignments->count();
-        }
+        
 
-        $advertisingBanners = AdvertisingBanner::where('published', true)
-            ->whereIn('position', ['course', 'course_sidebar'])
-            ->get();
-
-        $sessionsWithoutChapter = $course->sessions->whereNull('chapter_id');
-
-        $filesWithoutChapter = $course->files->whereNull('chapter_id');
-
-        $textLessonsWithoutChapter = $course->textLessons->whereNull('chapter_id');
-
-        $quizzes = $course->quizzes->whereNull('chapter_id');
-
-        if ($user) {
-            $quizzes = $this->checkQuizzesResults($user, $quizzes);
-
-            if (!empty($course->chapters) and count($course->chapters)) {
-                foreach ($course->chapters as $chapter) {
-                    if (!empty($chapter->chapterItems) and count($chapter->chapterItems)) {
-                        foreach ($chapter->chapterItems as $chapterItem) {
-                            if (!empty($chapterItem->quiz)) {
-                                $chapterItem->quiz = $this->checkQuizResults($user, $chapterItem->quiz);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!empty($course->quizzes) and count($course->quizzes)) {
-                $course->quizzes = $this->checkQuizzesResults($user, $course->quizzes);
-            }
-        }
-
-        $pageRobot = getPageRobot('course_show'); // index
         $canSale = ($course->canSale() and !$hasBought);
 
         /* Installments */
@@ -260,31 +212,25 @@ class WebinarController extends Controller
             $cashbackRules = $cashbackRulesMixin->getRules('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
         }
 
+        // check for certificate\
+        if (!empty($user)) {
+            $certificate = $course->makeCourseCertificateForUser($user);
+        }
+
         $data = [
             'pageTitle' => $course->title,
             'pageDescription' => $course->seo_description,
-            'pageRobot' => $pageRobot,
             'pageMetaImage' => $course->getImage(),
             'course' => $course,
             'isFavorite' => $isFavorite,
             'hasBought' => $hasBought,
             'user' => $user,
-            'webinarContentCount' => $webinarContentCount,
-            'advertisingBanners' => $advertisingBanners->where('position', 'course'),
-            'advertisingBannersSidebar' => $advertisingBanners->where('position', 'course_sidebar'),
             'activeSpecialOffer' => $course->activeSpecialOffer(),
-            'sessionsWithoutChapter' => $sessionsWithoutChapter,
-            'filesWithoutChapter' => $filesWithoutChapter,
-            'textLessonsWithoutChapter' => $textLessonsWithoutChapter,
-            'quizzes' => $quizzes,
             'installments' => $installments ?? null,
             'cashbackRules' => $cashbackRules ?? null,
+            'certificate' => $certificate ?? null,
         ];
-
-        // check for certificate
-        if (!empty($user)) {
-            $course->makeCourseCertificateForUser($user);
-        }
+        
 
         if ($justReturnData) {
             return $data;
@@ -1153,19 +1099,19 @@ class WebinarController extends Controller
         $user = auth()->user();
 
         // Check if the user is authenticated and if the feature for direct certificate purchase is enabled
-        if (!empty($user) && !empty(getFeaturesSettings('certificate_purchase_button_status'))) {
+        if (!empty($user) && !empty(getFeaturesSettings('direct_classes_payment_button_status'))) {
             // Validate the incoming request data
             $this->validate($request, [
-                'certificate_id' => 'required',
-                'webinar_id' => 'required|exists:webinars,id',
+                'item_id' => 'required',
+                'item_name' => 'nullable',
             ]);
 
             // Extract the data from the request
             $data = $request->except('_token');
 
             // Get the webinar and certificate information
-            $webinarId = $data['webinar_id'];
-            $certificateId = $data['certificate_id'];
+            $webinarId = $data['item_id'];
+            $certificateId = $data['ticket_id'];
 
             // Retrieve the webinar that is active and not private
             $webinar = Webinar::where('id', $webinarId)

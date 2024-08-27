@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="feature-slider-container position-relative d-flex justify-content-center mt-10">
-                    <div class="swiper-container features-swiper-container pb-25">
+                    <div class="swiper-container features-swiper-container pb-25 swiper-container-initialized swiper-container-horizontal col-12">
                         <div class="swiper-wrapper py-10">
                             <?php $__currentLoopData = $featureWebinars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="swiper-slide">

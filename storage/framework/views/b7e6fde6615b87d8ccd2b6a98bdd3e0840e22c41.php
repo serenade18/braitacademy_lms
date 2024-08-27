@@ -15,9 +15,8 @@
             } else {
                 // Use course certificate ID if the price is null
                 // $certificateAttribute = !empty($courseCertificate) 
-                 //   ? url('panel/certificates/webinars/' . $courseCertificate->id . '/show')
-                 //   : ''; 
-
+                //    ? url('panel/certificates/webinars/' . $courseCertificate->id . '/show')
+                //    : ''; 
                 $certificateAttribute = route('certificate.show', ['slug' => $course->slug]);
             }   
         ?>

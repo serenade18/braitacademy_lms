@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="feature-slider-container position-relative d-flex justify-content-center mt-10">
-                    <div class="swiper-container features-swiper-container pb-25">
+                    <div class="swiper-container features-swiper-container pb-25 swiper-container-initialized swiper-container-horizontal col-12">
                         <div class="swiper-wrapper py-10">
                             @foreach($featureWebinars as $feature)
                                 <div class="swiper-slide">
