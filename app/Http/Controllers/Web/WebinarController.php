@@ -18,6 +18,7 @@ use App\Models\TextLesson;
 use App\Models\CourseLearning;
 use App\Models\WebinarChapter;
 use App\Models\WebinarReport;
+use App\Models\Certificate;
 use App\Models\Webinar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +37,6 @@ class WebinarController extends Controller
             $user = auth()->user();
         }
 
-
         if (!$justReturnData) {
             $contentLimitation = $this->checkContentLimitation($user, true);
             if ($contentLimitation != "ok") {
@@ -46,103 +46,8 @@ class WebinarController extends Controller
 
         $course = Webinar::where('slug', $slug)
             ->with([
-                'quizzes' => function ($query) {
-                    $query->where('status', 'active')
-                        ->with(['quizResults', 'quizQuestions']);
-                },
-                'tags',
-                'prerequisites' => function ($query) {
-                    $query->with(['prerequisiteWebinar' => function ($query) {
-                        $query->with(['teacher' => function ($qu) {
-                            $qu->select('id', 'full_name', 'avatar');
-                        }]);
-                    }]);
-                    $query->orderBy('order', 'asc');
-                },
-                'faqs' => function ($query) {
-                    $query->orderBy('order', 'asc');
-                },
-                'webinarExtraDescription' => function ($query) {
-                    $query->orderBy('order', 'asc');
-                },
-                'chapters' => function ($query) use ($user) {
-                    $query->where('status', WebinarChapter::$chapterActive);
-                    $query->orderBy('order', 'asc');
-
-                    $query->with([
-                        'chapterItems' => function ($query) {
-                            $query->orderBy('order', 'asc');
-                        }
-                    ]);
-                },
-                'files' => function ($query) use ($user) {
-                    $query->join('webinar_chapters', 'webinar_chapters.id', '=', 'files.chapter_id')
-                        ->select('files.*', DB::raw('webinar_chapters.order as chapterOrder'))
-                        ->where('files.status', WebinarChapter::$chapterActive)
-                        ->orderBy('chapterOrder', 'asc')
-                        ->orderBy('files.order', 'asc')
-                        ->with([
-                            'learningStatus' => function ($query) use ($user) {
-                                $query->where('user_id', !empty($user) ? $user->id : null);
-                            }
-                        ]);
-                },
-                'textLessons' => function ($query) use ($user) {
-                    $query->where('status', WebinarChapter::$chapterActive)
-                        ->withCount(['attachments'])
-                        ->orderBy('order', 'asc')
-                        ->with([
-                            'learningStatus' => function ($query) use ($user) {
-                                $query->where('user_id', !empty($user) ? $user->id : null);
-                            }
-                        ]);
-                },
-                'sessions' => function ($query) use ($user) {
-                    $query->where('status', WebinarChapter::$chapterActive)
-                        ->orderBy('order', 'asc')
-                        ->with([
-                            'learningStatus' => function ($query) use ($user) {
-                                $query->where('user_id', !empty($user) ? $user->id : null);
-                            }
-                        ]);
-                },
-                'assignments' => function ($query) {
-                    $query->where('status', WebinarChapter::$chapterActive);
-                },
                 'tickets' => function ($query) {
                     $query->orderBy('order', 'asc');
-                },
-                'filterOptions',
-                'category',
-                'teacher',
-                'reviews' => function ($query) {
-                    $query->where('status', 'active');
-                    $query->with([
-                        'comments' => function ($query) {
-                            $query->where('status', 'active');
-                        },
-                        'creator' => function ($qu) {
-                            $qu->select('id', 'full_name', 'avatar');
-                        }
-                    ]);
-                },
-                'comments' => function ($query) {
-                    $query->where('status', 'active');
-                    $query->whereNull('reply_id');
-                    $query->with([
-                        'user' => function ($query) {
-                            $query->select('id', 'full_name', 'role_name', 'role_id', 'avatar', 'avatar_settings');
-                        },
-                        'replies' => function ($query) {
-                            $query->where('status', 'active');
-                            $query->with([
-                                'user' => function ($query) {
-                                    $query->select('id', 'full_name', 'role_name', 'role_id', 'avatar', 'avatar_settings');
-                                }
-                            ]);
-                        }
-                    ]);
-                    $query->orderBy('created_at', 'desc');
                 },
             ])
             ->withCount([
@@ -167,33 +72,9 @@ class WebinarController extends Controller
         }
 
         $hasBought = $course->checkUserHasBought($user, true, true);
-        $isPrivate = $course->private;
-
-        if (!empty($user) and ($user->id == $course->creator_id or $user->organ_id == $course->creator_id or $user->isAdmin())) {
-            $isPrivate = false;
-        }
-
-        if ($isPrivate and $hasBought) { // check the user has bought the course or not
-            $isPrivate = false;
-        }
-
-        if ($isPrivate) {
-            return $justReturnData ? false : back();
-        }
-
-        $isFavorite = false;
-
-        if (!empty($user)) {
-            $isFavorite = Favorite::where('webinar_id', $course->id)
-                ->where('user_id', $user->id)
-                ->first();
-        }
-
-        
 
         $canSale = ($course->canSale() and !$hasBought);
 
-        /* Installments */
         $showInstallments = true;
         $overdueInstallmentOrders = $this->checkUserHasOverdueInstallment($user);
 
@@ -206,31 +87,29 @@ class WebinarController extends Controller
             $installments = $installmentPlans->getPlans('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
         }
 
-        /* Cashback Rules */
+        $cashbackRules = [];
         if ($canSale and !empty($course->price) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
             $cashbackRulesMixin = new CashbackRules($user);
             $cashbackRules = $cashbackRulesMixin->getRules('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
         }
 
-        // check for certificate\
-        if (!empty($user)) {
-            $certificate = $course->makeCourseCertificateForUser($user);
-        }
+        // Fetch the certificate associated with the course (or webinar)
+        $certificate = Certificate::where('webinar_id', $course->id)
+            ->where('student_id', $user->id)
+            ->first();
 
         $data = [
             'pageTitle' => $course->title,
             'pageDescription' => $course->seo_description,
             'pageMetaImage' => $course->getImage(),
             'course' => $course,
-            'isFavorite' => $isFavorite,
             'hasBought' => $hasBought,
             'user' => $user,
             'activeSpecialOffer' => $course->activeSpecialOffer(),
             'installments' => $installments ?? null,
             'cashbackRules' => $cashbackRules ?? null,
-            'certificate' => $certificate ?? null,
+            'certificate' => $certificate,
         ];
-        
 
         if ($justReturnData) {
             return $data;
@@ -238,6 +117,7 @@ class WebinarController extends Controller
 
         return view('web.default.course.cert', $data);
     }
+
 
     public function course($slug, $justReturnData = false)
     {

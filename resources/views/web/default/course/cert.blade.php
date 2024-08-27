@@ -36,7 +36,6 @@
                         @endif
 
                         @if($hasBought or $percent)
-
                             <div class="mt-30 d-flex align-items-center">
                                 <div class="progress course-progress flex-grow-1 shadow-xs rounded-sm">
                                     <span class="progress-bar rounded-sm bg-warning" style="width: {{ $percent }}%"></span>
@@ -72,10 +71,9 @@
                                 <div class="accordion-row rounded-sm border mt-15 p-15">
                                     <div class="d-flex align-items-center justify-content-between" role="tab" id="files_110">
                                         <div class="d-flex align-items-center" href="#collapseFiles110" aria-controls="collapseFiles110" data-parent="#chaptersAccordion" role="button" data-toggle="collapse" aria-expanded="true">
-
                                             <span class="d-flex align-items-center justify-content-center mr-15">
                                                 <span class="chapter-icon chapter-content-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text text-gray"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text text-gray"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                                                 </span>
                                             </span>
 
@@ -83,29 +81,34 @@
                                         </div>
                                     </div>
                                     
-                                        <div class="collapse show" >
-                                            <div class="panel-collapse">
-                                                <div class="text-gray text-14">
-                                                    
-                                                </div>
-                                                    <div class="d-flex align-items-center justify-content-between mt-20">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="d-flex align-items-center text-gray text-center font-14 mr-20">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download-cloud text-gray mr-5">
-                                                                    <polyline points="8 17 12 21 16 17"></polyline>
-                                                                    <line x1="12" y1="12" x2="12" y2="21"></line>
-                                                                    <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
-                                                                </svg>
-                                                                <span class="line-height-1">1 MB</span>
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <a href="" class="course-content-btns btn btn-sm btn-primary">Download</a>
-                                                        
-                                                        </div>
+                                    <div class="collapse show">
+                                        <div class="panel-collapse">
+                                            <div class="text-gray text-14">
+                                                {{-- Certificate description or additional information can go here --}}
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between mt-20">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="d-flex align-items-center text-gray text-center font-14 mr-20">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download-cloud text-gray mr-5">
+                                                            <polyline points="8 17 12 21 16 17"></polyline>
+                                                            <line x1="12" y1="12" x2="12" y2="21"></line>
+                                                            <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+                                                        </svg>
+                                                        <span class="line-height-1">1 MB</span>
                                                     </div>
-                                            </div> 
-                                        </div>
+                                                </div>
+                                                <div>
+                                                    @if ($certificate)
+                                                        <a href="{{ url('panel/certificates/webinars/' . $certificate->id . '/show') }}" class="course-content-btns btn btn-sm btn-primary">
+                                                            Download
+                                                        </a>
+                                                    @else
+                                                        <span class="text-muted">No certificate available</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
                                     
                                 </div>   
                             </div>
@@ -116,7 +119,7 @@
 
             <div class="course-content-sidebar col-12 col-lg-4 mt-25 mt-lg-0">
                 <div class="rounded-lg shadow-sm">
-                    <div class="course-img {{ $course->video_demo ? 'has-video' :'' }}">
+                    <div class="course-img {{ $course->video_demo ? 'has-video' : '' }}">
                         <img src="{{ $course->getImage() }}" class="img-cover" alt="">
                     </div>
 
@@ -128,7 +131,6 @@
 
                             @if(!empty($course->tickets))
                                 @foreach($course->tickets as $ticket)
-
                                     <div class="form-check mt-20">
                                         <input class="form-check-input" @if(!$ticket->isValid()) disabled @endif type="radio"
                                                data-discount-price="{{ handlePrice($ticket->getPriceWithDiscount($course->certificate_price, !empty($activeSpecialOffer) ? $activeSpecialOffer : null)) }}"
@@ -164,7 +166,12 @@
                                 </div>
                             @else
                                 <div class="d-flex align-items-center justify-content-center mt-20">
-                                    <span class="font-36 text-primary">{{ trans('public.free') }}</span>
+                                    <span class="font-36 text-primary">{{ trans('public.free') }} Certificate</span>
+                                </div>
+                                <div class="mt-20 d-flex flex-column">  
+                                <a href="{{ url('panel/certificates/webinars/' . $certificate->id . '/show') }}" class="course-content-btns btn btn-sm btn-primary">
+                                            Download
+                                </a>
                                 </div>
                             @endif
 
@@ -178,6 +185,7 @@
                                         <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-payment">
                                             Pay Now!
                                         </button>
+                                    @else >
                                     @endif
                                 @else
                                 @endif

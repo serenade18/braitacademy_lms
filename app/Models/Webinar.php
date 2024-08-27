@@ -290,6 +290,11 @@ class Webinar extends Model implements TranslatableContract
         return $discountOut;
     }
 
+    public function certificate()
+    {
+        return $this->hasOne(Certificate::class, 'webinar_id', 'id');
+    }
+
     public function getDiscountPercent()
     {
         $percent = 0;
