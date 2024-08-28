@@ -98,12 +98,10 @@
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    @if ($certificate)
-                                                        <a href="{{ url('panel/certificates/webinars/' . $certificate->id . '/show') }}" class="course-content-btns btn btn-sm btn-primary">
-                                                            Download
+                                                    @if ($certificate && (is_null($course->certificate_price) || $course->certificate_price == 0))
+                                                        <a href="{{ url('panel/certificates/webinars/' . ($certificate->id ?? '#') . '/show') }}" target="_blank" class="course-content-btns btn btn-sm btn-primary">
+                                                            {{ $certificate ? 'Download' : 'No certificate available' }}
                                                         </a>
-                                                    @else
-                                                        <span class="text-muted">No certificate available</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -165,14 +163,16 @@
                                     </div>
                                 </div>
                             @else
+                            @if (is_null($course->certificate_price) || $course->certificate_price == 0)
                                 <div class="d-flex align-items-center justify-content-center mt-20">
-                                    <span class="font-36 text-primary">{{ trans('public.free') }} Certificate</span>
+                                    <span class="font-36 text-primary">Get Certificate</span>
                                 </div>
-                                <div class="mt-20 d-flex flex-column">  
-                                <a href="{{ url('panel/certificates/webinars/' . $certificate->id . '/show') }}" class="course-content-btns btn btn-sm btn-primary">
-                                            Download
-                                </a>
+                                <div class="mt-20 d-flex flex-column">
+                                    <a href="{{ url('panel/certificates/webinars/' . $certificate->id . '/show') }}" target="_blank" class="course-content-btns btn btn-sm btn-primary">
+                                        Download
+                                    </a>
                                 </div>
+                            @endif
                             @endif
 
                             <div class="mt-20 d-flex flex-column">
