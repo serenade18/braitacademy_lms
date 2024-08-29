@@ -102,12 +102,11 @@
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <?php if($certificate): ?>
-                                                        <a href="<?php echo e(url('panel/certificates/webinars/' . $certificate->id . '/show')); ?>" class="course-content-btns btn btn-sm btn-primary">
-                                                            Download
+                                                    <?php if($certificate && (is_null($course->certificate_price) || $course->certificate_price == 0)): ?>
+                                                        <a href="<?php echo e(url('panel/certificates/webinars/' . ($certificate->id ?? '#') . '/show')); ?>" target="_blank" class="course-content-btns btn btn-sm btn-primary">
+                                                            <?php echo e($certificate ? 'Download' : 'No certificate available'); ?>
+
                                                         </a>
-                                                    <?php else: ?>
-                                                        <span class="text-muted">No certificate available</span>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
@@ -171,14 +170,16 @@
                                     </div>
                                 </div>
                             <?php else: ?>
+                            <?php if(is_null($course->certificate_price) || $course->certificate_price == 0): ?>
                                 <div class="d-flex align-items-center justify-content-center mt-20">
-                                    <span class="font-36 text-primary"><?php echo e(trans('public.free')); ?> Certificate</span>
+                                    <span class="font-36 text-primary">Get Certificate</span>
                                 </div>
-                                <div class="mt-20 d-flex flex-column">  
-                                <a href="<?php echo e(url('panel/certificates/webinars/' . $certificate->id . '/show')); ?>" class="course-content-btns btn btn-sm btn-primary">
-                                            Download
-                                </a>
+                                <div class="mt-20 d-flex flex-column">
+                                    <a href="<?php echo e(url('panel/certificates/webinars/' . $certificate->id . '/show')); ?>" target="_blank" class="course-content-btns btn btn-sm btn-primary">
+                                        Download
+                                    </a>
                                 </div>
+                            <?php endif; ?>
                             <?php endif; ?>
 
                             <div class="mt-20 d-flex flex-column">

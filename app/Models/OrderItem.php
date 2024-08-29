@@ -75,7 +75,6 @@ class OrderItem extends Model
         return $this->belongsTo(Gift::class, 'gift_id', 'id');
     }
 
-
     public static function getSeller($orderItem)
     {
         $seller = null;

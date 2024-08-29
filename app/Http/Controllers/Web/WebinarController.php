@@ -118,7 +118,6 @@ class WebinarController extends Controller
         return view('web.default.course.cert', $data);
     }
 
-
     public function course($slug, $justReturnData = false)
     {
         $user = null;
