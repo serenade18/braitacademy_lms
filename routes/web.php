@@ -153,6 +153,10 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
     // certificate routes
     Route::group(['prefix' => 'certificate'], function () {
         Route::get('/{slug}', 'WebinarController@certificate')->name('certificate.show');
+        Route::group(['middleware' => 'web.auth'], function () {
+            // purchase certifcate route
+            Route::post('/direct-payment', 'WebinarController@purchaseCertificate');
+        });
     });
 
     Route::group(['prefix' => 'certificate_validation'], function () {
