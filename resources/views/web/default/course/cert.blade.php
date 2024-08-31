@@ -187,9 +187,7 @@
                                     </button>
 
                                     @if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0 )
-                                        <!-- <a href="{{ route('certificate.direct-payment') }}" class="btn btn-outline-danger mt-20 js-course-direct-payment">
-                                            Pay Now!
-                                        </a> -->
+                                        
 
                                         <button type="submit" class="btn btn-outline-danger mt-20">
                                             Pay Now!

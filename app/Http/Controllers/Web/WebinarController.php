@@ -32,11 +32,7 @@ class WebinarController extends Controller
     // use this controller for the certificate blade
     public function certificate($slug, $justReturnData = false)
     {
-        $user = null;
-
-        if (auth()->check()) {
-            $user = auth()->user();
-        }
+        $user = auth()->check() ? auth()->user() : null;
 
         if (!$justReturnData) {
             $contentLimitation = $this->checkContentLimitation($user, true);
@@ -95,9 +91,12 @@ class WebinarController extends Controller
         }
 
         // Fetch the certificate associated with the course (or webinar)
-        $certificate = Certificate::where('webinar_id', $course->id)
-            ->where('student_id', $user->id)
-            ->first();
+        $certificate = null;
+        if ($user) {
+            $certificate = Certificate::where('webinar_id', $course->id)
+                ->where('student_id', $user->id)
+                ->first();
+        }
 
         $data = [
             'pageTitle' => $course->title,
@@ -110,6 +109,7 @@ class WebinarController extends Controller
             'installments' => $installments ?? null,
             'cashbackRules' => $cashbackRules ?? null,
             'certificate' => $certificate,
+            'canSaleCertificate' => $canSaleCertificate, // Pass it to the view
         ];
 
         if ($justReturnData) {

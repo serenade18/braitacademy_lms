@@ -195,9 +195,7 @@
                                     </button>
 
                                     <?php if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0 ): ?>
-                                        <!-- <a href="<?php echo e(route('certificate.direct-payment')); ?>" class="btn btn-outline-danger mt-20 js-course-direct-payment">
-                                            Pay Now!
-                                        </a> -->
+                                        
 
                                         <button type="submit" class="btn btn-outline-danger mt-20">
                                             Pay Now!
@@ -232,5 +230,4 @@
         </script>
     <?php endif; ?>
 <?php $__env->stopPush(); ?>
-
 <?php echo $__env->make(getTemplate().'.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\BraIT\Desktop\Dev\braitacademy\resources\views/web/default/course/cert.blade.php ENDPATH**/ ?>
