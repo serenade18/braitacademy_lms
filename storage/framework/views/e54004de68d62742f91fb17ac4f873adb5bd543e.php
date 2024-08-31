@@ -151,6 +151,11 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php endif; ?>
 
+                            <!--  use this to check if certificate can be sold -->
+                            <?php
+                                $canSaleCertificate = ($course->canSaleCertificate());
+                            ?>
+
                             <?php if(isset($course->certificate_price) && $course->certificate_price > 0): ?>
                                 <div id="priceBox" class="d-flex align-items-center justify-content-center mt-20 <?php echo e(!empty($activeSpecialOffer) ? ' flex-column ' : ''); ?>">
                                     <div class="text-center">
@@ -189,11 +194,10 @@
 
                                     </button>
 
-                                    <?php if(!empty(getFeaturesSettings('direct_certificate_payment_button_status'))): ?>
+                                    <?php if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0): ?>
                                         <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-payment">
                                             Pay Now!
                                         </button>
-                                    <?php else: ?> >
                                     <?php endif; ?>
                                 <?php else: ?>
                                 <?php endif; ?>
@@ -208,6 +212,8 @@
     <?php echo $__env->make('web.default.course.share_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('web.default.course.buy_with_point_modal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
+
+
 
 <?php $__env->startPush('scripts_bottom'); ?>
 

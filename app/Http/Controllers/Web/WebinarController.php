@@ -29,6 +29,7 @@ class WebinarController extends Controller
     use CheckContentLimitationTrait;
     use InstallmentsTrait;
 
+    // use this controller for the certificate blade
     public function certificate($slug, $justReturnData = false)
     {
         $user = null;
@@ -73,7 +74,7 @@ class WebinarController extends Controller
 
         $hasBought = $course->checkUserHasBought($user, true, true);
 
-        $canSale = ($course->canSale() and !$hasBought);
+        $canSaleCertificate = ($course->canSaleCertificate() and !$hasBought);
 
         $showInstallments = true;
         $overdueInstallmentOrders = $this->checkUserHasOverdueInstallment($user);
@@ -82,13 +83,13 @@ class WebinarController extends Controller
             $showInstallments = false;
         }
 
-        if ($canSale and !empty($course->price) and $course->price > 0 and $showInstallments and getInstallmentsSettings('status') and (empty($user) or $user->enable_installments)) {
+        if ($canSaleCertificate and !empty($course->price) and $course->price > 0 and $showInstallments and getInstallmentsSettings('status') and (empty($user) or $user->enable_installments)) {
             $installmentPlans = new InstallmentPlans($user);
             $installments = $installmentPlans->getPlans('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
         }
 
         $cashbackRules = [];
-        if ($canSale and !empty($course->price) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
+        if ($canSaleCertificate and !empty($course->price) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
             $cashbackRulesMixin = new CashbackRules($user);
             $cashbackRules = $cashbackRulesMixin->getRules('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
         }

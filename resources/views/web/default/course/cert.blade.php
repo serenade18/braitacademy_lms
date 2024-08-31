@@ -145,6 +145,11 @@
                                 @endforeach
                             @endif
 
+                            <!--  use this to check if certificate can be sold -->
+                            @php
+                                $canSaleCertificate = ($course->canSaleCertificate());
+                            @endphp
+
                             @if(isset($course->certificate_price) && $course->certificate_price > 0)
                                 <div id="priceBox" class="d-flex align-items-center justify-content-center mt-20 {{ !empty($activeSpecialOffer) ? ' flex-column ' : '' }}">
                                     <div class="text-center">
@@ -181,11 +186,10 @@
                                         {{ trans('public.add_to_cart') }}
                                     </button>
 
-                                    @if(!empty(getFeaturesSettings('direct_certificate_payment_button_status')))
+                                    @if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0)
                                         <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-payment">
                                             Pay Now!
                                         </button>
-                                    @else >
                                     @endif
                                 @else
                                 @endif
@@ -200,6 +204,8 @@
     @include('web.default.course.share_modal')
     @include('web.default.course.buy_with_point_modal')
 @endsection
+
+
 
 @push('scripts_bottom')
 
