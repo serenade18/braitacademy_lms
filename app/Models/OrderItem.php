@@ -24,6 +24,11 @@ class OrderItem extends Model
     {
         return $this->belongsTo('App\Models\Webinar', 'webinar_id', 'id');
     }
+    
+    public function certificate()
+    {
+        return $this->belongsTo('App\Models\Certificate', 'certificate_id', 'id');
+    }
 
     public function bundle()
     {

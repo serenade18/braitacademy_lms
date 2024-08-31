@@ -978,7 +978,7 @@ class WebinarController extends Controller
         $user = auth()->user();
 
         // Check if the user is authenticated and if the feature for direct certificate purchase is enabled
-        if (!empty($user) && !empty(getFeaturesSettings('direct_classes_payment_button_status'))) {
+        if (!empty($user) && !empty(getFeaturesSettings('direct_certificate_payment_button_status'))) {
             // Validate the incoming request data
             $this->validate($request, [
                 'item_id' => 'required',
@@ -989,19 +989,21 @@ class WebinarController extends Controller
             $data = $request->except('_token');
 
             // Get the webinar and certificate information
-            $webinarId = $data['item_id'];
-            $certificateId = $data['ticket_id'];
+            $certificateId = $data['item_id'];
+            $ticketId = $data['ticket_id'];
 
-            // Retrieve the webinar that is active and not private
-            $webinar = Webinar::where('id', $webinarId)
-                ->where('private', false)
-                ->where('status', 'active')
-                ->first();
+            // Retrieve the certificate 
+            $certificate = Certificate::where('id', $certificateId)
+            ->where('status', 'active')
+            ->first();;
 
             // Check if the webinar exists
-            if (!empty($webinar)) {
-                // Get the certificate details
-                $courseCertificate = Certificate::find($certificateId);
+            if (!empty($certificate)) {
+                $checkCertificateForSale = $this->checkCertificateForSale($certificate, $user);
+    
+                if ($checkCertificateForSale != 'ok') {
+                    return $checkCertificateForSale;
+                };
 
                 // Check if the certificate exists and has a price
                 if (!empty($courseCertificate) && $courseCertificate->certificate_price > 0) {

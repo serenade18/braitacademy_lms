@@ -1207,7 +1207,7 @@ function getGeneralSettings($key = null)
  * $key => "agora_resolution" | "agora_max_bitrate" | "agora_min_bitrate" | "agora_frame_rate" | "agora_live_streaming" | "agora_chat" | "agora_cloud_rec" | "agora_in_free_courses"
  * "new_interactive_file" | "timezone_in_register" | "timezone_in_create_webinar"
  * "sequence_content_status" | "webinar_assignment_status" | "webinar_private_content_status" | "disable_view_content_after_user_register"
- * "direct_classes_payment_button_status" | "mobile_app_status" | "cookie_settings_status" | "show_other_register_method" | "show_certificate_additional_in_register"
+ * "direct_classes_payment_button_status" | "direct_certificate_payment_button_status" | "mobile_app_status" | "cookie_settings_status" | "show_other_register_method" | "show_certificate_additional_in_register"
  * @return
  * */
 function getFeaturesSettings($key = null)
@@ -2260,6 +2260,22 @@ function handleCoursePagePrice($price)
     ];
 }
 
+/**
+ * This text is for the certificate details page only and should not be used elsewhere. Use the "handlePrice" method for other places.
+ * */
+function handleCertificatePagePrice($certificatePrice)
+{
+    $result = handlePrice($certificatePrice, true, true, true, null, true);
+
+    $certificatePrice = addCurrencyToPrice($result['certificate_price']);
+
+    $tax = !empty($result['tax']) ? addCurrencyToPrice($result['tax']) : 0;
+
+    return [
+        'certificate_price' => $certificatePrice,
+        'tax' => $tax,
+    ];
+}
 
 function checkShowCookieSecurityDialog()
 {

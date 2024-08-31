@@ -18,6 +18,7 @@ return [
     'fail_purchase' => 'Purchase failed!',
     'course_not_found' => 'Course not found!',
     'course_not_capacity' => 'Out of class capacity!',
+    'certificat_not_available' => 'Certificate no valid!!',
     'course_not_free' => 'The course is not free.',
     'course_has_been_purchase' => 'This course has been purchased.',
     'cant_purchase_your_course' => 'You can not purchase your course.',

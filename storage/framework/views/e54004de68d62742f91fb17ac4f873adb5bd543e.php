@@ -189,7 +189,7 @@
 
                                     </button>
 
-                                    <?php if(!empty(getFeaturesSettings('direct_classes_payment_button_status'))): ?>
+                                    <?php if(!empty(getFeaturesSettings('direct_certificate_payment_button_status'))): ?>
                                         <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-payment">
                                             Pay Now!
                                         </button>

@@ -14,6 +14,7 @@ class Order extends Model
 
     //types
     public static $webinar = 'webinar';
+    public static $certificate = 'certificate';
     public static $meeting = 'meeting';
     public static $charge = 'charge';
     public static $subscribe = 'subscribe';
