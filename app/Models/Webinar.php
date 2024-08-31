@@ -824,6 +824,12 @@ class Webinar extends Model implements TranslatableContract
         return $result;
     }
 
+    public function canSaleCertificate()
+    {
+        // Check if the certificate price is set and greater than 0
+        return !is_null($this->certificate_price) && $this->certificate_price > 0;
+    }
+
     public function canJoinToWaitlist()
     {
         $hasBought = $this->checkUserHasBought();
