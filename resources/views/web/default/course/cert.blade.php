@@ -124,8 +124,8 @@
                     <div class="px-20 pb-30">
                         <form action="/cart/store" method="post">
                             {{ csrf_field() }}
-                            <input type="hidden" name="item_id" value="{{ $course->id }}">
-                            <input type="hidden" name="item_name" value="webinar_id">
+                            <input type="hidden" name="item_id" value="{{ $certificate->id }}">
+                            <input type="hidden" name="item_name" value="certificate_id">
 
                             @if(!empty($course->tickets))
                                 @foreach($course->tickets as $ticket)
@@ -186,8 +186,12 @@
                                         {{ trans('public.add_to_cart') }}
                                     </button>
 
-                                    @if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0)
-                                        <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-payment">
+                                    @if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0 )
+                                        <!-- <a href="{{ route('certificate.direct-payment') }}" class="btn btn-outline-danger mt-20 js-course-direct-payment">
+                                            Pay Now!
+                                        </a> -->
+
+                                        <button type="submit" class="btn btn-outline-danger mt-20">
                                             Pay Now!
                                         </button>
                                     @endif

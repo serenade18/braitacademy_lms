@@ -83,13 +83,13 @@ class WebinarController extends Controller
             $showInstallments = false;
         }
 
-        if ($canSaleCertificate and !empty($course->price) and $course->price > 0 and $showInstallments and getInstallmentsSettings('status') and (empty($user) or $user->enable_installments)) {
+        if ($canSaleCertificate and !empty($course->certificate_price) and $course->certificate_price > 0 and $showInstallments and getInstallmentsSettings('status') and (empty($user) or $user->enable_installments)) {
             $installmentPlans = new InstallmentPlans($user);
             $installments = $installmentPlans->getPlans('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
         }
 
         $cashbackRules = [];
-        if ($canSaleCertificate and !empty($course->price) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
+        if ($canSaleCertificate and !empty($course->certificate_price) and getFeaturesSettings('cashback_active') and (empty($user) or !$user->disable_cashback)) {
             $cashbackRulesMixin = new CashbackRules($user);
             $cashbackRules = $cashbackRulesMixin->getRules('courses', $course->id, $course->type, $course->category_id, $course->teacher_id);
         }
@@ -982,37 +982,37 @@ class WebinarController extends Controller
         if (!empty($user) && !empty(getFeaturesSettings('direct_certificate_payment_button_status'))) {
             // Validate the incoming request data
             $this->validate($request, [
-                'item_id' => 'required',
-                'item_name' => 'nullable',
+                'item_id' => 'required|exists:certificates,id', // Ensure item_id is a valid certificate ID
+                'ticket_id' => 'nullable', // Ensure ticket_id is optional
             ]);
 
             // Extract the data from the request
             $data = $request->except('_token');
 
-            // Get the webinar and certificate information
+            // Get the certificate information
             $certificateId = $data['item_id'];
             $ticketId = $data['ticket_id'];
 
-            // Retrieve the certificate 
+            // Retrieve the certificate
             $certificate = Certificate::where('id', $certificateId)
-            ->where('status', 'active')
-            ->first();;
+                ->where('status', 'active')
+                ->first();
 
-            // Check if the webinar exists
+            // Check if the certificate exists
             if (!empty($certificate)) {
                 $checkCertificateForSale = $this->checkCertificateForSale($certificate, $user);
-    
+
                 if ($checkCertificateForSale != 'ok') {
                     return $checkCertificateForSale;
-                };
+                }
 
-                // Check if the certificate exists and has a price
-                if (!empty($courseCertificate) && $courseCertificate->certificate_price > 0) {
+                // Check if the certificate has a price
+                if ($certificate->certificate_price > 0) {
                     // Create a fake cart for the certificate purchase
                     $fakeCarts = collect();
                     $fakeCart = new Cart();
                     $fakeCart->creator_id = $user->id;
-                    $fakeCart->webinar_id = $webinarId;
+                    $fakeCart->webinar_id = $certificate->webinar_id; // Use the correct webinar ID
                     $fakeCart->ticket_id = $ticketId;
                     $fakeCart->special_offer_id = null; // If applicable
                     $fakeCart->created_at = time();
@@ -1023,14 +1023,15 @@ class WebinarController extends Controller
                     $cartController = new CartController();
                     return $cartController->checkout(new Request(), $fakeCarts);
                 } else {
-                    // Return an error if the certificate doesn't exist or has no price
+                    // Return an error if the certificate doesn't have a price
                     return response()->json(['message' => 'Certificate does not exist or price is not set.'], 400);
                 }
             }
         }
 
+        // return view('web.default.cart.cert_payment');
+
         // If user is not authenticated or the feature is disabled, return a 404 error
         abort(404);
     }
-
 }

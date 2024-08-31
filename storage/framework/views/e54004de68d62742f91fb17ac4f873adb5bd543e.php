@@ -130,8 +130,8 @@
                         <form action="/cart/store" method="post">
                             <?php echo e(csrf_field()); ?>
 
-                            <input type="hidden" name="item_id" value="<?php echo e($course->id); ?>">
-                            <input type="hidden" name="item_name" value="webinar_id">
+                            <input type="hidden" name="item_id" value="<?php echo e($certificate->id); ?>">
+                            <input type="hidden" name="item_name" value="certificate_id">
 
                             <?php if(!empty($course->tickets)): ?>
                                 <?php $__currentLoopData = $course->tickets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ticket): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -194,8 +194,12 @@
 
                                     </button>
 
-                                    <?php if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0): ?>
-                                        <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-payment">
+                                    <?php if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0 ): ?>
+                                        <!-- <a href="<?php echo e(route('certificate.direct-payment')); ?>" class="btn btn-outline-danger mt-20 js-course-direct-payment">
+                                            Pay Now!
+                                        </a> -->
+
+                                        <button type="submit" class="btn btn-outline-danger mt-20">
                                             Pay Now!
                                         </button>
                                     <?php endif; ?>
