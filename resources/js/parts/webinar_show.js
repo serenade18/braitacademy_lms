@@ -448,6 +448,16 @@
         $form.trigger('submit');
     });
 
+    $('body').on('click', '.js-course-direct-certificate-payment', function (e) {
+        const $this = $(this);
+        $this.addClass('loadingbar danger').prop('disabled', true);
+
+        const $form = $this.closest('form');
+        $form.attr('action', '/certificate/direct-payment');
+
+        $form.trigger('submit');
+    });
+
     $('body').on('click', '.js-bundle-direct-payment', function (e) {
         const $this = $(this);
         $this.addClass('loadingbar danger').prop('disabled', true);
