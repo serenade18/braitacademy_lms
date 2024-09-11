@@ -358,10 +358,11 @@ class CartController extends Controller
 
         $cartHasWebinar = array_filter($carts->pluck('webinar_id')->toArray());
         $cartHasBundle = array_filter($carts->pluck('bundle_id')->toArray());
+        $cartHasCertificate = array_filter($carts->pluck('certificate_id')->toArray());
         $cartHasMeeting = array_filter($carts->pluck('reserve_meeting_id')->toArray());
         $cartHasInstallmentPayment = array_filter($carts->pluck('installment_payment_id')->toArray());
 
-        $taxIsDifferent = (count($cartHasWebinar) or count($cartHasBundle) or count($cartHasMeeting) or count($cartHasInstallmentPayment));
+        $taxIsDifferent = (count($cartHasWebinar) or count($cartHasBundle) or count($cartHasCertificate) or count($cartHasMeeting) or count($cartHasInstallmentPayment));
 
         foreach ($carts as $cart) {
             $orderPrices = $this->handleOrderPrices($cart, $user, $taxIsDifferent, $discountCoupon);
@@ -581,6 +582,7 @@ class CartController extends Controller
                 'user_id' => $user->id,
                 'order_id' => $order->id,
                 'webinar_id' => $cart->webinar_id ?? null,
+                'certificate_id' => $cart->certificate_id ?? null,
                 'bundle_id' => $cart->bundle_id ?? null,
                 'product_id' => (!empty($cart->product_order_id) and !empty($cart->productOrder->product)) ? $cart->productOrder->product->id : null,
                 'product_order_id' => (!empty($cart->product_order_id)) ? $cart->product_order_id : null,
@@ -639,6 +641,57 @@ class CartController extends Controller
 
             if (!empty($financialSettings) and !empty($financialSettings['commission'])) {
                 $commission = (int)$financialSettings['commission'];
+            }
+        }
+
+         // Check for webinar_id
+        if (!empty($cart->webinar_id)) {
+            $item = $cart->webinar; // Fetch the webinar directly
+            $price = $item->certificate_price; // Access the certificate price from the webinar
+            $discount = $item->getDiscount($cart->ticket, $user); // Calculate discount
+
+            // Calculate the price without discount
+            $priceWithoutDiscount = $price - $discount;
+
+            // Calculate tax
+            if ($tax > 0 && $priceWithoutDiscount > 0) {
+                $taxPrice += $priceWithoutDiscount * $tax / 100;
+            }
+
+            // Calculate commission
+            if (!empty($commission) && $commission > 0) {
+                $commissionPrice += $priceWithoutDiscount > 0 ? $priceWithoutDiscount * $commission / 100 : 0;
+            }
+
+            $totalDiscount += $discount;
+            $subTotal += $price; // Add full price to subtotal, not price without discount
+        }
+
+        // If a certificate_id is present but without a webinar_id (if that's a valid case)
+        if (!empty($cart->certificate_id) && empty($cart->webinar_id)) {
+            // Assuming the certificate might be independent of webinars
+            $certificate = $this->getCertificateById($cart->certificate_id); // Implement this method to fetch the certificate details
+
+            // Check if the associated webinar is available
+            $webinar = $this->getWebinarByCertificateId($cart->certificate_id); // Implement this method to fetch the webinar using the certificate ID
+
+            if ($webinar) {
+                $price = $webinar->certificate_price; // Access the price from the webinar
+                $discount = $webinar->getDiscount($cart->ticket, $user); // Calculate discount from the webinar context
+
+                $priceWithoutDiscount = $price - $discount;
+
+                // Calculate tax and commission based on the certificate price from the webinar
+                if ($tax > 0 && $priceWithoutDiscount > 0) {
+                    $taxPrice += $priceWithoutDiscount * $tax / 100;
+                }
+
+                if (!empty($commission) && $commission > 0) {
+                    $commissionPrice += $priceWithoutDiscount > 0 ? $priceWithoutDiscount * $commission / 100 : 0;
+                }
+
+                $totalDiscount += $discount;
+                $subTotal += $price; // Add full price to subtotal
             }
         }
 
@@ -753,7 +806,6 @@ class CartController extends Controller
 
         return redirect('/payments/status?order_id=' . $order->id);
     }
-
 
     private function getTotalCashbackAmount($carts, $user, $subTotal)
     {

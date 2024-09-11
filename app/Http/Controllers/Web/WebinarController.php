@@ -60,6 +60,9 @@ class WebinarController extends Controller
             return $justReturnData ? false : back();
         }
 
+        // Directly access the certificate price from the course
+        $certificatePrice = $course->certificate_price;
+
         if (!$justReturnData) {
             $installmentLimitation = $this->installmentContentLimitation($user, $course->id, 'webinar_id');
 
@@ -978,60 +981,67 @@ class WebinarController extends Controller
     {
         $user = auth()->user();
 
-        // Check if the user is authenticated and if the feature for direct certificate purchase is enabled
-        if (!empty($user) && !empty(getFeaturesSettings('direct_certificate_payment_button_status'))) {
+        // Check if the user is authenticated and feature is enabled
+        $featureStatus = getFeaturesSettings('direct_classes_payment_button_status');
+
+        // Check if the user is authenticated and feature is enabled
+        if ($user && $featureStatus) {
             // Validate the incoming request data
-            $this->validate($request, [
+            $validatedData = $request->validate([
                 'item_id' => 'required|exists:certificates,id', // Ensure item_id is a valid certificate ID
-                'ticket_id' => 'nullable', // Ensure ticket_id is optional
+                'webinar_id' => 'required|exists:webinars,id', // Validate the webinar ID
             ]);
 
             // Extract the data from the request
-            $data = $request->except('_token');
-
-            // Get the certificate information
-            $certificateId = $data['item_id'];
-            $ticketId = $data['ticket_id'];
+            $certificateId = $validatedData['item_id'];
+            $webinarId = $validatedData['webinar_id'];
 
             // Retrieve the certificate
             $certificate = Certificate::where('id', $certificateId)
                 ->where('status', 'active')
                 ->first();
 
+            // Retrieve the webinar
+            $webinar = Webinar::where('id', $webinarId)
+                ->where('private', false)
+                ->where('status', 'active')
+                ->first();
+
             // Check if the certificate exists
-            if (!empty($certificate)) {
+            if ($certificate) {
                 $checkCertificateForSale = $this->checkCertificateForSale($certificate, $user);
 
-                if ($checkCertificateForSale != 'ok') {
-                    return $checkCertificateForSale;
+                if ($checkCertificateForSale !== 'ok') {
+                    return response()->json(['success' => false, 'message' => $checkCertificateForSale]);
                 }
 
                 // Check if the certificate has a price
                 if ($certificate->certificate_price > 0) {
-                    // Create a fake cart for the certificate purchase
-                    $fakeCarts = collect();
+                    // Create a new cart for the certificate purchase
                     $fakeCart = new Cart();
                     $fakeCart->creator_id = $user->id;
-                    $fakeCart->webinar_id = $certificate->webinar_id; // Use the correct webinar ID
-                    $fakeCart->ticket_id = $ticketId;
+                    $fakeCart->certificate_id = $certificateId; // Use the correct certificate ID
                     $fakeCart->special_offer_id = null; // If applicable
-                    $fakeCart->created_at = time();
+                    $fakeCart->created_at = now(); // Use now() instead of time()
 
-                    $fakeCarts->add($fakeCart);
+                    // Save the cart
+                    $fakeCart->save();
 
                     // Process the checkout through the CartController
                     $cartController = new CartController();
-                    return $cartController->checkout(new Request(), $fakeCarts);
+
+                    return $cartController->checkout(new Request(), collect([$fakeCart]));
                 } else {
-                    // Return an error if the certificate doesn't have a price
-                    return response()->json(['message' => 'Certificate does not exist or price is not set.'], 400);
+                    return response()->json(['success' => false, 'message' => 'The certificate is free.']);
                 }
+            } else {
+                return response()->json(['success' => false, 'message' => 'Certificate not found or inactive.']);
             }
+        } else {
+            return response()->json(['success' => false, 'message' => 'Feature disabled or unauthorized.'], 403);
         }
 
-        // return view('web.default.cart.cert_payment');
-
-        // If user is not authenticated or the feature is disabled, return a 404 error
-        abort(404);
+        return response()->json(['success' => false, 'message' => 'Unauthorized or feature disabled.'], 403);
     }
+
 }

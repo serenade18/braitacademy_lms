@@ -360,20 +360,24 @@ class Webinar extends Model implements TranslatableContract
         return strtotime("+{$this->access_days} days", $purchaseDate) > $time;
     }
 
-    public function getSaleItem($user = null)
+    public function getSaleItem($user = null, $certificateId = null)
     {
         if (empty($user)) {
             $user = auth()->user();
         }
 
         if (!empty($user)) {
-            return Sale::query()->where('buyer_id', $user->id)
+            $query = Sale::query()->where('buyer_id', $user->id)
                 ->where('webinar_id', $this->id)
                 ->where('type', 'webinar')
                 ->whereNull('refund_at')
-                ->where('access_to_purchased_item', true)
-                ->orderBy('created_at', 'desc')
-                ->first();
+                ->where('access_to_purchased_item', true);
+
+            if (!empty($certificateId)) {
+                $query->where('certificate_id', $certificateId);
+            }
+
+            return $query->orderBy('created_at', 'desc')->first();
         }
 
         return null;

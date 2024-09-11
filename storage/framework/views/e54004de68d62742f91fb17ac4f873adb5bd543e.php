@@ -133,24 +133,6 @@
                             <input type="hidden" name="item_id" value="<?php echo e($certificate->id); ?>">
                             <input type="hidden" name="item_name" value="certificate_id">
 
-                            <?php if(!empty($course->tickets)): ?>
-                                <?php $__currentLoopData = $course->tickets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ticket): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <div class="form-check mt-20">
-                                        <input class="form-check-input" <?php if(!$ticket->isValid()): ?> disabled <?php endif; ?> type="radio"
-                                               data-discount-price="<?php echo e(handlePrice($ticket->getPriceWithDiscount($course->certificate_price, !empty($activeSpecialOffer) ? $activeSpecialOffer : null))); ?>"
-                                               value="<?php echo e(($ticket->isValid()) ? $ticket->id : ''); ?>"
-                                               name="ticket_id"
-                                               id="courseOff<?php echo e($ticket->id); ?>">
-                                        <label class="form-check-label d-flex flex-column cursor-pointer" for="courseOff<?php echo e($ticket->id); ?>">
-                                            <span class="font-16 font-weight-500 text-dark-blue"><?php echo e($ticket->title); ?> <?php if(!empty($ticket->discount)): ?>
-                                                    (<?php echo e($ticket->discount); ?>% <?php echo e(trans('public.off')); ?>)
-                                                <?php endif; ?></span>
-                                            <span class="font-14 text-gray"><?php echo e($ticket->getSubTitle()); ?></span>
-                                        </label>
-                                    </div>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?>
-
                             <!--  use this to check if certificate can be sold -->
                             <?php
                                 $canSaleCertificate = ($course->canSaleCertificate());
@@ -188,16 +170,15 @@
                             <?php endif; ?>
 
                             <div class="mt-20 d-flex flex-column">
-                                <?php if(!empty($course->certificate_price) and $course->certificate_price > 0): ?>
+                                <?php if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0): ?>
                                     <button type="button" class="btn btn-primary js-course-add-to-cart-btn"> 
                                         <?php echo e(trans('public.add_to_cart')); ?>
 
                                     </button>
 
-                                    <?php if($canSaleCertificate && !empty($course->certificate_price) && $course->certificate_price > 0 ): ?>
-                                        
-
-                                        <button type="submit" class="btn btn-outline-danger mt-20">
+                                    <?php if($canSaleCertificate && !empty(getFeaturesSettings('direct_classes_payment_button_status')) ): ?>
+               
+                                        <button type="button" class="btn btn-outline-danger mt-20 js-course-direct-certificate-payment">
                                             Pay Now!
                                         </button>
                                     <?php endif; ?>
@@ -218,16 +199,54 @@
 
 
 <?php $__env->startPush('scripts_bottom'); ?>
+    <script src="/assets/default/js/parts/time-counter-down.min.js"></script>
+    <script src="/assets/default/vendors/barrating/jquery.barrating.min.js"></script>
+    <script src="/assets/default/vendors/video/video.min.js"></script>
+    <script src="/assets/default/vendors/video/youtube.min.js"></script>
+    <script src="/assets/default/vendors/video/vimeo.js"></script>
 
-    <?php if(!empty($course->creator) and !empty($course->creator->getLiveChatJsCode()) and !empty(getFeaturesSettings('show_live_chat_widget'))): ?>
-        <script>
-            (function () {
-                "use strict"
+    <script>
+        var webinarDemoLang = '<?php echo e(trans('webinars.webinar_demo')); ?>';
+        var replyLang = '<?php echo e(trans('panel.reply')); ?>';
+        var closeLang = '<?php echo e(trans('public.close')); ?>';
+        var saveLang = '<?php echo e(trans('public.save')); ?>';
+        var reportLang = '<?php echo e(trans('panel.report')); ?>';
+        var reportSuccessLang = '<?php echo e(trans('panel.report_success')); ?>';
+        var reportFailLang = '<?php echo e(trans('panel.report_fail')); ?>';
+        var messageToReviewerLang = '<?php echo e(trans('public.message_to_reviewer')); ?>';
+        var copyLang = '<?php echo e(trans('public.copy')); ?>';
+        var copiedLang = '<?php echo e(trans('public.copied')); ?>';
+        var learningToggleLangSuccess = '<?php echo e(trans('public.course_learning_change_status_success')); ?>';
+        var learningToggleLangError = '<?php echo e(trans('public.course_learning_change_status_error')); ?>';
+        var notLoginToastTitleLang = '<?php echo e(trans('public.not_login_toast_lang')); ?>';
+        var notLoginToastMsgLang = '<?php echo e(trans('public.not_login_toast_msg_lang')); ?>';
+        var notAccessToastTitleLang = '<?php echo e(trans('public.not_access_toast_lang')); ?>';
+        var notAccessToastMsgLang = '<?php echo e(trans('public.not_access_toast_msg_lang')); ?>';
+        var canNotTryAgainQuizToastTitleLang = '<?php echo e(trans('public.can_not_try_again_quiz_toast_lang')); ?>';
+        var canNotTryAgainQuizToastMsgLang = '<?php echo e(trans('public.can_not_try_again_quiz_toast_msg_lang')); ?>';
+        var canNotDownloadCertificateToastTitleLang = '<?php echo e(trans('public.can_not_download_certificate_toast_lang')); ?>';
+        var canNotDownloadCertificateToastMsgLang = '<?php echo e(trans('public.can_not_download_certificate_toast_msg_lang')); ?>';
+        var sessionFinishedToastTitleLang = '<?php echo e(trans('public.session_finished_toast_title_lang')); ?>';
+        var sessionFinishedToastMsgLang = '<?php echo e(trans('public.session_finished_toast_msg_lang')); ?>';
+        var sequenceContentErrorModalTitle = '<?php echo e(trans('update.sequence_content_error_modal_title')); ?>';
+        var courseHasBoughtStatusToastTitleLang = '<?php echo e(trans('cart.fail_purchase')); ?>';
+        var courseHasBoughtStatusToastMsgLang = '<?php echo e(trans('site.you_bought_webinar')); ?>';
+        var courseNotCapacityStatusToastTitleLang = '<?php echo e(trans('public.request_failed')); ?>';
+        var courseNotCapacityStatusToastMsgLang = '<?php echo e(trans('cart.course_not_capacity')); ?>';
+        var courseHasStartedStatusToastTitleLang = '<?php echo e(trans('cart.fail_purchase')); ?>';
+        var courseHasStartedStatusToastMsgLang = '<?php echo e(trans('update.class_has_started')); ?>';
+        var joinCourseWaitlistLang = '<?php echo e(trans('update.join_course_waitlist')); ?>';
+        var joinCourseWaitlistModalHintLang = "<?php echo e(trans('update.join_course_waitlist_modal_hint')); ?>";
+        var joinLang = '<?php echo e(trans('footer.join')); ?>';
+        var nameLang = '<?php echo e(trans('auth.name')); ?>';
+        var emailLang = '<?php echo e(trans('auth.email')); ?>';
+        var phoneLang = '<?php echo e(trans('public.phone')); ?>';
+        var captchaLang = '<?php echo e(trans('site.captcha')); ?>';
+    </script>
 
-                <?php echo $course->creator->getLiveChatJsCode(); ?>
+    <script src="/assets/default/js/parts/comment.min.js"></script>
+    <script src="/assets/default/js/parts/video_player_helpers.min.js"></script>
+    <script src="/assets/default/js/parts/webinar_show.min.js"></script>
 
-            })(jQuery)
-        </script>
-    <?php endif; ?>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make(getTemplate().'.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\BraIT\Desktop\Dev\braitacademy\resources\views/web/default/course/cert.blade.php ENDPATH**/ ?>

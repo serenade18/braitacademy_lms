@@ -9,6 +9,7 @@ class Sale extends Model
 {
     public static $webinar = 'webinar';
     public static $meeting = 'meeting';
+    public static $certificate = 'certificate';
     public static $subscribe = 'subscribe';
     public static $promotion = 'promotion';
     public static $registrationPackage = 'registration_package';
@@ -27,6 +28,11 @@ class Sale extends Model
     public function webinar()
     {
         return $this->belongsTo('App\Models\Webinar', 'webinar_id', 'id');
+    }
+
+    public function certificate()
+    {
+        return $this->belongsTo('App\Models\Certificate', 'certificate_id', 'id');
     }
 
     public function bundle()
@@ -118,12 +124,13 @@ class Sale extends Model
         }
 
         $seller_id = OrderItem::getSeller($orderItem);
-
+       
         $sale = Sale::create([
             'buyer_id' => $orderItem->user_id,
             'seller_id' => $seller_id,
             'order_id' => $orderItem->order_id,
             'webinar_id' => (empty($orderItem->gift_id) and !empty($orderItem->webinar_id)) ? $orderItem->webinar_id : null,
+            'certificate_id' => $orderItem->certificate_id, // Add this line to set the certificate_id
             'bundle_id' => (empty($orderItem->gift_id) and !empty($orderItem->bundle_id)) ? $orderItem->bundle_id : null,
             'meeting_id' => !empty($orderItem->reserve_meeting_id) ? $orderItem->reserveMeeting->meeting_id : null,
             'meeting_time_id' => !empty($orderItem->reserveMeeting) ? $orderItem->reserveMeeting->meeting_time_id : null,
