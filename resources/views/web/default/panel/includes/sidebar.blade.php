@@ -72,6 +72,44 @@
             </a>
         </li>
 
+        <!-- courses dropdown -->
+
+        <li class="sidenav-item {{ (request()->is('panel/webinars') or request()->is('panel/webinars/*')) ? 'sidenav-item-active' : '' }}">
+            <a class="d-flex align-items-center" data-toggle="collapse" href="#webinarCollapse" role="button" aria-expanded="false" aria-controls="webinarCollapse">
+                <span class="sidenav-item-icon mr-10">
+                    @include('web.default.panel.includes.sidebar_icons.webinars')
+                </span>
+                <span class="font-14 text-dark-blue font-weight-500">{{ trans('panel.webinars') }}</span>
+            </a>
+
+            <div class="collapse {{ (request()->is('panel/webinars') or request()->is('panel/webinars/*')) ? 'show' : '' }}" id="webinarCollapse">
+                <ul class="sidenav-item-collapse">
+
+                    <li class="mt-5 {{ (request()->is('panel/webinars/purchases')) ? 'active' : '' }}">
+                        <a href="/panel/webinars/purchases">{{ trans('panel.my_classes') }}</a>
+                    </li>
+
+                    <li class="mt-5 {{ (request()->is('panel/webinars/comments')) ? 'active' : '' }}">
+                        <a href="/panel/webinars/comments">{{ trans('panel.my_class_comments') }}</a>
+                    </li>
+
+                    <li class="mt-5 {{ (request()->is('panel/webinars/my-comments')) ? 'active' : '' }}">
+                        <a href="/panel/webinars/my-comments">{{ trans('panel.my_comments') }}</a>
+                    </li>
+
+                    <li class="mt-5 {{ (request()->is('panel/webinars/favorites')) ? 'active' : '' }}">
+                        <a href="/panel/webinars/favorites">{{ trans('panel.favorites') }}</a>
+                    </li>
+
+                    @if(!empty(getFeaturesSettings('course_notes_status')))
+                        <li class="mt-5 {{ (request()->is('panel/webinars/personal-notes')) ? 'active' : '' }}">
+                            <a href="/panel/webinars/personal-notes">{{ trans('update.course_notes') }}</a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </li>
+
         @if($authUser->isOrganization())
 
             @can('panel_organization_instructors')
