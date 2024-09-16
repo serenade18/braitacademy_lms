@@ -72,17 +72,15 @@
             </a>
         </li>
 
-        <!-- courses dropdown -->
-
         <li class="sidenav-item {{ (request()->is('panel/webinars') or request()->is('panel/webinars/*')) ? 'sidenav-item-active' : '' }}">
-            <a href="/panel/webinars/purchases" class="d-flex align-items-center" data-toggle="collapse" href="#webinarCollapse" role="button" aria-expanded="false" aria-controls="webinarCollapse">
-                <span class="sidenav-item-icon mr-10">
-                    @include('web.default.panel.includes.sidebar_icons.webinars')
-                </span>
+            <a class="d-flex align-items-center" data-toggle="collapse" href="#webinarCollapse" role="button" aria-expanded="false" aria-controls="webinarCollapse">
+            <span class="sidenav-item-icon mr-10">
+                @include('web.default.panel.includes.sidebar_icons.webinars')
+            </span>
                 <span class="font-14 text-dark-blue font-weight-500">{{ trans('panel.webinars') }}</span>
             </a>
 
-            <div class="collapse {{ (request()->is('panel/webinars') or request()->is('panel/webinars/*')) ? 'show' : '' }}" id="webinarCollapse">
+            <div class="collapse {{ (request()->is('panel/certificates') or request()->is('panel/certificates/*')) ? 'show' : '' }}" id="webinarCollapse">
                 <ul class="sidenav-item-collapse">
 
                     <li cgitlass="mt-5 {{ (request()->is('panel/webinars/purchases')) ? 'active' : '' }}">
@@ -106,6 +104,7 @@
                             <a href="/panel/webinars/personal-notes">{{ trans('update.course_notes') }}</a>
                         </li>
                     @endif
+
                 </ul>
             </div>
         </li>
