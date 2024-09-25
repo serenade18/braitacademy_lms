@@ -57,38 +57,6 @@
                         @endif
 
                     </div>
-
-
-                    <!-- <div class="col-12 col-lg-2">
-                        <div class="mt-20 p-20 rounded-sm shadow-lg border border-gray300 filters-container">
-
-                            <div class="">
-                                <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">{{ trans('public.type') }}</h3>
-
-                                <div class="pt-10">
-                                    @foreach(['bundle','webinar','course','text_lesson'] as $typeOption)
-                                        <div class="d-flex align-items-center justify-content-between mt-20">
-                                            <label class="cursor-pointer" for="filterLanguage{{ $typeOption }}">
-                                                @if($typeOption == 'bundle')
-                                                    {{ trans('update.bundle') }}
-                                                @else
-                                                    {{ trans('webinars.'.$typeOption) }}
-                                                @endif
-                                            </label>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" name="type[]" id="filterLanguage{{ $typeOption }}" value="{{ $typeOption }}" @if(in_array($typeOption, request()->get('type', []))) checked="checked" @endif class="custom-control-input">
-                                                <label class="custom-control-label" for="filterLanguage{{ $typeOption }}"></label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-
-
-                            <button type="submit" class="btn btn-sm btn-primary btn-block mt-30">{{ trans('site.filter_items') }}</button>
-                        </div>
-                    </div> -->
                 </div>
 
             </form>
